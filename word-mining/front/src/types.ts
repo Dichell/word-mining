@@ -12,18 +12,18 @@ export interface GeneralStore {
 export interface BaseStore {
     isActive: boolean
 }
-export interface YouglishStore extends BaseStore{
-    languages: ObjectSimple[],
-    sourceText: string,
-    sourceLang: number,
-    targetLang: number
-}
-export interface ReversoStore extends BaseStore{
-    languages: ObjectSimple[],
-    sourceText: string,
-    sourceLang: number,
-    targetLang: number
-}
+// export interface YouglishStore extends BaseStore{
+//     languages: ObjectSimple[],
+//     sourceText: string,
+//     sourceLang: number,
+//     targetLang: number
+// }
+// export interface ReversoStore extends BaseStore{
+//     languages: ObjectSimple[],
+//     sourceText: string,
+//     sourceLang: number,
+//     targetLang: number
+// } //TODO delete ?
 
 export interface ObjectSimple {
     key: number,

@@ -1,7 +1,7 @@
 import { GeneralStore } from '@/types'
 import { defineStore } from 'pinia'
 
-export default defineStore('Youglish', {
+export default defineStore('General', {
     state: (): GeneralStore => ({
         token: "",
         isAuth: false,
@@ -12,7 +12,7 @@ export default defineStore('Youglish', {
             { key: 1, value: "english" },
             { key: 2, value: "russian" },
         ],
-        sourceText: "שלום",
+        sourceText: "",
         sourceLang: 0,
         targetLang: 1,
     }),
@@ -25,6 +25,10 @@ export default defineStore('Youglish', {
         getTargetLang: (state: GeneralStore): string => state.languages[state.targetLang].value
     },
 
-    actions: {},
+    actions: {
+        setSourceText(value: string){
+            this.sourceText = value
+        }
+    },
 
 })

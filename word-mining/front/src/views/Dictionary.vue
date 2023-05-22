@@ -1,6 +1,8 @@
 <template>
-    <InputForm />
-    <ControlInstruments />
+    <v-container class="d-flex flex-row-reverse">
+        <InputForm />
+        <ControlInstruments />
+    </v-container>
     <Reverso v-if="reversoIsActive"/>
     <YouGlish v-if="youglishIsActive"/>
 </template>

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import { BaseStore, ObjectSimple, ReversoStore } from '@/types'
+import { BaseStore } from '@/types'
 import { LocalStorageKeys } from '@/enums'
 
 export default defineStore('Reverso', {
     state: (): BaseStore => ({
-        isActive: false
+        isActive: true
     }),
     getters: {
     },

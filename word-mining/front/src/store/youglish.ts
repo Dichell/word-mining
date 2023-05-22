@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { BaseStore, ObjectSimple, YouglishStore } from '@/types'
+import { BaseStore } from '@/types'
 import { LocalStorageKeys } from '@/enums'
 
 export default defineStore('Youglish', {

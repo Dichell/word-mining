@@ -1,27 +1,48 @@
 <template>
-    <v-sheet>ControlInstruments</v-sheet> 
-    <v-row class="d-flex justify-start">
-        <v-col>
-            <v-switch 
-                :true-value=true
-                :false-value=false
-                v-model=reversoIsActive
-                label=Reverso
+    <v-menu
+        open-on-hover
+        :close-on-content-click="false"
+        >
+        <template v-slot:activator="{ props }">
+            <v-btn
+                class="mt-3"
                 color="primary"
-                @click="toogleReversoIsActive"
-                ></v-switch>
-        </v-col>
-        <v-col>
-            <v-switch 
-                :true-value=true
-                :false-value=false
-                v-model=youglishIsActive
-                label=YouGlish  
-                color="primary"
-                @click="toogleYouglishIsActive"
-                ></v-switch>
-        </v-col>
-    </v-row>
+                v-bind="props"
+                icon="mdi-tune"
+            >
+            </v-btn>
+        </template>
+        <v-card min-width="300" class="pa-2">
+            <v-list>
+                <v-list-item
+                    subtitle="Use instrumens:"
+                ></v-list-item>
+                <v-list-item>
+                    <v-switch class="ml-5"
+                    :true-value=true
+                    :false-value=false
+                    v-model=reversoIsActive
+                    label=Reverso
+                    density="compact"
+                    color="primary"
+                    @click="toogleReversoIsActive"
+                    ></v-switch>
+                </v-list-item>
+                <v-list-item>
+
+                <v-switch class="ml-5"
+                    :true-value=true
+                    :false-value=false
+                    v-model=youglishIsActive
+                    label=YouGlish  
+                    density="compact"
+                    color="primary"
+                    @click="toogleYouglishIsActive"
+                    ></v-switch>
+                </v-list-item>
+            </v-list>
+        </v-card>
+    </v-menu>
 </template>
 
 <script lang="ts">
@@ -47,7 +68,7 @@ export default defineComponent({
     },
     computed: {
         youglishIsActive(){
-            return this.youGlishStore.getIsActive
+            return this.youGlishStore.isActive
         },
         reversoIsActive(){
             return this.reversoStore.isActive
