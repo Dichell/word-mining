@@ -3,10 +3,10 @@ export interface GeneralStore {
     isAuth: boolean,
     userEmail: string,
     isLoading: boolean,
-    languages: ObjectSimple[],
+    languages: languages[],
     sourceText: string,
-    sourceLang: number,
-    targetLang: number,
+    sourceLang: string,
+    targetLang: string,
 }
 
 export interface BaseStore {
@@ -25,7 +25,8 @@ export interface BaseStore {
 //     targetLang: number
 // } //TODO delete ?
 
-export interface ObjectSimple {
+export interface languages {
     key: number,
+    name: string,
     value: string
 }

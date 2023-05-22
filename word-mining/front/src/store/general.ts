@@ -2,32 +2,33 @@ import { GeneralStore } from '@/types'
 import { defineStore } from 'pinia'
 
 export default defineStore('General', {
-    state: (): GeneralStore => ({
+    state: () => ({
         token: "",
         isAuth: false,
         userEmail: "",
         isLoading: false,
-        languages: [
-            { key: 0, value: "hebrew" },
-            { key: 1, value: "english" },
-            { key: 2, value: "russian" },
-        ],
+        // languages: [
+        //     { key: 0, name: "Hebrew", value: "hebrew" },
+        //     { key: 1, name: "English",  value: "english" },
+        //     { key: 2, name: "Russian",  value: "russian" },
+        // ],
+        languages: ["hebrew", "english", "russian"],
         sourceText: "",
-        sourceLang: 0,
+        sourceLang: "hebrew",
         targetLang: 1,
     }),
     getters: {
-        getIsAuth: (state: GeneralStore): boolean => state.isAuth,
-        getUserEmail: (state: GeneralStore): string => state.userEmail,
-        getIsLoadingStatus: (state: GeneralStore): boolean => state.isLoading,
-
-        getSourceLang: (state: GeneralStore): string => state.languages[state.sourceLang].value,
-        getTargetLang: (state: GeneralStore): string => state.languages[state.targetLang].value
+        // getCurrentLang(state){
+        //     return state.languages[state.sourceLang]
+        // }
     },
 
     actions: {
         setSourceText(value: string){
             this.sourceText = value
+        },
+        setSourceLang(value: string){
+            this.sourceLang = value
         }
     },
 

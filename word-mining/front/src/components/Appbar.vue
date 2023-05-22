@@ -5,7 +5,9 @@
 
         <v-menu>
             <template v-slot:activator="{ props }">
-              <v-btn icon="mdi-menu" v-bind="props"></v-btn>
+              <v-btn size="x-large" v-bind="props">
+                <v-icon size="xx-large">mdi-menu</v-icon>
+            </v-btn>
             </template>
 
             <v-list>
@@ -56,7 +58,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-    name: 'Sidebar',
+    name: 'Appbar',
     data() {
         return {
             menu: [

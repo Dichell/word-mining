@@ -1,0 +1,4 @@
+const userData = {
+    email: "",
+    words: [],
+}
