@@ -59,5 +59,5 @@ export default defineComponent({
     }
 })
 
-//TODO create Switcher
+//TODO create Switcher components
 </script>

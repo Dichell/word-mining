@@ -2,10 +2,14 @@ export interface GeneralStore {
     token: string,
     isAuth: boolean,
     userEmail: string,
-    isLoading: boolean
+    isLoading: boolean,
+    languages: ObjectSimple[],
+    sourceText: string,
+    sourceLang: number,
+    targetLang: number,
 }
 
-interface BaseStore {
+export interface BaseStore {
     isActive: boolean
 }
 export interface YouglishStore extends BaseStore{

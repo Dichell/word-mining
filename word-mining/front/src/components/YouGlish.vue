@@ -17,16 +17,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import useGeneralStore from "@/store/general";
 import useYouglishStore from "@/store/youglish";
 
 export default defineComponent({
     name: 'YouGlish',
 
     data() {
+        const generalStore = useGeneralStore()
         const youGlishStore = useYouglishStore()
-        let widget
 
-        return { youGlishStore, widget }
+        return { generalStore, youGlishStore }
     },
 
     methods: {
@@ -34,10 +35,10 @@ export default defineComponent({
 
     computed: {
         dataLang() {
-            return this.youGlishStore.getSourceLang
+            return this.generalStore.getSourceLang
         },
         currentText() {
-            return this.youGlishStore.sourceText
+            return this.generalStore.sourceText
         },
         youglishIsActive(){
             return this.youGlishStore.isActive
