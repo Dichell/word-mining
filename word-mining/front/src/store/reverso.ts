@@ -6,20 +6,17 @@ export default defineStore('Reverso', {
     state: (): BaseStore => ({
         isActive: true
     }),
-    getters: {
-    },
-
+    getters: {},
     actions: {
-        mountRevesohIsActive(){
+        mountRevesohIsActive(): void {
             const isActive = localStorage.getItem(LocalStorageKeys.ReversoIsActive)
             if(isActive != null){
                 this.isActive = isActive == "true" ? true : false
             }
         },
-        toggleReverso(){
+        toggleReverso(): void {
             this.isActive = !this.isActive
             localStorage.setItem(LocalStorageKeys.ReversoIsActive, this.isActive.toString())
         }
-    },
-
+    }
 })

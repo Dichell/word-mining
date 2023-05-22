@@ -5,7 +5,7 @@
         >
         <template v-slot:activator="{ props }">
             <v-btn
-                class="mt-3"
+                class="mt-1"
                 color="primary"
                 v-bind="props"
                 icon="mdi-tune"
@@ -59,18 +59,18 @@ export default defineComponent({
         return { youGlishStore, reversoStore }
     },
     methods: {
-        toogleYouglishIsActive(){
+        toogleYouglishIsActive(): void {
             this.youGlishStore.toggleYouglish()
         },
-        toogleReversoIsActive(){
+        toogleReversoIsActive(): void {
             this.reversoStore.toggleReverso()
         }
     },
     computed: {
-        youglishIsActive(){
+        youglishIsActive(): boolean {
             return this.youGlishStore.isActive
         },
-        reversoIsActive(){
+        reversoIsActive(): boolean {
             return this.reversoStore.isActive
         }
     },

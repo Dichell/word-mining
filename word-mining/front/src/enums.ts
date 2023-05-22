@@ -1,4 +1,6 @@
 export enum LocalStorageKeys {
     YouglishIsActive = "YouglishIsActive",
-    ReversoIsActive = "ReversoIsActive"
+    ReversoIsActive = "ReversoIsActive",
+    SourceLang = "SourceLang",
+    TargetLang = "TargetLang"
 }

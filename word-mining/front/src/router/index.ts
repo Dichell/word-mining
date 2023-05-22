@@ -33,9 +33,9 @@ const routes = [
             component: Progress,
           },
           {
-              path: 'about',
-              name: 'About',
-              component: About,
+            path: 'about',
+            name: 'About',
+            component: About,
           }
         ],
     }

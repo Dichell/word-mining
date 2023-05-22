@@ -6,17 +6,15 @@ export default defineStore('Youglish', {
     state: (): BaseStore => ({
         isActive: true
     }),
-    getters: {
-    },
-
+    getters: {},
     actions: {
-        mountYouglishIsActive(){
+        mountYouglishIsActive(): void {
             const isActive = localStorage.getItem(LocalStorageKeys.YouglishIsActive)
             if(isActive != null){
                 this.isActive = isActive == "true" ? true : false
             }
         },
-        toggleYouglish(){
+        toggleYouglish(): void {
             this.isActive = !this.isActive
             localStorage.setItem(LocalStorageKeys.YouglishIsActive, this.isActive.toString())
         }
