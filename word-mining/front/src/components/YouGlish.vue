@@ -1,6 +1,18 @@
 <template>
     <v-sheet>Youglish</v-sheet> 
-    <a id="yg-widget-0" class="youglish-widget" data-query="great%20power" data-lang="english" data-zones="all,us,uk,aus" data-components="8415" data-bkg-color="theme_light"  rel="nofollow" href="https://youglish.com">Visit YouGlish.com</a>
+    <a id="yg-widget-0" 
+    
+        :data-query=currentText 
+        :data-lang=dataLang
+
+        class="youglish-widget" 
+        data-auto-start="0"
+        data-zones="all,us,uk,aus" 
+        data-components="8413" 
+        data-bkg-color="theme_light"  
+        rel="nofollow" 
+        href="https://www.youglish.com">Visit YouGlish.com</a>
+
 </template>
 
 <script lang="ts">
@@ -11,10 +23,10 @@ export default defineComponent({
     name: 'YouGlish',
 
     data() {
-        const youglishStore = useYouglishStore()
+        const youGlishStore = useYouglishStore()
         let widget
 
-        return { youglishStore, widget }
+        return { youGlishStore, widget }
     },
 
     methods: {
@@ -22,12 +34,14 @@ export default defineComponent({
 
     computed: {
         dataLang() {
-            return this.youglishStore.sourceLang
+            return this.youGlishStore.getSourceLang
         },
         currentText() {
-            return encodeURIComponent(this.youglishStore.currentText)
+            return this.youGlishStore.sourceText
+        },
+        youglishIsActive(){
+            return this.youGlishStore.isActive
         }
-
     },
 
     mounted() {
