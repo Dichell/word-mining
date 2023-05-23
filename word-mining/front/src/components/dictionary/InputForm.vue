@@ -22,7 +22,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useGeneralStore from '@/store/general'
-import BtnSearchWord from '@/components/buttons/dictionary/BtnSearchWord.vue'
+import BtnSearchWord from './BtnSearchWord.vue'
 
 export default defineComponent({
     name: 'InputForm',

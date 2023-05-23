@@ -16,9 +16,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import InputForm from '@/components/InputForm.vue'
-import ControlInstruments from '@/components/ControlInstruments.vue'
-import SelectLang from "@/components/SelectLang.vue";
+import InputForm from './InputForm.vue'
+import ControlInstruments from './ControlInstruments.vue'
+import SelectLang from "./SelectLang.vue";
 
 export default defineComponent({
     name: 'ControlPanel',

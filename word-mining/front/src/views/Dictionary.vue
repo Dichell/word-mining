@@ -7,8 +7,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ControlPanel from '@/components/dictionary/ControlPanel.vue'
-import YouGlish from '@/components/YouGlish.vue'
-import Reverso from '@/components/Reverso.vue'
+import YouGlish from '@/components/dictionary/YouGlish.vue'
+import Reverso from '@/components/dictionary/Reverso.vue'
 import useReversoStore from "@/store/reverso";
 import useYouglishStore from "@/store/youglish";
 
