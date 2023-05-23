@@ -27,7 +27,7 @@
             ></v-select>
         </v-col>
         <v-col md="2" class="d-none d-md-block">
-            <BtnQuad @event="sendToStore" icon='mdi-magnify' />
+            <BtnSearchWord />
         </v-col>
     </v-row>
 </v-container>
@@ -37,11 +37,11 @@
 import { defineComponent } from "vue";
 import useGeneralStore from '@/store/general'
 import { languages } from "@/types";
-import BtnQuad from '@/components/buttons/BtnQuad.vue'
+import BtnSearchWord from '@/components/buttons/dictionary/BtnSearchWord.vue'
 
 export default defineComponent({
     name: 'SelectLang',
-    components: { BtnQuad },
+    components: { BtnSearchWord },
     data() {
         const generalStore = useGeneralStore()
         let sourceLanguage: any
@@ -57,9 +57,6 @@ export default defineComponent({
         },
         replaceLangs(): void {
             this.generalStore.reverseLangs()
-        },
-        sendToStore(): void {
-            this.generalStore.setSourceText()
         }
     },
     computed: {

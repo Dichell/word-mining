@@ -10,7 +10,7 @@
                 >
                 <template v-slot:append>
                     <v-sheet class="d-md-none">
-                        <BtnQuad @event="sendToStore" icon='mdi-magnify' />
+                        <BtnSearchWord />
                     </v-sheet>
                 </template>
             </v-text-field>
@@ -22,20 +22,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useGeneralStore from '@/store/general'
-import BtnQuad from '@/components/buttons/BtnQuad.vue'
+import BtnSearchWord from '@/components/buttons/dictionary/BtnSearchWord.vue'
 
 export default defineComponent({
     name: 'InputForm',
-    components: { BtnQuad },
+    components: { BtnSearchWord },
     data() {
         const generalStore = useGeneralStore()
         let textInput = ""
         return { generalStore, textInput }
-    },
-    methods: {
-        sendToStore(): void {
-            this.generalStore.setSourceText()
-        }
     },
     created() {
         this.textInput = this.generalStore.sourceText
