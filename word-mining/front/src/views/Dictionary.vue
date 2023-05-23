@@ -1,15 +1,17 @@
 <template>
-    <v-container class="d-flex align-content-start flex-row">
-        <v-row no-gutters>
-            <v-col cols="2" md="1">
-                <ControlInstruments />
-            </v-col>
-            <v-col cols="10" md="6">
+    <v-container>
+        <v-row no-gutters class="d-flex flex-row ">
+
+            <v-col class="order-md-2" cols="12" md="5">
                 <InputForm />
             </v-col>
-            <v-col md="5">
+            <v-col class="order-md-1" cols="2" md="2">
+                <ControlInstruments />
+            </v-col>
+            <v-col class="order-md-4" cols="10" md="5">
                 <SelectLang />
             </v-col>
+
         </v-row>
     </v-container>
     <Reverso v-if="reversoIsActive"/>
@@ -23,17 +25,25 @@ import ControlInstruments from '@/components/ControlInstruments.vue'
 import SelectLang from "@/components/SelectLang.vue";
 import YouGlish from '@/components/YouGlish.vue'
 import Reverso from '@/components/Reverso.vue'
+import BtnQuad from '@/components/buttons/BtnQuad.vue'
+import useGeneralStore from "@/store/general";
 import useYouglishStore from "@/store/youglish";
 import useReversoStore from "@/store/reverso";
 
 export default defineComponent({
     name: 'Dictionary',
-    components: { InputForm, ControlInstruments, SelectLang, YouGlish, Reverso },
+    components: { InputForm, ControlInstruments, SelectLang, YouGlish, Reverso, BtnQuad },
     data() {
+        const generalStore = useGeneralStore()
         const youGlishStore = useYouglishStore()
         const reversoStore = useReversoStore()
 
-        return { youGlishStore, reversoStore }
+        return { generalStore, youGlishStore, reversoStore }
+    },
+    methods: {
+        sendToStore(): void {
+            this.generalStore.setSourceText()
+        }
     },
     computed: {
         youglishIsActive(){

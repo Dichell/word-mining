@@ -1,8 +1,8 @@
 <template>
       <v-app-bar
         color="primary"
+        density="compact"
       >
-
         <v-menu>
             <template v-slot:activator="{ props }">
               <v-btn size="x-large" v-bind="props">
@@ -38,11 +38,12 @@
                 </v-app-bar-title>
             </v-col>
             <v-col class="d-flex justify-end">
-                <v-btn icon
+                <v-btn
+                    size="large"
                     v-for="{name, path, icon} in menu"
                     :to=path
                     >
-                    <v-icon>{{icon}}</v-icon>
+                    <v-icon size="x-large">{{icon}}</v-icon>
                         <v-tooltip
                             activator="parent"
                             location="bottom"

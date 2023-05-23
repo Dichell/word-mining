@@ -5,6 +5,7 @@ export interface GeneralStore {
     isLoading: boolean,
     languages: languages[],
     sourceText: string,
+    inputText: string,
     sourceLang: languages,
     targetLang: languages,
 }
@@ -16,5 +17,6 @@ export interface BaseStore {
 export interface languages {
     key: number,
     name: string,
-    value: string
+    value: string,
+    helloWord: string
 }

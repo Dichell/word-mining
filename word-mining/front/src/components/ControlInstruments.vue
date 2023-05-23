@@ -1,48 +1,79 @@
 <template>
-    <v-menu
-        open-on-hover
-        :close-on-content-click="false"
-        >
-        <template v-slot:activator="{ props }">
-            <v-btn
-                class="mt-1"
-                color="primary"
-                v-bind="props"
-                icon="mdi-tune"
+    <v-container class="d-flex d-md-none">
+        <v-menu
+            open-on-hover
+            :close-on-content-click="false"
             >
-            </v-btn>
-        </template>
-        <v-card min-width="300" class="pa-2">
-            <v-list>
-                <v-list-item
-                    subtitle="Use instrumens:"
-                ></v-list-item>
-                <v-list-item>
-                    <v-switch class="ml-5"
-                    :true-value=true
-                    :false-value=false
-                    v-model=reversoIsActive
-                    label=Reverso
-                    density="compact"
+            <template v-slot:activator="{ props }">
+                <v-btn
+                    class="mt-1"
                     color="primary"
-                    @click="toogleReversoIsActive"
-                    ></v-switch>
-                </v-list-item>
-                <v-list-item>
+                    v-bind="props"
+                    icon="mdi-tune"
+                >
+                </v-btn>
+            </template>
+            <v-card min-width="300" class="pa-2">
+                <v-list>
+                    <v-list-item
+                        subtitle="Services:"
+                    ></v-list-item>
+                    <v-list-item>
+                        <v-switch class="ml-5"
+                        :true-value=true
+                        :false-value=false
+                        v-model=reversoIsActive
+                        label=Reverso
+                        density="compact"
+                        color="primary"
+                        @click="toogleReversoIsActive"
+                        ></v-switch>
+                    </v-list-item>
+                    <v-list-item>
 
-                <v-switch class="ml-5"
-                    :true-value=true
-                    :false-value=false
-                    v-model=youglishIsActive
-                    label=YouGlish  
-                    density="compact"
-                    color="primary"
-                    @click="toogleYouglishIsActive"
-                    ></v-switch>
-                </v-list-item>
-            </v-list>
-        </v-card>
-    </v-menu>
+                    <v-switch class="ml-5"
+                        :true-value=true
+                        :false-value=false
+                        v-model=youglishIsActive
+                        label=YouGlish  
+                        density="compact"
+                        color="primary"
+                        @click="toogleYouglishIsActive"
+                        ></v-switch>
+                    </v-list-item>
+                </v-list>
+            </v-card>
+        </v-menu>
+    </v-container>
+
+    <v-container class="d-none d-md-inline">
+            <v-row no-gutters justify="center">
+                <v-col cols="6">Youglish</v-col>
+                <v-col cols="6">Reverso</v-col>
+            </v-row>
+            <v-row no-gutters justify="center">
+                <v-col cols="6">
+                    <v-switch class="ml-5"
+                        :true-value=true
+                        :false-value=false
+                        v-model=youglishIsActive
+                        density="compact"
+                        color="primary"
+                        @click="toogleYouglishIsActive"
+                        ></v-switch>
+                </v-col>
+                <v-col cols="6">
+                    <v-switch class="ml-5"
+                        :true-value=true
+                        :false-value=false
+                        v-model=reversoIsActive
+                        density="compact"
+                        color="primary"
+                        @click="toogleReversoIsActive"
+                        ></v-switch>
+                </v-col>
+            </v-row>
+    </v-container>
 </template>
 
 <script lang="ts">

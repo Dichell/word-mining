@@ -1,17 +1,13 @@
 <template>
     <v-sheet>Youglish</v-sheet> 
-    <a id="yg-widget-0" 
-    
-        :data-query=currentText 
-        :data-lang=dataLang
-
-        class="youglish-widget" 
-        data-auto-start="0"
-        data-zones="all,us,uk,aus" 
-        data-components="8413" 
-        data-bkg-color="theme_light"  
-        rel="nofollow" 
-        href="https://www.youglish.com">Visit YouGlish.com</a>
+        <a id="yg-widget-0" 
+            class="youglish-widget" 
+            :data-query=currentText
+            :data-lang=fromLang 
+            data-components="8412" 
+            data-auto-start="0" 
+            data-bkg-color="theme_light"  
+            rel="nofollow" href="https://www.youglish.com">Powered by YouGlish.com</a>
 
 </template>
 
@@ -34,11 +30,11 @@ export default defineComponent({
     },
 
     computed: {
-        dataLang() {
-            return this.generalStore.getSourceLang
+        fromLang() {
+            return this.generalStore.sourceLang.value
         },
         currentText() {
-            return this.generalStore.sourceText
+            return encodeURIComponent(this.generalStore.sourceText)
         },
         youglishIsActive(){
             return this.youGlishStore.isActive

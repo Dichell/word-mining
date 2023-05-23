@@ -9,18 +9,20 @@ export default defineStore('General', {
         userEmail: "",
         isLoading: false,
         languages: [
-            { key: 0, name: "Hebrew", value: "hebrew" },
-            { key: 1, name: "English",  value: "english" },
-            { key: 2, name: "Russian",  value: "russian" },
+            { key: 0, name: "Hebrew", value: "hebrew", helloWord: "שלום" },
+            { key: 1, name: "English",  value: "english", helloWord: "hello" },
+            { key: 2, name: "Russian",  value: "russian", helloWord: "привет" },
         ],
         sourceText: "",
-        sourceLang: { key: 0, name: "Hebrew", value: "hebrew" },
-        targetLang: { key: 1, name: "English",  value: "english" }
+        inputText: "",
+        sourceLang: { key: 0, name: "Hebrew", value: "hebrew", helloWord: "שלום" },
+        targetLang: { key: 1, name: "English",  value: "english", helloWord: "hello" }
     }),
     getters: {},
     actions: {
-        setSourceText(value: string): void {
-            this.sourceText = value
+        setSourceText(): void {
+            this.sourceText = this.inputText
+            localStorage.setItem(LocalStorageKeys.SourceText, this.inputText)
         },
         setSourceLang(value: languages): void {
             this.sourceLang = value
@@ -48,6 +50,14 @@ export default defineStore('General', {
             if(lsSoureLang && lsTargetLang){
                 this.sourceLang = JSON.parse(lsSoureLang)
                 this.targetLang = JSON.parse(lsTargetLang)
+            }
+        },
+        mountSourceText(): void {
+            let lsHelloWord = localStorage.getItem(LocalStorageKeys.SourceText)
+            if(lsHelloWord) {
+                this.sourceText = this.inputText = lsHelloWord
+            } else {
+                this.sourceText = this.inputText = this.languages[this.sourceLang.key].helloWord 
             }
         }
     }
