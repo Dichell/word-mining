@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
-import { BaseStore } from '@/types'
+import { YouGlishStore } from '@/types'
 import { LocalStorageKeys } from '@/enums'
 
 export default defineStore('Youglish', {
-    state: (): BaseStore => ({
-        isActive: true
+    state: (): YouGlishStore => ({
+        isActive: true,
+        newTranslationTrigger: 0
     }),
     getters: {},
     actions: {

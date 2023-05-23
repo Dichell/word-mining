@@ -1,7 +1,8 @@
 <template>
     <ControlPanel />
     <Reverso v-if="reversoIsActive"/>
-    <YouGlish v-if="youglishIsActive"/>
+    <YouGlish v-if="youglishIsActive" :key=youGlishStore.newTranslationTrigger /> 
+        <!-- // key is a way to rerender comp if new word was pased -->
 </template>
 
 <script lang="ts">
@@ -16,7 +17,7 @@ export default defineComponent({
     name: 'Dictionary',
     components: { ControlPanel, YouGlish, Reverso },
     data() {
-        const youGlishStore = useYouglishStore()
+        const youGlishStore = useYouglishStore() 
         const reversoStore = useReversoStore()
 
         return { youGlishStore, reversoStore }

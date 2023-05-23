@@ -1,3 +1,4 @@
+
 export interface GeneralStore {
     token: string,
     isAuth: boolean,
@@ -12,6 +13,10 @@ export interface GeneralStore {
 
 export interface BaseStore {
     isActive: boolean
+}
+
+export interface YouGlishStore extends BaseStore {
+    newTranslationTrigger: number
 }
 
 export interface languages {
