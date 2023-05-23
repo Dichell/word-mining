@@ -1,7 +1,9 @@
 <template>
-    <v-container class="d-flex d-md-none">
+    <v-container v-if="!screenSize">
         <v-menu
             open-on-hover
+            open-delay="10"
+            close-delay="100"
             :close-on-content-click="false"
             >
             <template v-slot:activator="{ props }">
@@ -46,14 +48,14 @@
         </v-menu>
     </v-container>
 
-    <v-container class="d-none d-md-inline">
-            <v-row no-gutters justify="center">
-                <v-col cols="6">Youglish</v-col>
-                <v-col cols="6">Reverso</v-col>
-            </v-row>
-            <v-row no-gutters justify="center">
+    <v-container class="border-primary" v-if="screenSize">
+            <v-row>
                 <v-col cols="6">
-                    <v-switch class="ml-5"
+                    <v-row dense>
+                        Youglish
+                    </v-row>
+                    <v-row dense>
+                        <v-switch class="ml-3"
                         :true-value=true
                         :false-value=false
                         v-model=youglishIsActive
@@ -61,9 +63,14 @@
                         color="primary"
                         @click="toogleYouglishIsActive"
                         ></v-switch>
+                    </v-row>
                 </v-col>
                 <v-col cols="6">
-                    <v-switch class="ml-5"
+                    <v-row dense>
+                        Reverso
+                    </v-row>
+                    <v-row dense>
+                        <v-switch class="ml-3"
                         :true-value=true
                         :false-value=false
                         v-model=reversoIsActive
@@ -71,6 +78,7 @@
                         color="primary"
                         @click="toogleReversoIsActive"
                         ></v-switch>
+                    </v-row>
                 </v-col>
             </v-row>
     </v-container>
@@ -103,6 +111,9 @@ export default defineComponent({
         },
         reversoIsActive(): boolean {
             return this.reversoStore.isActive
+        },
+        screenSize(): boolean {
+            return this.$vuetify.display.mdAndUp
         }
     },
     mounted() {

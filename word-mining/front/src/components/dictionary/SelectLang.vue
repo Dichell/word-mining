@@ -2,23 +2,14 @@
 <v-container>
     <v-row justify="center" >
         <v-col cols="5" md="4">
-
-            <BtnSelect 
-                @event="setSourceLang" 
-                :sourceLanguage=sourceLanguage 
-                :sourceLanguages=sourceLanguages
-                itemTitle="name"
-                label="from"
-                />
-
-            <!-- <v-select
+            <v-select
                 v-model=sourceLanguage
                 :items=sourceLanguages
                 item-title="name"
                 label="from"
                 return-object
                 @update:model-value="setSourceLang"
-            ></v-select> -->
+            ></v-select>
         </v-col>
         <v-col cols="2"  md="2" class="d-flex justify-center">
             <v-btn class="mt-2" @click="replaceLangs">
@@ -47,11 +38,10 @@ import { defineComponent } from "vue";
 import useGeneralStore from '@/store/general'
 import { languages } from "@/types";
 import BtnSearchWord from './BtnSearchWord.vue'
-import BtnSelect from '@/components/buttons/BtnSelect.vue'
 
 export default defineComponent({
     name: 'SelectLang',
-    components: { BtnSelect, BtnSearchWord },
+    components: { BtnSearchWord },
     data() {
         const generalStore = useGeneralStore()
         let sourceLanguage: any

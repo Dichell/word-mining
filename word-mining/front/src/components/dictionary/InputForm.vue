@@ -3,6 +3,7 @@
     <v-row>
         <v-col>
             <v-text-field
+                :reverse="generalStore.sourceLang.value == 'hebrew' ? true : false"
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"
