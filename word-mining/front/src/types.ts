@@ -23,5 +23,6 @@ export interface languages {
     key: number,
     name: string,
     value: string,
+    short: string,
     helloWord: string
 }

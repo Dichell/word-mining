@@ -87,7 +87,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useYouglishStore from "@/store/youglish";
-import useReversoStore from "@/store/reverso";
+import useReversoStore from "@/store/translate";
 
 export default defineComponent({
     name: 'ControlInstruments',

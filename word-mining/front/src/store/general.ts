@@ -9,14 +9,14 @@ export default defineStore('General', {
         userEmail: "",
         isLoading: false,
         languages: [
-            { key: 0, name: "Hebrew", value: "hebrew", helloWord: "שלום" },
-            { key: 1, name: "English",  value: "english", helloWord: "hello" },
-            { key: 2, name: "Russian",  value: "russian", helloWord: "привет" },
+            { key: 0, name: "Hebrew", value: "hebrew", short:"he", helloWord: "שלום" },
+            { key: 1, name: "English",  value: "english", short:"en", helloWord: "hello" },
+            { key: 2, name: "Russian",  value: "russian", short:"ru", helloWord: "привет" },
         ],
         sourceText: "",
         inputText: "",
-        sourceLang: { key: 0, name: "Hebrew", value: "hebrew", helloWord: "שלום" },
-        targetLang: { key: 1, name: "English",  value: "english", helloWord: "hello" }
+        sourceLang: { key: 0, name: "Hebrew", value: "hebrew", short:"he", helloWord: "שלום" },
+        targetLang: { key: 1, name: "English",  value: "english", short:"en", helloWord: "hello" }
     }),
     getters: {},
     actions: {
