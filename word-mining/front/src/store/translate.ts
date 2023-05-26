@@ -1,16 +1,7 @@
 import { defineStore } from 'pinia'
-import { BaseStore } from '@/types'
 import { LocalStorageKeys } from '@/enums'
 import useGeneralStore from './general'
-import axios from 'axios';
-
-const api = axios.create({
-    baseURL: 'http://localhost:4000/translate',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    },
-})
+import Api from '@/api' 
 
 export default defineStore('Reverso', {
     state: () => ({
@@ -36,7 +27,7 @@ export default defineStore('Reverso', {
         },
         async translate(){
             const textData = {text: this.getFromGeneralStore.sourceText, targetLang: this.getFromGeneralStore.targetLang.short}
-            const response: any = await api.post('', {textData: textData})
+            const response: any = await Api.get('translate', textData)
             
             this.translatedText = response.data.data[0].text
         }
