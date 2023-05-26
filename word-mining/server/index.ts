@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 import cors from 'cors';
-import { translateAzure } from './microsoftTranslate';
+import TranslationsRoutes from './modules/translations/routes.translations';
 
 const app = express()
 const host = "localhost"
@@ -14,16 +14,7 @@ app.get('/', function (req: Request, res: Response) {
     console.log(new Date(), ': get "/"')
   })
 
-app.post('/translate', async function (req: Request, res: Response) {
-    try{
-        const response = await translateAzure(req.body.textData.text, req.body.textData.targetLang)
-        res.send({data: response, status: "ok", message: ""})
-    }
-    catch(e){
-        res.send({status: "error", message:"translate no received"})
-        console.log('"/translate" error: ', e)
-    }
-  })
+app.post('/translate', TranslationsRoutes.translateText)
 
 app.listen(
     port, 
