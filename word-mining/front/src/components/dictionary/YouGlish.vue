@@ -3,8 +3,8 @@
     <v-sheet>Youglish</v-sheet> 
         <a id="yg-widget-0" 
             class="youglish-widget" 
-            :data-query=generalStore.sourceText
-            :data-lang=generalStore.sourceLang.value 
+            :data-query=translateStore.translatedText
+            :data-lang=generalStore.targetLang.value 
             data-components="8412" 
             data-auto-start="0" 
             data-bkg-color="theme_light"  
@@ -15,14 +15,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useGeneralStore from "@/store/general";
+import useTranslateStore from "@/store/translate";
 
 export default defineComponent({
     name: 'YouGlish',
 
     data() {
         const generalStore = useGeneralStore()
+        const translateStore = useTranslateStore()
 
-        return { generalStore }
+        return { generalStore, translateStore }
     },
     mounted() {
         let youGlishScriipt = document.createElement('script')
