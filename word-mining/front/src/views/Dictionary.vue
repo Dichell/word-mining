@@ -14,7 +14,6 @@ import { defineComponent } from "vue";
 import ControlPanel from '@/components/dictionary/ControlPanel.vue'
 import YouGlish from '@/components/dictionary/YouGlish.vue'
 import Translate from '@/components/dictionary/Translate.vue'
-import useTranslateStore from "@/store/translate";
 import useYouglishStore from "@/store/youglish";
 
 export default defineComponent({
@@ -22,9 +21,7 @@ export default defineComponent({
     components: { ControlPanel, YouGlish, Translate },
     data() {
         const youGlishStore = useYouglishStore() 
-        const translateStore = useTranslateStore()
-
-        return { youGlishStore, translateStore }
+        return { youGlishStore }
     }
 })
 </script>

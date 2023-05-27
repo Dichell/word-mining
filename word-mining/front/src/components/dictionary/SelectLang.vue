@@ -35,42 +35,42 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useGeneralStore from '@/store/general'
-import { languages } from "@/types";
+import useTranslateStore from '@/store/translate'
+import { Ilanguages } from "@/types";
 import BtnSearchWord from './BtnSearchWord.vue'
 
 export default defineComponent({
     name: 'SelectLang',
     components: { BtnSearchWord },
     data() {
-        const generalStore = useGeneralStore()
-        let sourceLanguage: any
-        let targetLanguage: any
-        return { generalStore, sourceLanguage, targetLanguage }
+        const translatelStore = useTranslateStore()
+        let sourceLanguage!: Ilanguages
+        let targetLanguage!: Ilanguages
+        return { translatelStore, sourceLanguage, targetLanguage }
     },
     methods: {
         setSourceLang(): void {
-            this.generalStore.setSourceLang(this.sourceLanguage)
+            this.translatelStore.updateTranslateObject("fromLangKey", this.sourceLanguage.key)
         },
         setTargetLang(): void {
-            this.generalStore.setTargetLang(this.targetLanguage)
+            this.translatelStore.updateTranslateObject("toLangKey", this.targetLanguage.key)
         },
         replaceLangs(): void {
-            this.generalStore.reverseLangs()
+            this.translatelStore.reverseLangs()
         }
     },
     computed: {
-        sourceLanguages(): languages[] {
-            this.sourceLanguage = this.generalStore.sourceLang
-            return this.generalStore.languages
+        sourceLanguages(): Ilanguages[] {
+            this.sourceLanguage = this.translatelStore.getSourceLang
+            return this.translatelStore.languages
         },
-        targetLanguages(): languages[] {
-            this.targetLanguage = this.generalStore.targetLang
-            return this.generalStore.languages.filter(a => a.key != this.sourceLanguage.key)
-        },
+        targetLanguages(): Ilanguages[] {
+            this.targetLanguage = this.translatelStore.getTargetLang
+            return this.translatelStore.languages.filter(a => a.key != this.sourceLanguage.key)
+        }
     },
     mounted() {
-        this.generalStore.mountLangs()
+        this.translatelStore.mountBaseTranslateSettings()
     },
 
 })

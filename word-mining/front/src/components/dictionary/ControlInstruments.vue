@@ -56,13 +56,13 @@
                     </v-row>
                     <v-row dense>
                         <v-switch class="ml-3"
-                        :true-value=true
-                        :false-value=false
-                        v-model=youglishIsActive
-                        density="compact"
-                        color="primary"
-                        @click="toogleYouglishIsActive"
-                        ></v-switch>
+                            :true-value=true
+                            :false-value=false
+                            v-model=youglishIsActive
+                            density="compact"
+                            color="primary"
+                            @click="toogleYouglishIsActive"
+                            ></v-switch>
                     </v-row>
                 </v-col>
                 <!-- <v-col cols="6">
@@ -87,38 +87,26 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useYouglishStore from "@/store/youglish";
-import useReversoStore from "@/store/translate";
 
 export default defineComponent({
     name: 'ControlInstruments',
     data() {
         const youGlishStore = useYouglishStore()
-        const reversoStore = useReversoStore()
 
-        return { youGlishStore, reversoStore }
+        return { youGlishStore }
     },
     methods: {
         toogleYouglishIsActive(): void {
             this.youGlishStore.toggleYouglish()
-        },
-        toogleReversoIsActive(): void {
-            this.reversoStore.toggleReverso()
         }
     },
     computed: {
         youglishIsActive(): boolean {
             return this.youGlishStore.isActive
-        },
-        reversoIsActive(): boolean {
-            return this.reversoStore.isActive
-        },
-        screenSize(): boolean {
-            return this.$vuetify.display.mdAndUp
         }
     },
     mounted() {
         this.youGlishStore.mountYouglishIsActive()
-        this.reversoStore.mountRevesohIsActive()
     }
 })
 

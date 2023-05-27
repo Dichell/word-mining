@@ -1,45 +1,67 @@
 import { defineStore } from 'pinia'
 import { LocalStorageKeys } from '@/enums'
-import useGeneralStore from './general'
 import useYouglishlStore from './youglish'
 import Api from '@/api' 
+import { localStorageMethods } from '@/utils/localStorage'
+import { ITranslateObject, ITranslateStore, Ilanguages } from '@/types'
+import { updateObject } from '@/utils/objectWorker'
 
 export default defineStore('Translate', {
-    state: () => ({
+    state: (): ITranslateStore => ({
         isActive: true,
-        translatedText: ""
+        languages: [
+            { key: 0, name: "Hebrew", value: "hebrew", short:"he", helloWord: "שלום" },
+            { key: 1, name: "English",  value: "english", short:"en", helloWord: "hello" },
+            { key: 2, name: "Russian",  value: "russian", short:"ru", helloWord: "привет" },
+        ],
+        textInput: "",
+        translateObject: { sourceText:"", fromLangKey: 0, toLangKey: 1, translatedText: "" }
     }),
     getters: {
-        getFromGeneralStore() {
-            const generalStore = useGeneralStore()
-            return generalStore
+        getSourceLang(): Ilanguages {
+            return this.languages[this.translateObject.fromLangKey]
         },
-        getFromYouglishStore() {
-            const youglishlStore = useYouglishlStore()
-            return youglishlStore
+        getTargetLang(): Ilanguages {
+            return this.languages[this.translateObject.toLangKey]
         },
+        // getFromYouglishStore() {
+        //     const youglishlStore = useYouglishlStore()
+        //     return youglishlStore
+        // },
     },
     actions: {
-        mountRevesohIsActive(): void {
-            const isActive = localStorage.getItem(LocalStorageKeys.ReversoIsActive)
-            if(isActive != null){
-                this.isActive = isActive == "true" ? true : false
-            }
+        updateTranslateObject(key: keyof ITranslateObject, value: string | number){
+            updateObject(this.translateObject, key, value)
+            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
         },
-        toggleReverso(): void {
-            this.isActive = !this.isActive
-            localStorage.setItem(LocalStorageKeys.ReversoIsActive, this.isActive.toString())
+        reverseLangs(){
+            let midlLang = this.translateObject
+            this.translateObject = {
+                sourceText: this.textInput = midlLang.translatedText,
+                fromLangKey: midlLang.toLangKey,
+                toLangKey: midlLang.fromLangKey,
+                translatedText: midlLang.sourceText
+            }
+            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
         },
         async translate(){
             const textData = {
-                text: this.getFromGeneralStore.sourceText, 
-                sourceLang: this.getFromGeneralStore.sourceLang.short, 
-                targetLang: this.getFromGeneralStore.targetLang.short
+                text: this.translateObject.sourceText, 
+                sourceLang: this.languages.find(el => el.key == this.translateObject.fromLangKey)?.short, 
+                targetLang: this.languages.find(el => el.key == this.translateObject.toLangKey)?.short
             }
             const response: any = await Api.get('translate', textData)
-            
-            this.translatedText = response.data.data[0].text
-            this.getFromYouglishStore.newTranslationTrigger++
+            this.translateObject.translatedText = response.data.data[0].text
+            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+        },
+// MOUNTING
+        mountBaseTranslateSettings(): void {
+            let lsTextTranslated = localStorageMethods.getAndToObject<ITranslateObject>(LocalStorageKeys.TranslateStore)
+            if(lsTextTranslated){
+                this.translateObject = lsTextTranslated
+                this.textInput = lsTextTranslated.sourceText
+            }
         }
+        
     }
 })

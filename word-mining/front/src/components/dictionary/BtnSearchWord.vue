@@ -4,25 +4,25 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useGeneralStore from '@/store/general'
-import useYouglishlStore from '@/store/youglish'
 import useTranslateStore from '@/store/translate'
+import useYouglishStore from '@/store/youglish'
 import BtnQuad from '@/components/buttons/BtnQuad.vue'
 
 export default defineComponent({
     name: 'BtnSearchWord',
     components: { BtnQuad },
     data() {
-        const generalStore = useGeneralStore()
-        const youglishlStore = useYouglishlStore()
         const translateStore = useTranslateStore()
-        let textInput = ""
-        return { generalStore, youglishlStore, translateStore, textInput }
+        const youglishStore = useYouglishStore()
+        return { translateStore, youglishStore }
     },
     methods: {
-        sendToStore(): void {
-            this.generalStore.setSourceText()
+        sendToStore() {
+            this.translateStore.updateTranslateObject("sourceText", this.translateStore.textInput)
             this.translateStore.translate()
+            setTimeout(()=>{
+                this.youglishStore.newTranslationTrigger++
+            }, 2000)
         }
     }
 })

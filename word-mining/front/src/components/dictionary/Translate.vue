@@ -1,7 +1,7 @@
 <template>
     <v-sheet>Translate</v-sheet> 
-    <v-sheet><h3>{{ translateStore.translatedText }}</h3></v-sheet>
-    <v-sheet>With context</v-sheet> 
+    <v-sheet><h3>{{ translateStore.translateObject.translatedText }}</h3></v-sheet>
+    <v-sheet></v-sheet> 
 </template>
 
 <script lang="ts">
@@ -10,22 +10,10 @@ import useTranslateStore from '@/store/translate'
 
 export default defineComponent({
     name: 'Translate',
-
     data() {
         const translateStore = useTranslateStore()
         return { translateStore }
-    },
-
-    methods: {
-    },
-
-    computed: {
-
-    },
-
-    mounted() {
     }
-
 })
 </script>
 

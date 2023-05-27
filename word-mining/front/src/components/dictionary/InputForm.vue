@@ -3,11 +3,11 @@
     <v-row>
         <v-col>
             <v-text-field
-                :reverse="generalStore.sourceLang.value == 'hebrew' ? true : false"
+                :reverse="reverseText.value == 'hebrew' ? true : false"
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"
-                v-model=generalStore.inputText
+                v-model=translateStore.textInput
                 >
                 <template v-slot:append>
                     <v-sheet class="d-md-none">
@@ -22,23 +22,21 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useGeneralStore from '@/store/general'
+import useTranslateStore from '@/store/translate'
 import BtnSearchWord from './BtnSearchWord.vue'
 
 export default defineComponent({
     name: 'InputForm',
     components: { BtnSearchWord },
     data() {
-        const generalStore = useGeneralStore()
-        let textInput = ""
-        return { generalStore, textInput }
+        const translateStore = useTranslateStore()
+        return { translateStore }
     },
-    created() {
-        this.textInput = this.generalStore.sourceText
-    },
-    // mounted() {
-    //     this.generalStore.mountSourceText()
-    // },
+    computed: {
+        reverseText(){
+            return this.translateStore.getSourceLang
+        }
+    }
 })
 </script>
 
