@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="!screenSize">
+    <!-- <v-container v-if="!screenSize">
         <v-menu
             open-on-hover
             open-delay="10"
@@ -25,7 +25,7 @@
                         :true-value=true
                         :false-value=false
                         v-model=reversoIsActive
-                        label=Reverso
+                        label=Translation
                         density="compact"
                         color="primary"
                         @click="toogleReversoIsActive"
@@ -37,7 +37,7 @@
                         :true-value=true
                         :false-value=false
                         v-model=youglishIsActive
-                        label=YouGlish  
+                        label=Pronouncing  
                         density="compact"
                         color="primary"
                         @click="toogleYouglishIsActive"
@@ -46,13 +46,13 @@
                 </v-list>
             </v-card>
         </v-menu>
-    </v-container>
+    </v-container> -->
 
-    <v-container class="border-primary" v-if="screenSize">
+    <v-container class="border-primary">
             <v-row>
-                <v-col cols="6">
+                <v-col cols="12">
                     <v-row dense>
-                        Youglish
+                        Pronouncing
                     </v-row>
                     <v-row dense>
                         <v-switch class="ml-3"
@@ -65,9 +65,9 @@
                         ></v-switch>
                     </v-row>
                 </v-col>
-                <v-col cols="6">
+                <!-- <v-col cols="6">
                     <v-row dense>
-                        Reverso
+                        Translation
                     </v-row>
                     <v-row dense>
                         <v-switch class="ml-3"
@@ -79,7 +79,7 @@
                         @click="toogleReversoIsActive"
                         ></v-switch>
                     </v-row>
-                </v-col>
+                </v-col> -->
             </v-row>
     </v-container>
 </template>

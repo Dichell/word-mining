@@ -1,15 +1,11 @@
 <template>
     <ControlPanel />
-    <v-container>
-        <v-row class="d-flex justify-center">
-            <v-col v-if="translateStore.isActive">
-                <Translate />
-            </v-col>
-            <v-col v-if="youGlishStore.isActive">
-                <YouGlish :key=youGlishStore.newTranslationTrigger /> 
-                <!-- // key is a way to rerender comp if new word was pased -->
-            </v-col>
-        </v-row>
+    <v-container class="d-flex flex-column justify-center">
+        <Translate />
+            <YouGlish 
+                v-if="youGlishStore.isActive" 
+                :key=youGlishStore.newTranslationTrigger /> 
+            <!-- // key is a way to rerender comp if new word was pased -->
     </v-container>
 </template>
 

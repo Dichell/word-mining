@@ -1,6 +1,6 @@
 <template>
     
-    <v-sheet>Youglish</v-sheet> 
+    <v-sheet>Pronouncing</v-sheet> 
         <a id="yg-widget-0" 
             class="youglish-widget" 
             :data-query=translateStore.translatedText

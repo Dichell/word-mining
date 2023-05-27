@@ -1,6 +1,7 @@
 <template>
     <v-sheet>Translate</v-sheet> 
-    <v-sheet>{{ translateStore.translatedText }}</v-sheet>
+    <v-sheet><h3>{{ translateStore.translatedText }}</h3></v-sheet>
+    <v-sheet>With context</v-sheet> 
 </template>
 
 <script lang="ts">

@@ -36,9 +36,9 @@ export default defineComponent({
     created() {
         this.textInput = this.generalStore.sourceText
     },
-    mounted() {
-        this.generalStore.mountSourceText()
-    },
+    // mounted() {
+    //     this.generalStore.mountSourceText()
+    // },
 })
 </script>
 
