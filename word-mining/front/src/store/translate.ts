@@ -31,7 +31,11 @@ export default defineStore('Translate', {
             localStorage.setItem(LocalStorageKeys.ReversoIsActive, this.isActive.toString())
         },
         async translate(){
-            const textData = {text: this.getFromGeneralStore.sourceText, targetLang: this.getFromGeneralStore.targetLang.short}
+            const textData = {
+                text: this.getFromGeneralStore.sourceText, 
+                sourceLang: this.getFromGeneralStore.sourceLang.short, 
+                targetLang: this.getFromGeneralStore.targetLang.short
+            }
             const response: any = await Api.get('translate', textData)
             
             this.translatedText = response.data.data[0].text

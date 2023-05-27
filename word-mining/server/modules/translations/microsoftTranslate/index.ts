@@ -5,7 +5,7 @@ let key = "c44c49d497a04da0a48c8c99e5482e16";
 let endpoint = "https://api.cognitive.microsofttranslator.com";
 let location = "westeurope";
 
-export async function translateAzure({text, target}:{text: string, target: string}): Promise<object>{
+export async function translateAzure({text, source, target}:{text: string, source: string, target: string}): Promise<object>{
     try{
         const response = await axios({
             baseURL: endpoint,
@@ -19,7 +19,7 @@ export async function translateAzure({text, target}:{text: string, target: strin
             },
             params: {
                 'api-version': '3.0',
-                'from': 'en',
+                'from': source,
                 'to': target
             },
             data: [{
