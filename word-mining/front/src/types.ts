@@ -7,10 +7,11 @@ export interface IGeneralStore {
 }
 
 export interface BaseStore {
-    isActive: boolean
+    isActive: boolean,
+    loading: boolean
 }
 
-export interface IYouGlishStore extends BaseStore {
+export interface IPronouncingStore extends BaseStore {
     newTranslationTrigger: number
     pronounceData: IPronounceData
 }

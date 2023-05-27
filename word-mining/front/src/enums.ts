@@ -1,13 +1,9 @@
 export enum LocalStorageKeys {
-    YouglishIsActive = "YouglishIsActive",
+    PronouncingIsActive = "PronouncingIsActive",
     ReversoIsActive = "ReversoIsActive",
     SourceText = "SourceText",
     PronounceData = "PronounceData",
-    TranslateStore = "TranslateStore",
-
-// TODO to delete ?
-    SourceLang = "SourceLang",
-    TargetLang = "TargetLang",
+    TranslateStore = "TranslateStore"
 }
 
 export enum ErrorMessage {

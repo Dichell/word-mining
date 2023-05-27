@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia'
-import { IPronounceData, IYouGlishStore } from '@/types'
+import { IPronounceData, IPronouncingStore } from '@/types'
 import { LocalStorageKeys } from '@/enums'
 import useTranslateStore from './translate'
 import { localStorageMethods } from '@/utils/localStorage'
 import { updateObject } from '@/utils/objectWorker'
 
-export default defineStore('Youglish', {
-    state: (): IYouGlishStore => ({
+export default defineStore('Pronouncing', {
+    state: (): IPronouncingStore => ({
         isActive: true,
+        loading: false,
         pronounceData: {text: "", speakLanguageValue: ""},
         newTranslationTrigger: 0
     }),
@@ -23,7 +24,7 @@ export default defineStore('Youglish', {
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.pronounceData)
 
         },
-        togglePronounce (): void {
+        togglePronounceLang (): void {
             if (this.pronounceData.speakLanguageValue == this.getFromTranslateStore.getSourceLang.value){
                 this.pronounceData = {
                     speakLanguageValue: this.getFromTranslateStore.getTargetLang.value,
@@ -39,9 +40,9 @@ export default defineStore('Youglish', {
             localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
             this.newTranslationTrigger++
         },
-        toggleYouglish(): void {
+        togglePronouncing(): void {
             this.isActive = !this.isActive
-            localStorageMethods.setItem(LocalStorageKeys.YouglishIsActive, this.isActive.toString())
+            localStorageMethods.setItem(LocalStorageKeys.PronouncingIsActive, this.isActive.toString())
         },
         triggerRefresh(){
             setTimeout(()=>{
@@ -59,8 +60,8 @@ export default defineStore('Youglish', {
                 localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
             }
         },
-        mountYouglishIsActive(): void {
-            const isActive = localStorageMethods.getAndToBoolean(LocalStorageKeys.YouglishIsActive)
+        mountPronouncingIsActive(): void {
+            const isActive = localStorageMethods.getAndToBoolean(LocalStorageKeys.PronouncingIsActive)
             if(isActive != null){this.isActive = isActive}
         }
     }

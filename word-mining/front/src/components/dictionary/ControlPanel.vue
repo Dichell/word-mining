@@ -16,12 +16,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+// components
 import InputForm from './InputForm.vue'
 import ControlInstruments from './ControlInstruments.vue'
 import SelectLang from "./SelectLang.vue";
 
 export default defineComponent({
-    name: 'ControlPanel',
+    name: 'ControlPanelComp',
     components: { InputForm, ControlInstruments, SelectLang }
 })
 </script>

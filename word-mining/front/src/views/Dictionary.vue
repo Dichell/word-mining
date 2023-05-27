@@ -1,27 +1,29 @@
 <template>
-    <ControlPanel />
+    <ControlPanelComp />
     <v-container class="d-flex flex-column justify-center">
-        <Translate />
-            <YouGlish 
-                v-if="youGlishStore.isActive" 
-                :key=youGlishStore.newTranslationTrigger /> 
+        <TranslateComp />
+            <PronouncingComp 
+                v-if="pronounceStore.isActive" 
+                :key=pronounceStore.newTranslationTrigger /> 
             <!-- // key is a way to rerender comp if new word was pased -->
     </v-container>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ControlPanel from '@/components/dictionary/ControlPanel.vue'
-import YouGlish from '@/components/dictionary/YouGlish.vue'
-import Translate from '@/components/dictionary/Translate.vue'
-import useYouglishStore from "@/store/youglish";
+// components
+import ControlPanelComp from '@/components/dictionary/ControlPanel.vue'
+import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
+import TranslateComp from '@/components/dictionary/Translate.vue'
+// store
+import usePronounceStore from "@/store/pronouncing";
 
 export default defineComponent({
     name: 'Dictionary',
-    components: { ControlPanel, YouGlish, Translate },
+    components: { ControlPanelComp, TranslateComp, PronouncingComp },
     data() {
-        const youGlishStore = useYouglishStore() 
-        return { youGlishStore }
+        const pronounceStore = usePronounceStore() 
+        return { pronounceStore }
     }
 })
 </script>

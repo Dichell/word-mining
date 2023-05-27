@@ -36,17 +36,17 @@
                     <v-switch class="ml-5"
                         :true-value=true
                         :false-value=false
-                        v-model=youglishIsActive
+                        v-model=pronounceIsActive
                         label=Pronouncing  
                         density="compact"
                         color="primary"
-                        @click="toogleYouglishIsActive"
+                        @click="tooglePronounceIsActive"
                         ></v-switch>
                     </v-list-item>
                 </v-list>
             </v-card>
         </v-menu>
-    </v-container> -->
+    </v-container> //TODO pop menu--> 
 
     <v-container class="border-primary">
             <v-row>
@@ -58,10 +58,10 @@
                         <v-switch class="ml-3"
                             :true-value=true
                             :false-value=false
-                            v-model=youglishIsActive
+                            v-model=pronounceIsActive
                             density="compact"
                             color="primary"
-                            @click="toogleYouglishIsActive"
+                            @click="tooglePronounceIsActive"
                             ></v-switch>
                     </v-row>
                 </v-col>
@@ -86,27 +86,27 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useYouglishStore from "@/store/youglish";
+// store
+import usePronounceStore from "@/store/pronouncing";
 
 export default defineComponent({
-    name: 'ControlInstruments',
+    name: 'ControlInstrumentsComp',
     data() {
-        const youGlishStore = useYouglishStore()
-
-        return { youGlishStore }
+        const pronounceStore = usePronounceStore()
+        return { pronounceStore }
     },
     methods: {
-        toogleYouglishIsActive(): void {
-            this.youGlishStore.toggleYouglish()
+        tooglePronounceIsActive(): void {
+            this.pronounceStore.togglePronouncing()
         }
     },
     computed: {
-        youglishIsActive(): boolean {
-            return this.youGlishStore.isActive
+        pronounceIsActive(): boolean {
+            return this.pronounceStore.isActive
         }
     },
     mounted() {
-        this.youGlishStore.mountYouglishIsActive()
+        this.pronounceStore.mountPronouncingIsActive()
     }
 })
 

@@ -7,6 +7,7 @@
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"
+                :loading=translateStore.loading
                 v-model=translateStore.textInput
                 >
                 <template v-slot:append>
@@ -22,7 +23,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+// store
 import useTranslateStore from '@/store/translate'
+// components
 import BtnSearchWord from './BtnSearchWord.vue'
 
 export default defineComponent({

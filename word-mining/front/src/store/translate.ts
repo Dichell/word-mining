@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { LocalStorageKeys } from '@/enums'
-import useYouglishlStore from './youglish'
 import Api from '@/api' 
 import { localStorageMethods } from '@/utils/localStorage'
 import { ITranslateObject, ITranslateStore, Ilanguages } from '@/types'
@@ -9,6 +8,7 @@ import { updateObject } from '@/utils/objectWorker'
 export default defineStore('Translate', {
     state: (): ITranslateStore => ({
         isActive: true,
+        loading: false,
         languages: [
             { key: 0, name: "Hebrew", value: "hebrew", short:"he", helloWord: "שלום" },
             { key: 1, name: "English",  value: "english", short:"en", helloWord: "hello" },
@@ -23,11 +23,7 @@ export default defineStore('Translate', {
         },
         getTargetLang(): Ilanguages {
             return this.languages[this.translateObject.toLangKey]
-        },
-        // getFromYouglishStore() {
-        //     const youglishlStore = useYouglishlStore()
-        //     return youglishlStore
-        // },
+        }
     },
     actions: {
         updateTranslateObject(key: keyof ITranslateObject, value: string | number){
@@ -45,6 +41,7 @@ export default defineStore('Translate', {
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
         },
         async translate(){
+            this.loading = true
             const textData = {
                 text: this.translateObject.sourceText, 
                 sourceLang: this.languages.find(el => el.key == this.translateObject.fromLangKey)?.short, 
@@ -53,6 +50,7 @@ export default defineStore('Translate', {
             const response: any = await Api.get('translate', textData)
             this.translateObject.translatedText = response.data.data[0].text
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+            this.loading = false
         },
 // MOUNTING
         mountBaseTranslateSettings(): void {
