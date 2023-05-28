@@ -21,8 +21,14 @@ export default defineStore('Pronouncing', {
     actions: {
         updatePronounceData(key: keyof IPronounceData, value: string){
             updateObject(this.pronounceData, key, value)
-            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.pronounceData)
-
+            localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
+            this.triggerRefresh()
+        },
+        refillPronDataFromTranslateSource(){
+            this.pronounceData = {
+                speakLanguageValue: this.getFromTranslateStore.getSourceLang.value,
+                text: this.getFromTranslateStore.translateObject.sourceText
+            }
         },
         togglePronounceLang (): void {
             if (this.pronounceData.speakLanguageValue == this.getFromTranslateStore.getSourceLang.value){
@@ -32,16 +38,19 @@ export default defineStore('Pronouncing', {
                 }
             }
             else { 
-                this.pronounceData = {
-                    speakLanguageValue: this.getFromTranslateStore.getSourceLang.value,
-                    text: this.getFromTranslateStore.translateObject.sourceText
-                }
+                this.refillPronDataFromTranslateSource()
             }
             localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
-            this.newTranslationTrigger++
+            this.getFromTranslateStore.refillAlternativeTranslations()
+            this.triggerRefresh()
         },
         togglePronouncing(): void {
             this.isActive = !this.isActive
+            if(this.isActive)
+            {
+                this.refillPronDataFromTranslateSource()
+                localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
+            }
             localStorageMethods.setItem(LocalStorageKeys.PronouncingIsActive, this.isActive.toString())
         },
         triggerRefresh(){

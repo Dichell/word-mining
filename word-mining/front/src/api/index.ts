@@ -1,3 +1,4 @@
+import { IResponse } from '@/types';
 import axios from 'axios';
 
 const api = axios.create({
@@ -12,9 +13,9 @@ class Api {
 
     constructor(){}
 
-    async get(url: string, data: any){
-        const response = await api.post(url, {textData: data})
-        return response
+    async get<T>(url: string, reqData: any): Promise<IResponse<T>>{
+        const { data } = await api.post<IResponse<T>>(url, {textData: reqData})
+        return data
     }
 }
 

@@ -7,7 +7,6 @@
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"
-                :loading=translateStore.loading
                 v-model=translateStore.textInput
                 >
                 <template v-slot:append>

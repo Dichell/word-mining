@@ -1,4 +1,10 @@
 
+export interface IResponse<T> {
+    data: T
+    status: string,
+    message: string
+}
+
 export interface IGeneralStore {
     token: string,
     isAuth: boolean,
@@ -8,7 +14,7 @@ export interface IGeneralStore {
 
 export interface BaseStore {
     isActive: boolean,
-    loading: boolean
+    loading?: boolean
 }
 
 export interface IPronouncingStore extends BaseStore {
@@ -17,9 +23,12 @@ export interface IPronouncingStore extends BaseStore {
 }
 
 export interface ITranslateStore extends BaseStore {
+    loadingTranslate: boolean,
+    loadingAlternatives: boolean,
     languages: Ilanguages[],
     textInput: string,
-    translateObject: ITranslateObject
+    translateObject: ITranslateObject,
+    alternativeTranslations: IAlternativeTranslations[]
 }
 
 export interface Ilanguages {
@@ -29,7 +38,6 @@ export interface Ilanguages {
     short: string,
     helloWord: string
 }
-
 
 export interface ITranslateObject {
     sourceText: string, 
@@ -41,4 +49,23 @@ export interface ITranslateObject {
 export interface IPronounceData {
     text: string
     speakLanguageValue: string
+}
+
+export interface IAlternativeTranslations {
+    normalizedTarget?: string,
+    displayTarget?: string,
+    posTag?: string,
+    confidence?: number,
+    prefixWord?: string,
+    backTranslations?: {
+        normalizedText: string,
+        displayText: string,
+        numExamples: number,
+        frequencyCount: number
+    }[]
+}
+
+export interface IAltText {
+    itemText: string,
+    itemTrans: string
 }

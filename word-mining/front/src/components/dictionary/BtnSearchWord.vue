@@ -22,9 +22,7 @@ export default defineComponent({
         sendToStore() {
             this.translateStore.updateTranslateObject("sourceText", this.translateStore.textInput)
             this.translateStore.translate()
-            setTimeout(()=>{
-                this.pronounceStore.newTranslationTrigger++
-            }, 2000)
+            this.pronounceStore.updatePronounceData("text", this.translateStore.textInput)
         }
     }
 })

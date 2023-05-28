@@ -1,7 +1,9 @@
 <template>
-    <v-sheet>Translate</v-sheet> 
-    <v-sheet><h3>{{ translateStore.translateObject.translatedText }}</h3></v-sheet>
-    <v-sheet></v-sheet> 
+    <v-container>
+        <v-sheet>Translate:</v-sheet> 
+        <v-sheet><h3>{{ translateStore.translateObject.translatedText }}</h3></v-sheet>
+        <v-sheet></v-sheet> 
+    </v-container>
 </template>
 
 <script lang="ts">
