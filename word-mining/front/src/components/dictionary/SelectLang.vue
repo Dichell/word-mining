@@ -35,8 +35,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useTranslateStore from '@/store/translate'
 import { Ilanguages } from "@/types";
+// stores
+import useTranslateStore from '@/store/translate'
+import usePronouncingStore from '@/store/pronouncing'
+// components
 import BtnSearchWord from './BtnSearchWord.vue'
 
 export default defineComponent({
@@ -44,9 +47,10 @@ export default defineComponent({
     components: { BtnSearchWord },
     data() {
         const translatelStore = useTranslateStore()
+        const pronouncinglStore = usePronouncingStore()
         let sourceLanguage!: Ilanguages
         let targetLanguage!: Ilanguages
-        return { translatelStore, sourceLanguage, targetLanguage }
+        return { translatelStore, pronouncinglStore, sourceLanguage, targetLanguage }
     },
     methods: {
         setSourceLang(): void {
@@ -57,6 +61,7 @@ export default defineComponent({
         },
         replaceLangs(): void {
             this.translatelStore.reverseLangs()
+            this.pronouncinglStore.togglePronounceLang()
         }
     },
     computed: {

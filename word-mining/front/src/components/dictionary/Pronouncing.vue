@@ -23,32 +23,15 @@
                 
                 </v-col>
             </v-row>
-        <!-- <v-switch
-            :false-value=sourceLang.value
-            :true-value=targetLang.value
-            v-model="pronounceStore.pronounceData.speakLanguageValue"
-            @click="togglepronounceLang"
-            >
-            <template v-slot:prepend>
-                <v-sheet :class="pronounceStore.pronounceData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
-                    {{ sourceLang.name }}
-                </v-sheet>
-            </template>
-            <template v-slot:append>
-                    <v-sheet :class="pronounceStore.pronounceData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
-                        {{ targetLang.name }}
-                    </v-sheet>
-            </template>
-        </v-switch> -->
 
         <a id="yg-widget-0" 
-            class="pronounce-widget" 
+            class="youglish-widget" 
             :data-query=pronounceStore.pronounceData.text
             :data-lang=pronounceStore.pronounceData.speakLanguageValue 
             data-components="8412" 
             data-auto-start="0" 
             data-bkg-color="theme_light"  
-            rel="nofollow" href="https://www.pronounce.com">Powered by Pronounce.com</a>
+            rel="nofollow" href="https://www.youglish.com">Powered by youglish.com</a>
     </v-container>
 </template>
 
@@ -81,11 +64,10 @@ export default defineComponent({
     mounted() {
         this.pronounceStore.mountPronounceData()
         let pronounceScriipt = document.createElement('script')
-        pronounceScriipt.setAttribute('src', 'https://pronounce.com/public/emb/widget.js')
+        pronounceScriipt.setAttribute('src', 'https://youglish.com/public/emb/widget.js')
         pronounceScriipt.setAttribute('async', "")
         pronounceScriipt.setAttribute('charset', "utf-8")
         document.head.appendChild(pronounceScriipt)
     }
-
 })
 </script>
