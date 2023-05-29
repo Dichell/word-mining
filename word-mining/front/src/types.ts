@@ -52,12 +52,12 @@ export interface IPronounceData {
 }
 
 export interface IAlternativeTranslations {
-    normalizedTarget?: string,
-    displayTarget?: string,
-    posTag?: string,
-    confidence?: number,
-    prefixWord?: string,
-    backTranslations?: {
+    normalizedTarget: string,
+    displayTarget: string,
+    posTag: string,
+    confidence: number,
+    prefixWord: string,
+    backTranslations: {
         normalizedText: string,
         displayText: string,
         numExamples: number,

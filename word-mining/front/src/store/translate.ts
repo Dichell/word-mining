@@ -85,9 +85,11 @@ export default defineStore('Translate', {
             }
             const response = await Api.get<IAlternativeTranslations[]>(Endpoint.TranslateAlternative, textData)
             if(response.data){
-                response.data.forEach(a => {
-                    this.alternativeTranslations.push(a)
-                })
+                response.data
+                    .sort((a,b) => b.confidence - a.confidence)
+                    .forEach(a => {
+                        this.alternativeTranslations.push(a)
+                    })
             }
             localStorageMethods.setItem(LocalStorageKeys.AlternativeTranslations, this.alternativeTranslations)
             this.loadingAlternatives = false

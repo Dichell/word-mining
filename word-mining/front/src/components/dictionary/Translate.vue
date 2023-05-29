@@ -1,8 +1,17 @@
 <template>
     <v-container>
         <v-sheet>Translate:</v-sheet> 
-        <v-sheet><h3>{{ translateStore.translateObject.translatedText }}</h3></v-sheet>
-        <v-sheet></v-sheet> 
+        <v-sheet>
+            <v-table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <v-btn variant="text">{{ translateStore.translateObject.translatedText }}</v-btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </v-table>
+        </v-sheet>
     </v-container>
 </template>
 

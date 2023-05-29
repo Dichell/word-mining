@@ -12,7 +12,7 @@
             ></v-select>
         </v-col>
         <v-col cols="2"  md="2" class="d-flex justify-center">
-            <v-btn class="mt-2" @click="replaceLangs">
+            <v-btn height="55px" @click="replaceLangs">
                 <v-icon color="primary" size="large">mdi-arrow-u-left-bottom</v-icon>
             </v-btn>
         </v-col>
