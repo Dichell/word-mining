@@ -25,10 +25,12 @@ export interface IPronouncingStore extends BaseStore {
 export interface ITranslateStore extends BaseStore {
     loadingTranslate: boolean,
     loadingAlternatives: boolean,
+    loadingExamples: boolean,
     languages: Ilanguages[],
     textInput: string,
     translateObject: ITranslateObject,
-    alternativeTranslations: IAlternativeTranslations[]
+    alternativeTranslations: IAlternativeTranslations[],
+    examplesTranslations: IExamplesTranslations[]
 }
 
 export interface Ilanguages {
@@ -68,4 +70,13 @@ export interface IAlternativeTranslations {
 export interface IAltText {
     itemText: string,
     itemTrans: string
+}
+
+export interface IExamplesTranslations {
+    sourcePrefix: string,
+    sourceTerm: string,
+    sourceSuffix: string,
+    targetPrefix: string,
+    targetTerm: string,
+    targetSuffix: string
 }

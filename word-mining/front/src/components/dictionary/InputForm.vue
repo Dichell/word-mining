@@ -7,6 +7,7 @@
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"
+                
                 v-model=translateStore.textInput
                 >
                 <template v-slot:append>
@@ -42,3 +43,8 @@ export default defineComponent({
 })
 </script>
 
+<style>
+  .v-text-field input {
+    font-size: 1.2em;
+  }
+</style>

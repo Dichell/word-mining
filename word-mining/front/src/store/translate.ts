@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { Endpoint, LocalStorageKeys } from '@/enums'
 import Api from '@/api' 
 import { localStorageMethods } from '@/utils/localStorage'
-import { IAltText, IAlternativeTranslations, ITranslateObject, ITranslateStore, Ilanguages } from '@/types'
+import { IAltText, IAlternativeTranslations, IExamplesTranslations, ITranslateObject, ITranslateStore, Ilanguages } from '@/types'
 import { updateObject } from '@/utils/objectWorker'
 
 export default defineStore('Translate', {
@@ -10,6 +10,7 @@ export default defineStore('Translate', {
         isActive: true,
         loadingTranslate: false,
         loadingAlternatives: false,
+        loadingExamples: false,
         languages: [
             { key: 0, name: "Hebrew", value: "hebrew", short:"he", helloWord: "שלום" },
             { key: 1, name: "English",  value: "english", short:"en", helloWord: "hello" },
@@ -17,7 +18,8 @@ export default defineStore('Translate', {
         ],
         textInput: "",
         translateObject: { sourceText:"", fromLangKey: 0, toLangKey: 1, translatedText: "" },
-        alternativeTranslations: []
+        alternativeTranslations: [],
+        examplesTranslations: []
     }),
     getters: {
         getSourceLang(): Ilanguages {
@@ -65,13 +67,14 @@ export default defineStore('Translate', {
             this.loading = true
             const textData = {
                 text: this.translateObject.sourceText, 
-                sourceLang: this.languages.find(el => el.key == this.translateObject.fromLangKey)?.short, 
-                targetLang: this.languages.find(el => el.key == this.translateObject.toLangKey)?.short
+                sourceLang: this.getSourceLang.short, 
+                targetLang: this.getTargetLang.short
             }
             const response: any = await Api.get<ITranslateObject>(Endpoint.Translate, textData)
             this.translateObject.translatedText = response.data[0].text
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
             this.refillAlternativeTranslations()
+            this.refillExamples()
             this.loading = false
         },
 // ALTERNATIVE TRANSLATIONS
@@ -80,8 +83,8 @@ export default defineStore('Translate', {
             this.alternativeTranslations = []
             const textData = {
                 text: this.translateObject.sourceText, 
-                sourceLang: this.languages.find(el => el.key == this.translateObject.fromLangKey)?.short, 
-                targetLang: this.languages.find(el => el.key == this.translateObject.toLangKey)?.short
+                sourceLang: this.getSourceLang.short, 
+                targetLang: this.getTargetLang.short
             }
             const response = await Api.get<IAlternativeTranslations[]>(Endpoint.TranslateAlternative, textData)
             if(response.data){
@@ -93,7 +96,27 @@ export default defineStore('Translate', {
             }
             localStorageMethods.setItem(LocalStorageKeys.AlternativeTranslations, this.alternativeTranslations)
             this.loadingAlternatives = false
-        }, //TODO param type ?
+        },
+// EXAMPLES TRANSLATIONS
+        async refillExamples(){
+            this.loadingExamples = true
+            this.examplesTranslations = []
+            const textData = {
+                text: this.translateObject.sourceText, 
+                sourceLang: this.getSourceLang.short, 
+                targetLang: this.getTargetLang.short,
+                translatedText: this.translateObject.translatedText
+            }
+            const response = await Api.get<IExamplesTranslations[]>(Endpoint.TranslateExamples, textData)
+            if(response.data){
+                response.data
+                    .forEach(a => {
+                        this.examplesTranslations.push(a)
+                    })
+            }
+            localStorageMethods.setItem(LocalStorageKeys.ExamplesTranslations, this.examplesTranslations)
+            this.loadingExamples = false
+        },
 // MOUNTING
         mountBaseTranslateSettings(): void {
             const lsTextTranslated = localStorageMethods.getAndToObject<ITranslateObject>(LocalStorageKeys.TranslateStore)
@@ -104,6 +127,10 @@ export default defineStore('Translate', {
             const lsAlternativeTranslations = localStorageMethods.getAndToObject<IAlternativeTranslations[]>(LocalStorageKeys.AlternativeTranslations)
             if(lsAlternativeTranslations){
                 this.alternativeTranslations = lsAlternativeTranslations
+            }
+            const lsExamplesTranslations = localStorageMethods.getAndToObject<IExamplesTranslations[]>(LocalStorageKeys.ExamplesTranslations)
+            if(lsExamplesTranslations){
+                this.examplesTranslations = lsExamplesTranslations
             }
         }
         

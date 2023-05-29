@@ -3,6 +3,7 @@
     <v-container class="d-flex flex-column justify-center">
         <TranslateComp />
         <TranslateLookupComp />
+        <TranslateExamples />
         <PronouncingComp 
             v-if="pronounceStore.isActive" 
             :key=pronounceStore.newTranslationTrigger /> 
@@ -16,13 +17,14 @@ import { defineComponent } from "vue";
 import ControlPanelComp from '@/components/dictionary/ControlPanel.vue'
 import TranslateComp from '@/components/dictionary/Translate.vue'
 import TranslateLookupComp from '@/components/dictionary/TranslateLookup.vue'
+import TranslateExamples from '@/components/dictionary/TranslateExamples.vue'
 import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 // store
 import usePronounceStore from "@/store/pronouncing";
 
 export default defineComponent({
     name: 'Dictionary',
-    components: { ControlPanelComp, TranslateComp, TranslateLookupComp, PronouncingComp },
+    components: { ControlPanelComp, TranslateComp, TranslateLookupComp, TranslateExamples, PronouncingComp },
     data() {
         const pronounceStore = usePronounceStore() 
         return { pronounceStore }

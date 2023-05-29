@@ -67,3 +67,35 @@ export async function translateAlternative({text, source, target}:{text: string,
         return { error: 'error'}
     }
 }
+
+export async function translateExamples({text, source, target, translation}:{text: string, source: string, target: string, translation: string}): Promise<object>{
+    try{
+        const response = await axios({
+            baseURL: endpoint,
+            url: '/dictionary/examples',
+            method: 'post',
+            headers: {
+                'Ocp-Apim-Subscription-Key': key,
+                'Ocp-Apim-Subscription-Region': location,
+                'Content-type': 'application/json',
+                'X-ClientTraceId': uuidv4().toString()
+            },
+            params: {
+                'api-version': '3.0',
+                'from': source,
+                'to': target
+            },
+            data: [{
+                'text': text,
+                'translation': translation
+            }],
+            responseType: 'json'
+        })
+        
+        return response
+    }
+    catch(e){
+        console.log(e)
+        return { error: 'error'}
+    }
+}

@@ -11,5 +11,6 @@ app.use(cors())
 
 app.post('/translate', TranslationsController.translateText)
 app.post('/translate-alternative', TranslationsController.translateAlternative)
+app.post('/translate-examples', TranslationsController.translateExamples)
 
 app.listen(port, host, () => { console.log(`Server runs on ${host}: ${port}`) })

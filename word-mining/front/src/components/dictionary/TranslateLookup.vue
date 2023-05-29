@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-sheet>Alternative translations: </v-sheet> 
+        <TitleElement text="Alternative translations"/>
         <v-sheet>
             <v-table>
                 <tbody>
@@ -17,7 +17,7 @@
                         <td>
                             <i :style="{fontSize: 'x-small'}">{{ posTag }}</i>
                         </td>
-                        <td>
+                        <td :dir="translateStore.getSourceLang.value == 'hebrew' ? 'rtl' : 'ltr'" >
                             <v-btn 
                                 density="compact" v-for="{normalizedText} in backTranslations"
                                 variant="text"
@@ -28,7 +28,7 @@
                         </td>
                     </tr>
                 </tbody>
-                <v-tooltip activator="parent" location="top"><u>Click:</u> pronounce selected. <u>Double click:</u> translate selected</v-tooltip>
+                <v-tooltip activator="parent" location="top" open-delay="2000"><u>Click:</u> pronounce selected. <u>Double click:</u> translate selected</v-tooltip>
             </v-table>
         </v-sheet> 
     </v-container>
@@ -38,6 +38,7 @@
 import { defineComponent } from "vue";
 import useTranslateStore from '@/store/translate'
 import usePronounceStore from '@/store/pronouncing'
+import TitleElement from '@/components/titles/TitleElement.vue'
 
 export default defineComponent({
     name: 'TranslateLookupComp',
@@ -46,6 +47,7 @@ export default defineComponent({
         const pronounceStore = usePronounceStore()
         return { translateStore, pronounceStore }
     },
+    components: { TitleElement },
     methods: {
         pronounceThis(word: string, lang: string){
             if(!this.pronounceStore.isActive){this.pronounceStore.togglePronouncing()}
