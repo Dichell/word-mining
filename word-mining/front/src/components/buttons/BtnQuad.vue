@@ -1,6 +1,6 @@
 <template>
     <v-btn 
-        height="50"
+        :height=height
         variant="flat"
         color="primary"
         @click="$emit('event')"
@@ -17,10 +17,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { string, number } from 'vue-types'
 
 export default defineComponent({
     name: 'BtnQuad',
-    props: ["icon", "tooltip"],
+    props: {
+        icon: string().isRequired,
+        tooltip: string(),
+        height: number().def(50)
+    },
     emits: ["event"]
 })
 </script>
