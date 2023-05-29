@@ -1,13 +1,33 @@
 <template>
     <ControlPanelComp />
-    <v-container class="d-flex flex-column justify-center">
-        <TranslateComp />
-        <TranslateLookupComp />
-        <TranslateExamples />
-        <PronouncingComp 
-            v-if="pronounceStore.isActive" 
-            :key=pronounceStore.newTranslationTrigger /> 
-        <!-- // key is a way to rerender comp if new word was pased -->
+
+    <v-container>
+            <v-row>
+
+                <v-col>
+                    <v-sheet>
+                            <TranslateComp />
+                    </v-sheet>
+                    
+                    <v-sheet>
+                            <TranslateExamples />
+                    </v-sheet>
+                </v-col>
+
+                <v-col>
+                        <v-sheet>
+                            <PronouncingComp 
+                            v-if="pronounceStore.isActive" 
+                            :key=pronounceStore.newTranslationTrigger /> 
+                            <!-- // key is a way to rerender comp if new word was pased -->        
+                        </v-sheet>
+
+                        <v-sheet>
+                            <TranslateLookupComp />
+                        </v-sheet>
+                </v-col>
+
+            </v-row>
     </v-container>
 </template>
 

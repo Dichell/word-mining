@@ -1,7 +1,7 @@
 <template>
     <v-container>
-        <TitleElement text="Translate"/>
-        <v-sheet>
+        <TitleElement text="Translation"/>
+        <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>
                     <tr>

@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <TitleElement text="Examples"/>
-        <v-container>
+        <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>
                     <tr v-for="{sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix} in translateStore.examplesTranslations">
@@ -20,7 +20,7 @@
                     </tr>
                 </tbody>
             </v-table>
-        </v-container> 
+        </v-sheet>
     </v-container>
 </template>
 

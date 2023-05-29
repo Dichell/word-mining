@@ -1,27 +1,35 @@
 <template>
     <v-container>
-        <v-sheet>Pronouncing</v-sheet> 
-            <v-row class="d-flex justify-start align-center">
-                <v-col cols="2" class="d-flex justify-start align-center">
-                    <v-sheet :class="pronounceStore.pronounceData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
-                        {{ sourceLang.name }}
-                    </v-sheet>
-                </v-col>
-                <v-col cols="1" class="d-flex justify-center align-center">
-                    <v-switch
-                        class="d-flex justify-center align-center"
-                        :false-value=sourceLang.value
-                        :true-value=targetLang.value
-                        v-model="pronounceStore.pronounceData.speakLanguageValue"
-                        @click="togglepronounceLang"
-                        ></v-switch>
-                </v-col>
-                <v-col cols="2" class="d-flex justify-end align-center">
-                    <v-sheet class="d-flex justify-end align-center" :class="pronounceStore.pronounceData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
-                        {{ targetLang.name }}
-                    </v-sheet>
-                
-                </v-col>
+        <TitleElement text="Pronouncing"/>
+        <v-sheet border rounded="lg" class="pa-3">
+
+            <v-row class="d-flex flex-row justify-end">
+                <v-sheet 
+                    class="d-flex flex-row justify-end align-center px-6" 
+                    rounded="xl"
+                    border
+                    width="fit-content"
+                    position='relative'
+                    :style="{right: '-2px', top: '-30px'}"
+                    >
+                        <div :class="pronounceStore.pronounceData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
+                            {{ sourceLang.short }}
+                        </div>
+                        <div class="px-2">
+                            <v-switch
+                                hide-details="auto"
+                                :false-value=sourceLang.value
+                                :true-value=targetLang.value
+                                color="white"
+                                v-model="pronounceStore.pronounceData.speakLanguageValue"
+                                @click="togglepronounceLang"
+                                ></v-switch>
+                        </div>
+                        <div :class="pronounceStore.pronounceData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
+                            {{ targetLang.short
+                            }}
+                        </div>
+                </v-sheet>
             </v-row>
 
         <a id="yg-widget-0" 
@@ -32,6 +40,7 @@
             data-auto-start="0" 
             data-bkg-color="theme_light"  
             rel="nofollow" href="https://www.youglish.com">Powered by youglish.com</a>
+        </v-sheet>
     </v-container>
 </template>
 
@@ -40,6 +49,8 @@ import { defineComponent } from "vue";
 // store
 import useTranslateStore from "@/store/translate";
 import usePronounceStore from "@/store/pronouncing";
+// components
+import TitleElement from '@/components/titles/TitleElement.vue'
 
 export default defineComponent({
     name: 'PronouncingComp',
@@ -48,6 +59,7 @@ export default defineComponent({
         const pronounceStore = usePronounceStore()
         return { translatelStore, pronounceStore }
     },
+    components: { TitleElement },
     methods: {
         togglepronounceLang(){
             this.pronounceStore.togglePronounceLang()
@@ -71,3 +83,11 @@ export default defineComponent({
     }
 })
 </script>
+
+<style>
+
+.ddd{
+    width: fit-content;
+}
+
+</style>

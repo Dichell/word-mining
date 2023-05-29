@@ -1,6 +1,6 @@
 <template>
 <v-container>
-    <v-row justify="center" >
+    <v-row justify="center">
         <v-col cols="5" md="4">
             <v-select
                 v-model=sourceLanguage

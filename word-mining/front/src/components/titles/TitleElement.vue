@@ -1,6 +1,5 @@
 <template>
-    <v-sheet class="pa-1 bg-primary" ></v-sheet> 
-    <v-sheet class="pa-2 bg-blue-lighten-5" >{{ text }}</v-sheet> 
+    <v-sheet class="text-overline pl-3">{{ text }}</v-sheet> 
 </template>
 
 <script lang="ts">
