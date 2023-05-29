@@ -57,17 +57,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import useGeneralState from '@/store/general'
 
 export default defineComponent({
     name: 'Appbar',
     data() {
-        return {
-            menu: [
-                {name: 'Dictionary', path: 'dictionary', icon: "mdi-book-open-variant"}, 
-                {name: 'Translate History', path:'translate-history', icon: "mdi-history"}, 
-                {name: 'Exercices', path: 'exercices', icon: "mdi-trophy-outline"}, 
-                {name: 'Progress', path: 'progress', icon: "mdi-chart-areaspline"}
-            ]
+        const generalState = useGeneralState()
+        return { generalState }
+    },
+    computed: {
+        menu(){
+            return this.generalState.menu
         }
     }
 })

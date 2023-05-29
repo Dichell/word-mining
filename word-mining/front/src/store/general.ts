@@ -5,7 +5,13 @@ export default defineStore('General', {
         token: "",
         isAuth: false,
         userEmail: "",
-        isLoading: false
+        isLoading: false,
+        menu: [
+            {name: 'Dictionary', path: 'dictionary', icon: "mdi-book-open-variant"}, 
+            {name: 'Translate History', path:'translate-history', icon: "mdi-history"}, 
+            {name: 'Exercices', path: 'exercices', icon: "mdi-trophy-outline"}, 
+            {name: 'Progress', path: 'progress', icon: "mdi-chart-areaspline"}
+        ]
     }),
     getters: {},
     actions: {}
