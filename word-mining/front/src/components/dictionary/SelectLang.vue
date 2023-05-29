@@ -1,34 +1,28 @@
 <template>
 <v-container>
-    <v-row justify="center">
-        <v-col cols="5" md="4">
+    <v-row class="pt-4">
             <v-select
                 v-model=sourceLanguage
                 :items=sourceLanguages
                 item-title="name"
                 label="from"
                 return-object
+                hide-details="auto"
                 @update:model-value="setSourceLang"
             ></v-select>
-        </v-col>
-        <v-col cols="2"  md="2" class="d-flex justify-center">
             <v-btn height="55px" @click="replaceLangs">
                 <v-icon color="primary" size="large">mdi-arrow-u-left-bottom</v-icon>
             </v-btn>
-        </v-col>
-        <v-col cols="5" md="4">
             <v-select
                 v-model=targetLanguage
                 :items=targetLanguages
                 item-title="name"
                 label="to"
                 return-object
+                hide-details="auto"
                 @update:model-value="setTargetLang"
             ></v-select>
-        </v-col>
-        <v-col md="2" class="d-none d-md-block">
-            <BtnSearchWord />
-        </v-col>
+            <BtnSearchWord md="2" class="d-none d-md-block mx-7"/>
     </v-row>
 </v-container>
 </template>
