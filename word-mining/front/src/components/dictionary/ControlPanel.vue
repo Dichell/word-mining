@@ -1,13 +1,13 @@
 <template>
     <v-container>
         <v-row no-gutters class="d-flex flex-row ">
-            <v-col class="order-md-2" cols="12" md="5">
+            <v-col class="order-md-2" cols="12" md="3">
                 <InputForm />
             </v-col>
             <v-col class="order-md-1" cols="3" md="2">
                 <ControlInstruments />
             </v-col>
-            <v-col class="order-md-4" cols="9" md="5">
+            <v-col class="order-md-4" cols="9" md="7">
                 <SelectLang />
             </v-col>
         </v-row>

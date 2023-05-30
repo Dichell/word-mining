@@ -7,7 +7,8 @@
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"
-                
+                rounded="lg"
+                variant="outlined"
                 v-model=translateStore.textInput
                 >
                 <template v-slot:append>

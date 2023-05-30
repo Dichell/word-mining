@@ -1,16 +1,24 @@
 <template>
 <v-container>
-    <v-row class="pt-4">
+    <v-row no-gutters class="d-flex align-center">
             <v-select
                 v-model=sourceLanguage
                 :items=sourceLanguages
                 item-title="name"
                 label="from"
-                return-object
+                variant="outlined"
                 hide-details="auto"
+                rounded="s-xl"
+                return-object
                 @update:model-value="setSourceLang"
             ></v-select>
-            <v-btn height="55px" @click="replaceLangs">
+            <v-btn 
+                class="mt-1"
+                height="48px" 
+                variant="tonal"
+                rounded="0"
+                @click="replaceLangs"   
+                >
                 <v-icon color="primary" size="large">mdi-arrow-u-left-bottom</v-icon>
             </v-btn>
             <v-select
@@ -18,8 +26,10 @@
                 :items=targetLanguages
                 item-title="name"
                 label="to"
-                return-object
+                variant="outlined"
                 hide-details="auto"
+                rounded="e-xl"
+                return-object
                 @update:model-value="setTargetLang"
             ></v-select>
             <BtnSearchWord md="2" class="d-none d-md-block mx-7"/>

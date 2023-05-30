@@ -22,7 +22,7 @@ class TranslationsController {
                 return res.status(200).json({data: response, status: "ok", message: ""})
             }
             catch(e){
-                console.warn("'translateText' - error: ", e)
+                console.warn("'translateText' - error")
                 return res.status(400).json({status: "error", message:"translate no received"})
             }
     }
@@ -44,7 +44,7 @@ class TranslationsController {
                 return res.status(200).json({data: response.data[0].translations, status: "ok", message: ""})
             }
             catch(e){
-                console.warn("'translateAlternative' - error: ", e)
+                console.warn("'translateAlternative' - error")
                 return res.status(400).json({status: "error", message:"translate no received"})
             }
     }
@@ -67,7 +67,7 @@ class TranslationsController {
                 return res.status(200).json({data: response.data[0].examples, status: "ok", message: ""})
             }
             catch(e){
-                console.warn("'translateExamples' - error: ", e)
+                console.warn("'translateExamples' - error")
                 return res.status(400).json({status: "error", message:"translate no received"})
             }
     }

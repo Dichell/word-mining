@@ -1,5 +1,5 @@
 <template>
-    <BtnQuad @event="sendToStore" icon='mdi-magnify' height="56"/>
+    <BtnQuad @event="sendToStore" icon='mdi-magnify' :height=56 />
 </template>
 
 <script lang="ts">
