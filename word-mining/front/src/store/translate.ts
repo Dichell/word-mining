@@ -19,7 +19,8 @@ export default defineStore('Translate', {
         textInput: "",
         translateObject: { sourceText:"", fromLangKey: 0, toLangKey: 1, translatedText: "" },
         alternativeTranslations: [],
-        examplesTranslations: []
+        examplesTranslations: [],
+        translateHistory: []
     }),
     getters: {
         getSourceLang(): Ilanguages {
@@ -76,6 +77,24 @@ export default defineStore('Translate', {
             this.refillAlternativeTranslations()
             this.refillExamples()
             this.loading = false
+
+                // history translations
+                let lsCurrentHistory = localStorage.getItem('translationsHistory')
+                let result = []
+                let count = 0
+                if(lsCurrentHistory){
+                    result = JSON.parse(lsCurrentHistory)
+                }
+                result.forEach((el:ITranslateObject)  => {
+                    if (el.sourceText == this.translateObject.sourceText){
+                        count++
+                    }
+                });
+                if(count < 1){
+                    result.push(this.translateObject)
+                    this.translateHistory = result
+                    localStorage.setItem('translationsHistory', JSON.stringify(result))
+                }
         },
 // ALTERNATIVE TRANSLATIONS
         async refillAlternativeTranslations(){
@@ -132,6 +151,16 @@ export default defineStore('Translate', {
             if(lsExamplesTranslations){
                 this.examplesTranslations = lsExamplesTranslations
             }
+
+
+    let lsCurrentHistory = localStorage.getItem('translationsHistory')
+    let result = []
+    if(lsCurrentHistory){
+        result = JSON.parse(lsCurrentHistory)
+    }
+    this.translateHistory = result
+
+
         }
         
     }

@@ -12,7 +12,7 @@
                 v-model=translateStore.textInput
                 >
                 <template v-slot:append>
-                    <v-sheet class="d-md-none">
+                    <v-sheet >
                         <BtnSearchWord />
                     </v-sheet>
                 </template>

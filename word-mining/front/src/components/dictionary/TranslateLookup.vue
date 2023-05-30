@@ -1,18 +1,18 @@
 <template>
     <v-container>
-        <TitleElement text="Alternative translations"/>
+        <TitleElement text="Translation"/>
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>
                     <tr v-for="{displayTarget, posTag, backTranslations} in alternativeDataToText">
                         <td>
-                            <b><v-btn 
-                                    density="compact" 
-                                    variant="text" 
-                                    @click="pronounceThis(displayTarget, translateStore.getTargetLang.value)"
-                                    @dblclick="translateThis(displayTarget, translateStore.getTargetLang.key, translateStore.getSourceLang.key)"
-                                    >{{ displayTarget }}
-                                </v-btn></b>
+                            <v-btn 
+                                density="compact" 
+                                variant="text" 
+                                @click="pronounceThis(displayTarget, translateStore.getTargetLang.value)"
+                                @dblclick="translateThis(displayTarget, translateStore.getTargetLang.key, translateStore.getSourceLang.key)"
+                                ><b>{{ displayTarget }}</b>
+                            </v-btn>
                         </td>
                         <td>
                             <i :style="{fontSize: 'x-small'}">{{ posTag }}</i>
@@ -29,6 +29,9 @@
                     </tr>
                 </tbody>
                 <v-tooltip activator="parent" location="top" open-delay="2000"><u>Click:</u> pronounce selected. <u>Double click:</u> translate selected</v-tooltip>
+                <v-sheet v-if="alternativeDataToText.length < 1">
+                    <i>No variants</i>
+                </v-sheet>
             </v-table>
         </v-sheet> 
     </v-container>

@@ -1,6 +1,11 @@
 <template>
     <v-container>
-        <TitleElement text="Pronouncing"/>
+        <TitleElement text="Pronouncing" />
+        <!-- <v-btn
+            width="fit-content"
+            position='relative'
+            :style="{right: '-2px', top: '-30px'}"
+            >on-off</v-btn> -->
         <v-sheet border rounded="lg" class="pa-3">
 
             <v-row class="d-flex flex-row justify-end">
@@ -37,9 +42,9 @@
             :data-query=pronounceStore.pronounceData.text
             :data-lang=pronounceStore.pronounceData.speakLanguageValue 
             data-components="8412" 
-            data-auto-start="0" 
+            data-auto-start="1" 
             data-bkg-color="theme_light"  
-            rel="nofollow" href="https://www.youglish.com">Powered by youglish.com</a>
+            rel="nofollow"></a>
         </v-sheet>
     </v-container>
 </template>

@@ -13,8 +13,7 @@
                 @update:model-value="setSourceLang"
             ></v-select>
             <v-btn 
-                class="mt-1"
-                height="48px" 
+                height="50px" 
                 variant="tonal"
                 rounded="0"
                 @click="replaceLangs"   
@@ -32,7 +31,7 @@
                 return-object
                 @update:model-value="setTargetLang"
             ></v-select>
-            <BtnSearchWord md="2" class="d-none d-md-block mx-7"/>
+            <!-- <BtnSearchWord md="2" class="d-none d-md-block mx-7"/> -->
     </v-row>
 </v-container>
 </template>

@@ -30,7 +30,8 @@ export interface ITranslateStore extends BaseStore {
     textInput: string,
     translateObject: ITranslateObject,
     alternativeTranslations: IAlternativeTranslations[],
-    examplesTranslations: IExamplesTranslations[]
+    examplesTranslations: IExamplesTranslations[],
+    translateHistory: ITranslateObject[]
 }
 
 export interface Ilanguages {

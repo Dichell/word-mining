@@ -18,6 +18,9 @@
                             </v-sheet>
                         </td>
                     </tr>
+                    <v-sheet v-if="translateStore.examplesTranslations.length < 1">
+                        <i>No examples</i>
+                    </v-sheet>
                 </tbody>
             </v-table>
         </v-sheet>

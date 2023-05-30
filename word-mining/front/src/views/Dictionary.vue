@@ -1,18 +1,18 @@
 <template>
     <ControlPanelComp />
-
+    <TranslattionHistory />
     <v-container>
         <v-row>
             <v-col>
-                <TranslateComp />
+                <TranslateLookupComp />
                 <TranslateExamples />
             </v-col>
             <v-col>
+                <!-- <TranslateComp /> -->
                 <PronouncingComp 
                 v-if="pronounceStore.isActive" 
                 :key=pronounceStore.newTranslationTrigger /> 
-                <!-- // key is a way to rerender comp if new word was pased -->        
-                <TranslateLookupComp />
+                <!-- // key is a way to rerender comp if new word was pased -->  
             </v-col>
         </v-row>
     </v-container>
@@ -22,6 +22,7 @@
 import { defineComponent } from "vue";
 // components
 import ControlPanelComp from '@/components/dictionary/ControlPanel.vue'
+import TranslattionHistory from '@/components/dictionary/TranslattionHistory.vue'
 import TranslateComp from '@/components/dictionary/Translate.vue'
 import TranslateLookupComp from '@/components/dictionary/TranslateLookup.vue'
 import TranslateExamples from '@/components/dictionary/TranslateExamples.vue'
@@ -31,7 +32,7 @@ import usePronounceStore from "@/store/pronouncing";
 
 export default defineComponent({
     name: 'Dictionary',
-    components: { ControlPanelComp, TranslateComp, TranslateLookupComp, TranslateExamples, PronouncingComp },
+    components: { ControlPanelComp, TranslattionHistory, TranslateComp, TranslateLookupComp, TranslateExamples, PronouncingComp },
     data() {
         const pronounceStore = usePronounceStore() 
         return { pronounceStore }

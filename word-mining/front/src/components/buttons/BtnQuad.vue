@@ -5,6 +5,7 @@
         color="primary"
         :rounded=rounded
         @click="$emit('event')"
+        v-on:keypress.ctrl.10.13.native="$emit('event')"
         >
             <v-icon color="white" :icon="icon"></v-icon>
             <v-tooltip
