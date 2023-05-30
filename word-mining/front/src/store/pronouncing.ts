@@ -10,7 +10,8 @@ export default defineStore('Pronouncing', {
         isActive: true,
         loading: false,
         pronounceData: {text: "", speakLanguageValue: ""},
-        newTranslationTrigger: 0
+        newTranslationTrigger: 0,
+        autoPlay: 0
     }),
     getters: {
         getFromTranslateStore() {
@@ -53,6 +54,7 @@ export default defineStore('Pronouncing', {
                 localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
             }
             localStorageMethods.setItem(LocalStorageKeys.PronouncingIsActive, this.isActive.toString())
+            this.newTranslationTrigger++
         },
         triggerRefresh(){
             setTimeout(()=>{
@@ -69,8 +71,6 @@ export default defineStore('Pronouncing', {
                 this.pronounceData.speakLanguageValue = this.getFromTranslateStore.getSourceLang.value
                 localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
             }
-        },
-        mountPronouncingIsActive(): void {
             const isActive = localStorageMethods.getAndToBoolean(LocalStorageKeys.PronouncingIsActive)
             if(isActive != null){this.isActive = isActive}
         }

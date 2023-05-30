@@ -1,21 +1,27 @@
 <template>
     <v-container>
-        <TitleElement text="Pronouncing" />
-        <!-- <v-btn
-            width="fit-content"
-            position='relative'
-            :style="{right: '-2px', top: '-30px'}"
-            >on-off</v-btn> -->
-        <v-sheet border rounded="lg" class="pa-3">
+        <TitleElement text="Pronouncing" @event="tooglePronounceIsActive"/>    
 
-            <v-row class="d-flex flex-row justify-end">
+        <v-sheet 
+            v-if="pronounceStore.isActive" 
+            border rounded="lg" class="pa-3">
+            <a id="yg-widget-0" 
+                class="youglish-widget" 
+                :data-query=pronounceStore.pronounceData.text
+                :data-lang=pronounceStore.pronounceData.speakLanguageValue 
+                data-components="8412" 
+                :data-auto-start=pronounceStore.autoPlay
+                data-bkg-color="theme_light"  
+                rel="nofollow"></a>
+
+                <v-row class="d-flex flex-row justify-start">
                 <v-sheet 
-                    class="d-flex flex-row justify-end align-center px-6" 
-                    rounded="xl"
+                    class="d-flex flex-row justify-center align-center px-6" 
+                    rounded="bs-lg"
                     border
                     width="fit-content"
                     position='relative'
-                    :style="{right: '-2px', top: '-30px'}"
+                    :style="{left:'-1px', bottom: '-1px'}"
                     >
                         <div :class="pronounceStore.pronounceData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
                             {{ sourceLang.short }}
@@ -25,7 +31,6 @@
                                 hide-details="auto"
                                 :false-value=sourceLang.value
                                 :true-value=targetLang.value
-                                color="white"
                                 v-model="pronounceStore.pronounceData.speakLanguageValue"
                                 @click="togglepronounceLang"
                                 ></v-switch>
@@ -34,17 +39,22 @@
                             {{ targetLang.short
                             }}
                         </div>
+                        <div class="mx-8">
+                            |
+                        </div>
+                        <div :class="pronounceStore.autoPlay == 1 ? 'font-weight-bold' : 'font-weight-regular'">
+                            autoplay
+                        </div>
+                        <div class="px-2">
+                            <v-switch
+                                hide-details="auto"
+                                :false-value=0
+                                :true-value=1
+                                v-model="pronounceStore.autoPlay"
+                                ></v-switch>
+                        </div>
                 </v-sheet>
             </v-row>
-
-        <a id="yg-widget-0" 
-            class="youglish-widget" 
-            :data-query=pronounceStore.pronounceData.text
-            :data-lang=pronounceStore.pronounceData.speakLanguageValue 
-            data-components="8412" 
-            data-auto-start="1" 
-            data-bkg-color="theme_light"  
-            rel="nofollow"></a>
         </v-sheet>
     </v-container>
 </template>
@@ -66,6 +76,9 @@ export default defineComponent({
     },
     components: { TitleElement },
     methods: {
+        tooglePronounceIsActive(): void {
+            this.pronounceStore.togglePronouncing()
+        },
         togglepronounceLang(){
             this.pronounceStore.togglePronounceLang()
         }

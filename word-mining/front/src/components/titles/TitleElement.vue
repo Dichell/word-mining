@@ -1,5 +1,9 @@
 <template>
-    <v-sheet class="text-overline pl-3">{{ text }}</v-sheet> 
+    <v-btn
+        variant="text" 
+        class="text-overline pl-3"
+        @click="$emit('event')"
+        >{{ text }}</v-btn>
 </template>
 
 <script lang="ts">
@@ -10,7 +14,8 @@ export default defineComponent({
     name: 'TitleElement',
     props: {
         text: string().def("").isRequired,
-    }
+    },
+    emits:['event']
 })
 </script>
 

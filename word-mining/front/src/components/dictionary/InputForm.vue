@@ -3,7 +3,6 @@
     <v-row>
         <v-col>
             <v-text-field
-                :reverse="reverseText.value == 'hebrew' ? true : false"
                 clearable
                 bg-color="blue-lighten-5"
                 type="text"

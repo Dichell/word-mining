@@ -1,27 +1,8 @@
 <template>
     <v-container>
-        <v-row class="d-flex flex-row align-center">
-<!-- 
-            <v-btn 
-                icon="mdi-delete-forever-outline" 
-                density="compact" 
-                variant="outlined"
-                @click="clearHistory">
-                    <v-tooltip activator="parent" location="bottom"
-                    >clear history</v-tooltip>
-            </v-btn> -->
-            Last words:
-            <v-chip
-                class="ma-1"
-                v-for="{sourceText, fromLangKey, toLangKey, translatedText} in translateStore.translateHistory"
-                @click="translateThis(sourceText, fromLangKey, toLangKey)"
-                >
-                {{ sourceText }}
-                <v-tooltip activator="parent" location="bottom"
-                >{{translatedText}}</v-tooltip>
-                </v-chip>
-            
-            <v-tooltip text="clear history" location="bottom">
+        <v-row>
+            <!-- <v-col>
+                <v-tooltip text="clear history" location="bottom">
                 <template v-slot:activator="{ props }">
                     <v-btn 
                         v-bind="props"
@@ -32,6 +13,25 @@
                         @click="clearHistory"></v-btn>
                 </template>
             </v-tooltip>
+            Last word:
+            </v-col> -->
+            <v-col>
+                <v-row class="d-flex flex-row-reverse align-start">
+                    <div style="overflow-x:auto; white-space: nowrap;">
+                        <v-chip
+                            class="mx-1 mb-3"
+                            v-for="{sourceText, fromLangKey, toLangKey, translatedText} in translateStore.translateHistory"
+                            @click="translateThis(sourceText, fromLangKey, toLangKey)"
+                            >{{ sourceText }}
+                                <v-tooltip activator="parent" location="bottom">
+                                    {{translatedText}}
+                                </v-tooltip>
+                        </v-chip>
+                    </div>
+                </v-row>
+                    <div style="position: relative; float: right; top: -34px; right: -14px; height: 35px; width: 70px; background-image: linear-gradient(to left, white, transparent)"></div>
+                    <div style="position: relative; top: -34px; left: -14px; height: 35px; width: 70px; background-image: linear-gradient(to right, white, transparent)"></div>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -39,12 +39,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useTranslateStore from '@/store/translate'
+import usePronouncingStore from '@/store/pronouncing'
 
 export default defineComponent({
     name: 'TranslattionHistoryComp',
     data() {
         const translateStore = useTranslateStore()
-        return { translateStore }
+        const pronouncingStore = usePronouncingStore()
+        return { translateStore, pronouncingStore }
     },
     methods: {
         clearHistory(){
@@ -56,6 +58,7 @@ export default defineComponent({
             this.translateStore.updateTranslateObject("toLangKey", langTo)
             this.translateStore.translate()
             this.translateStore.textInput = word
+            this.pronouncingStore.triggerRefresh()
         }}
 })
 </script>

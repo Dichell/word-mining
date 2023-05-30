@@ -10,7 +10,6 @@
             <v-col>
                 <!-- <TranslateComp /> -->
                 <PronouncingComp 
-                v-if="pronounceStore.isActive" 
                 :key=pronounceStore.newTranslationTrigger /> 
                 <!-- // key is a way to rerender comp if new word was pased -->  
             </v-col>

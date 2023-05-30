@@ -105,9 +105,9 @@ export default defineComponent({
             return this.pronounceStore.isActive
         }
     },
-    mounted() {
-        this.pronounceStore.mountPronouncingIsActive()
-    }
+    // mounted() {
+    //     this.pronounceStore.mountPronouncingIsActive()
+    // }
 })
 
 //TODO create Switcher components
