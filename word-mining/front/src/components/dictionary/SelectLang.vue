@@ -1,6 +1,6 @@
 <template>
 <v-container>
-    <v-row no-gutters class="d-flex align-center">
+    <v-row no-gutters class="d-flex align-center mt-1">
             <v-select
                 v-model=sourceLanguage
                 :items=sourceLanguages

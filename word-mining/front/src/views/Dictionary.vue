@@ -1,19 +1,16 @@
 <template>
-    <ControlPanelComp />
-    <TranslattionHistory />
     <v-container>
+        <TranslattionHistory />
         <v-row>
-            <v-col>
-                <TranslateLookupComp />
-                <TranslateExamples />
+            <v-col cols="6">
+                <ControlPanelComp />
+                <PronouncingComp :key=pronounceStore.newTranslationTrigger /> 
             </v-col>
-            <v-col>
-                <!-- <TranslateComp /> -->
-                <PronouncingComp 
-                :key=pronounceStore.newTranslationTrigger /> 
-                <!-- // key is a way to rerender comp if new word was pased -->  
+            <v-col cols="6">
+                <TranslateLookupComp />
             </v-col>
         </v-row>
+        <TranslateExamples />
     </v-container>
 </template>
 
