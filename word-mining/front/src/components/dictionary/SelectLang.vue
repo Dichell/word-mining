@@ -1,5 +1,4 @@
 <template>
-<v-container>
     <v-row no-gutters class="d-flex align-center mt-1">
             <v-select
                 v-model=sourceLanguage
@@ -33,7 +32,6 @@
             ></v-select>
             <!-- <BtnSearchWord md="2" class="d-none d-md-block mx-7"/> -->
     </v-row>
-</v-container>
 </template>
 
 <script lang="ts">

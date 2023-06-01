@@ -42,8 +42,6 @@ export default defineStore('Pronouncing', {
                 this.refillPronDataFromTranslateSource()
             }
             localStorageMethods.setItem(LocalStorageKeys.PronounceData, this.pronounceData)
-            this.getFromTranslateStore.refillAlternativeTranslations()
-            this.getFromTranslateStore.refillExamples()
             this.triggerRefresh()
         },
         togglePronouncing(): void {

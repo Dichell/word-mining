@@ -1,22 +1,23 @@
 <template>
-    <v-container>
-        <v-row>
-            <!-- <v-col>
+    <v-container v-if="translateStore.translateHistory.length > 0" style="position: relative; top: -20px;">
+        <v-row align="center">
+            <v-col style="max-width: fit-content;">
                 <v-tooltip text="clear history" location="bottom">
-                <template v-slot:activator="{ props }">
-                    <v-btn 
-                        v-bind="props"
-                        size="small"
-                        icon="mdi-close" 
-                        density="compact" 
-                        variant="outlined"
-                        @click="clearHistory"></v-btn>
-                </template>
-            </v-tooltip>
-            Last word:
-            </v-col> -->
+                    <template v-slot:activator="{ props }">
+                        <v-btn 
+                            v-bind="props"
+                            size="small"
+                            icon="mdi-close" 
+                            density="compact" 
+                            variant="text"
+                            color="red"
+                            @click="clearHistory"></v-btn>
+                    </template>
+                </v-tooltip>
+                Last words:
+            </v-col>
             <v-col>
-                <v-row class="d-flex flex-row-reverse align-start">
+                <v-row class="d-flex flex-row-reverse justify-end align-center">
                     <div style="overflow-x:auto; white-space: nowrap;">
                         <v-chip
                             class="mx-1 mb-3"
@@ -29,8 +30,9 @@
                         </v-chip>
                     </div>
                 </v-row>
-                    <div style="position: relative; float: right; top: -34px; right: -14px; height: 35px; width: 70px; background-image: linear-gradient(to left, white, transparent)"></div>
-                    <div style="position: relative; top: -34px; left: -14px; height: 35px; width: 70px; background-image: linear-gradient(to right, white, transparent)"></div>
+<!--clouds-->   
+                    <!-- <div style="position: relative; float: right; top: -34px; right: -14px; height: 35px; width: 70px; background-image: linear-gradient(to left, white, transparent)"></div>
+                    <div style="position: relative; top: -34px; left: -14px; height: 35px; width: 70px; background-image: linear-gradient(to right, white, transparent)"></div> -->
             </v-col>
         </v-row>
     </v-container>

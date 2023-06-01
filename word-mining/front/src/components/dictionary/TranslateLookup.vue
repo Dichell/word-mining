@@ -1,5 +1,4 @@
 <template>
-    <v-container>
         <TitleElement text="Translation"/>
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
@@ -34,7 +33,6 @@
                 </v-sheet>
             </v-table>
         </v-sheet> 
-    </v-container>
 </template>
 
 <script lang="ts">

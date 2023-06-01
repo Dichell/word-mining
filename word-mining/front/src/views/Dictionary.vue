@@ -1,16 +1,31 @@
 <template>
     <v-container>
-        <TranslattionHistory />
         <v-row>
-            <v-col cols="6">
+            <v-col>
                 <ControlPanelComp />
-                <PronouncingComp :key=pronounceStore.newTranslationTrigger /> 
-            </v-col>
-            <v-col cols="6">
-                <TranslateLookupComp />
             </v-col>
         </v-row>
-        <TranslateExamples />
+        <v-row>
+            <v-col>
+                <TranslattionHistory />
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="12" lg="7">
+                <TranslateLookupComp />
+            </v-col>
+            <v-col cols="12" lg="5">
+                <PronouncingComp :key=pronounceStore.newTranslationTrigger /> 
+            </v-col>
+            <!-- <v-col cols="12" md="6">
+            </v-col> -->
+        </v-row>
+        <v-row>
+            <v-col>
+                <TranslateExamples cols="12" />
+            </v-col>
+        </v-row>
+        <v-row class="ma-2"></v-row>
     </v-container>
 </template>
 
@@ -28,7 +43,14 @@ import usePronounceStore from "@/store/pronouncing";
 
 export default defineComponent({
     name: 'Dictionary',
-    components: { ControlPanelComp, TranslattionHistory, TranslateComp, TranslateLookupComp, TranslateExamples, PronouncingComp },
+    components: { 
+        ControlPanelComp, 
+        TranslattionHistory, 
+        TranslateComp, 
+        TranslateLookupComp, 
+        TranslateExamples, 
+        PronouncingComp 
+    },
     data() {
         const pronounceStore = usePronounceStore() 
         return { pronounceStore }

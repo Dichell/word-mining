@@ -1,5 +1,4 @@
 <template>
-    <v-container>
         <TitleElement text="Examples"/>
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
@@ -24,7 +23,6 @@
                 </tbody>
             </v-table>
         </v-sheet>
-    </v-container>
 </template>
 
 <script lang="ts">

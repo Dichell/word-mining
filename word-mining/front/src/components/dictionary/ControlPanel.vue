@@ -1,14 +1,12 @@
 <template>
-    <v-container>
-        <!-- <v-row no-gutters class="d-flex flex-row ">
-            <v-col cols="12" md="6"> -->
-                <SelectLang />
-                <InputForm />
-            <!-- </v-col>
+        <v-row no-gutters class="d-flex flex-row ">
             <v-col cols="12" md="6">
+                <InputForm />
             </v-col>
-        </v-row> -->
-    </v-container>
+            <v-col cols="12" md="6">
+                <SelectLang />
+            </v-col>
+        </v-row>
 </template>
 
 <script lang="ts">
