@@ -3,6 +3,12 @@
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>
+                    <tr v-if="alternativeDataToText.length < 1">
+                        <td>
+                                <b>{{translateStore.translateObject.translatedText}}</b>
+                        </td>
+                    </tr>
+
                     <tr v-for="{displayTarget, posTag, backTranslations} in alternativeDataToText">
                         <td>
                             <v-btn 

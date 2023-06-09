@@ -5,7 +5,8 @@ export enum LocalStorageKeys {
     PronounceData = "PronounceData",
     TranslateStore = "TranslateStore",
     AlternativeTranslations = "AlternativeTranslations",
-    ExamplesTranslations = "ExamplesTranslations"
+    ExamplesTranslations = "ExamplesTranslations",
+    TranslationsHistory = "translationsHistory"
 }
 
 export enum ErrorMessage {

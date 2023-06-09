@@ -91,9 +91,9 @@ export default defineStore('Translate', {
                     }
                 });
                 if(count < 1){
-                    result.push(this.translateObject)
+                    result.unshift(this.translateObject)
                     this.translateHistory = result
-                    localStorage.setItem('translationsHistory', JSON.stringify(result))
+                    localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, result)
                 }
         },
 // ALTERNATIVE TRANSLATIONS
@@ -135,6 +135,11 @@ export default defineStore('Translate', {
             }
             localStorageMethods.setItem(LocalStorageKeys.ExamplesTranslations, this.examplesTranslations)
             this.loadingExamples = false
+        },
+// HISTORY TRANSLATES
+        deleteOneFromHistory(i: number) {
+            this.translateHistory.splice(i, 1)
+            localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, this.translateHistory)
         },
 // MOUNTING
         mountBaseTranslateSettings(): void {

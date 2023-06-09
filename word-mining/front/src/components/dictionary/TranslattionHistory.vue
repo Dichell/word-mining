@@ -17,16 +17,20 @@
                 Last words:
             </v-col>
             <v-col>
-                <v-row class="d-flex flex-row-reverse justify-end align-center">
+                <v-row class="d-flex flex-row justify-start align-center">
                     <div style="overflow-x:auto; white-space: nowrap;">
                         <v-chip
+                            closable
+                            close-icon="mdi-close"
                             class="mx-1 mb-3"
-                            v-for="{sourceText, fromLangKey, toLangKey, translatedText} in translateStore.translateHistory"
+                            v-for="({sourceText, fromLangKey, toLangKey, translatedText}, index) in translateStore.translateHistory"
                             @click="translateThis(sourceText, fromLangKey, toLangKey)"
+                            @click:close="deleteChip(index)"
                             >{{ sourceText }}
                                 <v-tooltip activator="parent" location="bottom">
                                     {{translatedText}}
                                 </v-tooltip>
+                                
                         </v-chip>
                     </div>
                 </v-row>
@@ -61,7 +65,11 @@ export default defineComponent({
             this.translateStore.translate()
             this.translateStore.textInput = word
             this.pronouncingStore.triggerRefresh()
-        }}
+        },
+        deleteChip(i: number){
+            this.translateStore.deleteOneFromHistory(i)
+        }
+    }
 })
 </script>
 
