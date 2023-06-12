@@ -17,22 +17,27 @@ export default defineStore('Translate', {
             { key: 2, name: "Russian",  value: "russian", short:"ru", helloWord: "привет" },
         ],
         textInput: "",
-        translateObject: { sourceText:"", fromLangKey: 0, toLangKey: 1, translatedText: "" },
+        translateObject: { 
+            sourceText:"", 
+            fromLangKey: 0, 
+            toLangKey: 1, 
+            translatedText: "" 
+        },
         alternativeTranslations: [],
         examplesTranslations: [],
         translateHistory: [],
         translateExplanation: ''
     }),
     getters: {
-        getSourceLang(): Ilanguages {
-            return this.languages[this.translateObject.fromLangKey]
-        },
-        getTargetLang(): Ilanguages {
-            return this.languages[this.translateObject.toLangKey]
-        },
-        getAlternativeSreings(){
+        getTranslateObject: (state): ITranslateObject => state.translateObject,
+        getSourceLang: (state): Ilanguages => state.languages[state.translateObject.fromLangKey],
+        getTargetLang: (state): Ilanguages => state.languages[state.translateObject.toLangKey],
+        getExplain: (state): string => state.translateExplanation,
+        getExample: (state) => state.examplesTranslations,
+        getHistory: (state) => state.translateHistory,
+        getAlternativeSreings: (state) => {
             const altTexts: IAltText[] = []
-            this.alternativeTranslations.forEach((a) => {
+            state.alternativeTranslations.forEach((a) => {
                 if(a.displayTarget && a.backTranslations){
                     let itemText: string = a.displayTarget
                     let itemTrans: string = ""
@@ -45,8 +50,7 @@ export default defineStore('Translate', {
                 }
             })
             return altTexts
-        },
-        getExplain: (state) => { return state.translateExplanation }
+        }
     },
     actions: {
 // TRANSLATING

@@ -6,27 +6,30 @@
         </v-tooltip>
 
         <v-sheet 
-            v-if="pronounceStore.isActive" 
+            v-if="pronounceStore.getActive" 
             border rounded="lg" class="pa-3">
 
+
+            <!-- pronouncing external wiidget //TODO change to API methods -->
             <a id="yg-widget-0" 
                 class="youglish-widget" 
-                :data-query=pronounceStore.pronounceData.text
-                :data-lang=pronounceStore.pronounceData.speakLanguageValue 
+                :data-query=pronounceStore.getData.text
+                :data-lang=pronounceStore.getData.speakLanguageValue 
                 data-components="8412" 
-                :data-auto-start=pronounceStore.autoPlay
+                :data-auto-start=pronounceStore.getAutoPlay
                 data-bkg-color="theme_light"  
                 rel="nofollow"></a>
+            <!-- pronouncing external wiidget -->
+
 
             <v-row class="d-flex flex-row justify-start">
                 <v-sheet 
                     class="d-flex flex-row justify-space-around align-center px-6" 
                     rounded="lg"
-                    
                     style="position: relative;left: 0px; bottom: 0px; width: 100%;"
                     >
                         <div class="d-flex flex-row align-center">
-                            <div :class="pronounceStore.pronounceData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="pronounceStore.getData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
                                 {{ sourceLang.short }}
                             </div>
                             <div class="px-2">
@@ -34,18 +37,18 @@
                                     hide-details="auto"
                                     :false-value=sourceLang.value
                                     :true-value=targetLang.value
-                                    v-model="pronounceStore.pronounceData.speakLanguageValue"
+                                    v-model="pronounceStore.getData.speakLanguageValue"
                                     @click="togglepronounceLang"
                                     ></v-switch>
                             </div>
-                            <div :class="pronounceStore.pronounceData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="pronounceStore.getData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
                                 {{ targetLang.short
                                 }}
                             </div>
                         </div>
 
                         <div class="d-flex flex-row align-center">
-                            <div :class="pronounceStore.autoPlay == 1 ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="pronounceStore.getAutoPlay == 1 ? 'font-weight-bold' : 'font-weight-regular'">
                                 autoplay
                             </div>
                             
@@ -54,7 +57,8 @@
                                     hide-details="auto"
                                     :false-value=0
                                     :true-value=1
-                                    v-model="pronounceStore.autoPlay"
+                                    :value="pronounceStore.getAutoPlay"
+                                    @click="toggleAutoPlay"
                                     ></v-switch>
                             </div>
                         </div>
@@ -86,15 +90,14 @@ export default defineComponent({
         },
         togglepronounceLang(){
             this.pronounceStore.togglePronounceLang()
+        },
+        toggleAutoPlay(){
+            this.pronounceStore.toggleAutoPlay()
         }
     },
     computed: {
-        sourceLang(){
-            return this.translatelStore.getSourceLang
-        },
-        targetLang(){
-            return this.translatelStore.getTargetLang
-        }
+        sourceLang(){ return this.translatelStore.getSourceLang },
+        targetLang(){ return this.translatelStore.getTargetLang }
     },
     mounted() {
         this.pronounceStore.mountPronounceData()
@@ -106,11 +109,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style>
-
-.ddd{
-    width: fit-content;
-}
-
-</style>

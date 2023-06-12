@@ -32,11 +32,6 @@ export default defineComponent({
     data() {
         const translateStore = useTranslateStore()
         return { translateStore }
-    },
-    computed: {
-        reverseText(){
-            return this.translateStore.getSourceLang
-        }
     }
 })
 </script>

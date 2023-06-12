@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="translateStore.translateHistory.length > 0" style="position: relative; top: -20px;">
+    <v-container v-if="translateStore.getHistory.length > 0" style="position: relative; top: -20px;">
         <v-row align="center">
             <v-col style="max-width: fit-content;">
                 <v-tooltip text="clear history" location="bottom">
@@ -23,7 +23,7 @@
                             closable
                             close-icon="mdi-close"
                             class="mx-1 mb-3"
-                            v-for="({sourceText, fromLangKey, toLangKey, translatedText}, index) in translateStore.translateHistory"
+                            v-for="({sourceText, fromLangKey, toLangKey, translatedText}, index) in translateStore.getHistory"
                             @click="translateThis(sourceText, fromLangKey, toLangKey)"
                             @click:close="deleteChip(index)"
                             >{{ sourceText }}
@@ -64,6 +64,7 @@ export default defineComponent({
             this.translateStore.updateTranslateObject("toLangKey", langTo)
             this.translateStore.translate()
             this.translateStore.textInput = word
+            this.pronouncingStore.refillPronDataFromTranslateSource()
             this.pronouncingStore.triggerRefresh()
         },
         deleteChip(i: number){

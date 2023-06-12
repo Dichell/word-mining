@@ -3,7 +3,7 @@
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>
-                    <tr v-for="{sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix} in translateStore.examplesTranslations">
+                    <tr v-for="{sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix} in translateStore.getExample">
                         <td>
                             <v-sheet dir="auto">
                                 {{ sourcePrefix }} <b>{{ sourceTerm }}</b> {{ sourceSuffix }}
@@ -17,7 +17,7 @@
                             </v-sheet>
                         </td>
                     </tr>
-                    <v-sheet v-if="translateStore.examplesTranslations.length < 1">
+                    <v-sheet v-if="translateStore.getExample.length < 1">
                         <i>No examples</i>
                     </v-sheet>
                 </tbody>

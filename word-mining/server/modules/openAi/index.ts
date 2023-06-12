@@ -10,8 +10,6 @@ const openai = new OpenAIApi(configuration);
 
 enum chatModel {
     textDavinci003 = "text-davinci-003",
-    ada = 'ada',
-    gpt35Turbo = 'gpt-3.5-turbo',
     curie = 'curie'
 }
 
@@ -21,17 +19,15 @@ interface rqConst {
 }
 
 const requestConstructor: rqConst = {
-    english: 'Meaning of word ',
-    russian: 'Значение слова, транскрипция и написание во множественном числе '
+    english: 'Meaning, transcription and plural example of word ',
+    russian: 'Значение слова '
 }
 
 export const gptCompletion = async (dataText:{text: string, source: string, target: keyof rqConst} ): Promise<string> => {
 
     try{
         const reqPhrase = requestConstructor[dataText.target] ? requestConstructor[dataText.target] : requestConstructor['english']
-
         const request = reqPhrase + dataText.text
-
         console.log(`gptCompletion request; `, request)
 
         const answer = await openai.createCompletion({

@@ -11,13 +11,16 @@ export default defineStore('Pronouncing', {
         loading: false,
         pronounceData: {text: "", speakLanguageValue: ""},
         newTranslationTrigger: 0,
-        autoPlay: 0
+        autoPlay: 0   // 0 - no autoplay, 1 - yes
     }),
     getters: {
+        getActive: (state) => state.isActive,
+        getData: (state) => state.pronounceData,
+        getAutoPlay: (state) => state.autoPlay,
         getFromTranslateStore() {
             const translateStore = useTranslateStore()
             return translateStore
-        },
+        }
     },
     actions: {
         updatePronounceData(key: keyof IPronounceData, value: string){
@@ -53,6 +56,9 @@ export default defineStore('Pronouncing', {
             }
             localStorageMethods.setItem(LocalStorageKeys.PronouncingIsActive, this.isActive.toString())
             this.newTranslationTrigger++
+        },
+        toggleAutoPlay(){
+            this.autoPlay = this.autoPlay == 1 ? 0 : 1
         },
         triggerRefresh(){
             setTimeout(()=>{

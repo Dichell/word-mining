@@ -9,14 +9,14 @@
                             variant="text"
                             style="text-transform:uppercase; font-weight: bold; font-size: larger;"
                             >
-                            {{ translateStore.translateObject.translatedText }}
+                            {{ translateStore.getTranslateObject.translatedText }}
                         </v-sheet>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <v-card variant="text">
-                            {{ explanation }}
+                            {{ translateStore.getExplain }}
                         </v-card>
                     </td>
                 </tr>
@@ -30,17 +30,13 @@ import { defineComponent } from "vue";
 import useTranslateStore from '@/store/translate'
 import TitleElement from '@/components/titles/TitleElement.vue'
 
+
 export default defineComponent({
     name: 'Translate',
+    components: { TitleElement },
     data() {
         const translateStore = useTranslateStore()
         return { translateStore }
-    },
-    components: { TitleElement },
-    computed: {
-        explanation(){
-            return this.translateStore.getExplain
-        }
     }
 })
 </script>

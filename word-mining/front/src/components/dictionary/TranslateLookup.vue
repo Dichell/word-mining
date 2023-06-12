@@ -5,7 +5,7 @@
                 <tbody>
                     <tr v-if="alternativeDataToText.length < 1">
                         <td>
-                                <b>{{translateStore.translateObject.translatedText}}</b>
+                                <b>{{translateStore.getTranslateObject.translatedText}}</b>
                         </td>
                     </tr>
 
