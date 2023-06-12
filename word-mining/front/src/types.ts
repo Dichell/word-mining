@@ -32,7 +32,8 @@ export interface ITranslateStore extends BaseStore {
     translateObject: ITranslateObject,
     alternativeTranslations: IAlternativeTranslations[],
     examplesTranslations: IExamplesTranslations[],
-    translateHistory: ITranslateObject[]
+    translateHistory: ITranslateObject[],
+    translateExplanation: string
 }
 
 export interface Ilanguages {

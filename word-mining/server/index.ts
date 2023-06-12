@@ -10,6 +10,9 @@ app.use(express.json({ limit: 1024102420, type: "application/json" }))
 app.use(cors())
 
 app.post('/translate', TranslationsController.translateText)
+
+app.post('/translate-explanation', TranslationsController.translateExplanation)
+
 app.post('/translate-alternative', TranslationsController.translateAlternative)
 app.post('/translate-examples', TranslationsController.translateExamples)
 

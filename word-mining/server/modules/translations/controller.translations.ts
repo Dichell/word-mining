@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { translate, translateAlternative, translateExamples } from './microsoftTranslate';
+import {gptCompletion} from '../openAi/index'
 
 class TranslationsController {
 
@@ -72,7 +73,7 @@ class TranslationsController {
             }
     }
 
-    async 'translateHistory' (req: Request, res: Response) {
+    async translateHistory (req: Request, res: Response) {
         console.log(`'translateExamples' - starting (${req.body.textData.text}) ...`)
             try {
                 const dataText = {
@@ -94,6 +95,34 @@ class TranslationsController {
                 return res.status(400).json({status: "error", message:"translate no received"})
             }
     }
+
+    async translateExplanation (req: Request, res: Response) {
+        console.log(`'translateExplanation' - starting (${req.body.textData.text}) ...`)
+            try {
+                const dataText = {
+                    text: req.body.textData.text, 
+                    source: req.body.textData.sourceLang,
+                    target: req.body.textData.targetLang,
+                    translation: req.body.textData.translatedText
+                }
+                if(!dataText){
+                    console.log('"/translateExplanation" error: ', "Request data is empty")
+                    return res.status(400).json({status: "error", message:"Request data is empty"})
+                }
+                const response: string = await gptCompletion(dataText)
+                if(!response){
+
+                }
+                console.log(`'translateExplanation' - finish`)
+                return res.status(200).json({data: response, status: "ok", message: ""})
+            }
+            catch(e){
+                console.warn("'translateExplanation' - error")
+                return res.status(400).json({status: "error", message:"translate no received"})
+            }
+    }
+
+    
 }
 
 export default new TranslationsController()

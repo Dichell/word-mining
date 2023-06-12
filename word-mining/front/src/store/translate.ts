@@ -20,7 +20,8 @@ export default defineStore('Translate', {
         translateObject: { sourceText:"", fromLangKey: 0, toLangKey: 1, translatedText: "" },
         alternativeTranslations: [],
         examplesTranslations: [],
-        translateHistory: []
+        translateHistory: [],
+        translateExplanation: ''
     }),
     getters: {
         getSourceLang(): Ilanguages {
@@ -44,7 +45,8 @@ export default defineStore('Translate', {
                 }
             })
             return altTexts
-        }
+        },
+        getExplain: (state) => { return state.translateExplanation }
     },
     actions: {
 // TRANSLATING
@@ -64,6 +66,7 @@ export default defineStore('Translate', {
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
             this.loading = false
         },
+
         async translate(){
             this.loading = true
             const textData = {
@@ -76,6 +79,7 @@ export default defineStore('Translate', {
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
             this.refillAlternativeTranslations()
             this.refillExamples()
+            this.explain()
             this.loading = false
 
                 // history translations
@@ -96,9 +100,22 @@ export default defineStore('Translate', {
                     localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, result)
                 }
         },
+
+// EXPLANATION
+        async explain(){
+            this.translateExplanation = ''
+            const textData = {
+                text: this.translateObject.sourceText, 
+                sourceLang: this.getSourceLang.value, 
+                targetLang: this.getTargetLang.value
+            }
+            const response: any = await Api.get<ITranslateObject>(Endpoint.TranslateExplain, textData)
+            this.translateExplanation = response.data
+            localStorageMethods.setItem(LocalStorageKeys.TranslateExplain, this.translateExplanation)
+        },
+
 // ALTERNATIVE TRANSLATIONS
         async refillAlternativeTranslations(){
-            this.loadingAlternatives = true
             this.alternativeTranslations = []
             const textData = {
                 text: this.translateObject.sourceText, 
@@ -114,11 +131,10 @@ export default defineStore('Translate', {
                     })
             }
             localStorageMethods.setItem(LocalStorageKeys.AlternativeTranslations, this.alternativeTranslations)
-            this.loadingAlternatives = false
         },
+
 // EXAMPLES TRANSLATIONS
         async refillExamples(){
-            this.loadingExamples = true
             this.examplesTranslations = []
             const textData = {
                 text: this.translateObject.sourceText, 
@@ -134,13 +150,14 @@ export default defineStore('Translate', {
                     })
             }
             localStorageMethods.setItem(LocalStorageKeys.ExamplesTranslations, this.examplesTranslations)
-            this.loadingExamples = false
         },
+
 // HISTORY TRANSLATES
         deleteOneFromHistory(i: number) {
             this.translateHistory.splice(i, 1)
             localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, this.translateHistory)
         },
+
 // MOUNTING
         mountBaseTranslateSettings(): void {
             const lsTextTranslated = localStorageMethods.getAndToObject<ITranslateObject>(LocalStorageKeys.TranslateStore)
@@ -156,17 +173,18 @@ export default defineStore('Translate', {
             if(lsExamplesTranslations){
                 this.examplesTranslations = lsExamplesTranslations
             }
+            const lsExplainationTranslations = localStorageMethods.getString(LocalStorageKeys.TranslateExplain)
+            if(lsExplainationTranslations){
+                this.translateExplanation = lsExplainationTranslations
+            }
 
-
+    // history transltaions, using until db not connected
     let lsCurrentHistory = localStorage.getItem('translationsHistory')
     let result = []
     if(lsCurrentHistory){
         result = JSON.parse(lsCurrentHistory)
     }
     this.translateHistory = result
-
-
         }
-        
     }
 })

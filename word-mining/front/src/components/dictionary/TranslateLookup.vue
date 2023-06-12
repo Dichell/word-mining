@@ -1,5 +1,5 @@
 <template>
-        <TitleElement text="Translation"/>
+        <TitleElement text="Alternative translations"/>
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>

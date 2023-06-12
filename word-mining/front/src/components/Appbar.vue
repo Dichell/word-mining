@@ -3,6 +3,7 @@
         color="primary"
         density="compact"
       >
+
         <v-menu>
             <template v-slot:activator="{ props }">
               <v-btn size="x-large" v-bind="props">
@@ -37,11 +38,13 @@
                     Words Mining
                 </v-app-bar-title>
             </v-col>
+            
             <v-col class="d-flex justify-end">
                 <v-btn
                     size="large"
-                    v-for="{name, path, icon} in menu"
+                    v-for="({name, path, icon}, index) in menu"
                     :to=path
+                    :key=index
                     >
                     <v-icon size="x-large">{{icon}}</v-icon>
                         <v-tooltip
@@ -49,10 +52,34 @@
                             location="bottom"
                         >{{name}}</v-tooltip>
                 </v-btn>
+                <v-divider vertical></v-divider>
+
+                <v-menu>
+                    <template v-slot:activator="{ props }">
+                        <v-btn size="x-large" v-bind="props">
+                            <v-icon size="xx-large">mdi-account-circle</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-list>
+                        <v-list-item
+                            >
+                                <v-list-item-title v-if="isAuth" >Sign out</v-list-item-title>
+                                <v-list-item-title v-else >Log out</v-list-item-title>
+                        </v-list-item>
+                        
+                        <v-divider></v-divider>
+                        
+                        <v-list-item
+                            >
+                                <v-list-item-title>Settings</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+
             </v-col>
         </v-row>
       </v-app-bar>
-
 </template>
 
 <script lang="ts">
@@ -68,6 +95,9 @@ export default defineComponent({
     computed: {
         menu(){
             return this.generalState.menu
+        },
+        isAuth(): boolean {
+            return this.generalState.getIsAuth
         }
     }
 })

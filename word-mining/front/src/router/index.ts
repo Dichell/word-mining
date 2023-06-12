@@ -6,6 +6,7 @@ import Dictionary from '@/views/Dictionary.vue'
 import Exercices from '@/views/Exercices.vue'
 import Progress from '@/views/Progress.vue'
 import About from '@/views/About.vue'
+import Account from '@/views/Account.vue'
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
             path: 'about',
             name: 'About',
             component: About,
+          },
+          {
+            path: 'account',
+            name: 'Account',
+            component: Account,
           }
         ],
     }

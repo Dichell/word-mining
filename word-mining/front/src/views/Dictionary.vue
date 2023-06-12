@@ -12,13 +12,12 @@
         </v-row>
         <v-row>
             <v-col cols="12" lg="7">
+                <TranslateComp />
                 <TranslateLookupComp />
             </v-col>
             <v-col cols="12" lg="5">
                 <PronouncingComp :key=pronounceStore.newTranslationTrigger /> 
             </v-col>
-            <!-- <v-col cols="12" md="6">
-            </v-col> -->
         </v-row>
         <v-row>
             <v-col>

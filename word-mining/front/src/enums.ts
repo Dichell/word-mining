@@ -6,7 +6,8 @@ export enum LocalStorageKeys {
     TranslateStore = "TranslateStore",
     AlternativeTranslations = "AlternativeTranslations",
     ExamplesTranslations = "ExamplesTranslations",
-    TranslationsHistory = "translationsHistory"
+    TranslationsHistory = "translationsHistory",
+    TranslateExplain = 'TranslateExplain'
 }
 
 export enum ErrorMessage {
@@ -16,6 +17,7 @@ export enum ErrorMessage {
 
 export enum Endpoint {
     Translate = 'translate',
+    TranslateExplain = 'translate-explanation',
     TranslateAlternative = 'translate-alternative',
     TranslateExamples = 'translate-examples'
 }

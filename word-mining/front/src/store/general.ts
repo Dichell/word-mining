@@ -9,10 +9,12 @@ export default defineStore('General', {
         menu: [
             {name: 'Dictionary', path: 'dictionary', icon: "mdi-book-open-variant"}, 
             {name: 'Translate History', path:'translate-history', icon: "mdi-history"}, 
-            {name: 'Exercices', path: 'exercices', icon: "mdi-trophy-outline"}, 
+            {name: 'Exercises', path: 'exercises', icon: "mdi-trophy-outline"}, 
             {name: 'Progress', path: 'progress', icon: "mdi-chart-areaspline"}
         ]
     }),
-    getters: {},
+    getters: {
+        getIsAuth: (state): boolean => state.isAuth
+    },
     actions: {}
 })
