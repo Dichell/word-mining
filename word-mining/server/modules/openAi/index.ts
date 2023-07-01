@@ -19,8 +19,12 @@ interface rqConst {
 }
 
 const requestConstructor: rqConst = {
-    english: 'Meaning, transcription and plural example of word ',
+    english: 'What is meaning word ',
     russian: 'Значение слова '
+}
+
+function phraseConstructor(source: string, word: string){
+    return 
 }
 
 export const gptCompletion = async (dataText:{text: string, source: string, target: keyof rqConst} ): Promise<string> => {
@@ -34,7 +38,7 @@ export const gptCompletion = async (dataText:{text: string, source: string, targ
             model: chatModel.textDavinci003,
             prompt: request,
             temperature: 0,
-            max_tokens: 200
+            max_tokens: 500
         });
         return answer.data.choices[0].text ? answer.data.choices[0].text : ''
     }
