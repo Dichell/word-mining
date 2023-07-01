@@ -1,5 +1,5 @@
 <template>
-        <v-row no-gutters class="d-flex flex-row ">
+        <v-row no-gutters class="d-flex flex-row">
             <v-col cols="12" md="6">
                 <InputForm />
             </v-col>

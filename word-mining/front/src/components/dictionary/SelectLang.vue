@@ -1,5 +1,6 @@
 <template>
-    <v-row no-gutters class="d-flex align-center mt-1">
+    <v-row no-gutters class="ma-2">
+        <v-col class="d-flex align-center mt-1">
             <v-select
                 v-model=sourceLanguage
                 :items=sourceLanguages
@@ -30,7 +31,7 @@
                 return-object
                 @update:model-value="setTargetLang"
             ></v-select>
-            <!-- <BtnSearchWord md="2" class="d-none d-md-block mx-7"/> -->
+        </v-col>
     </v-row>
 </template>
 
@@ -40,12 +41,9 @@ import { Ilanguages } from "@/types";
 // stores
 import useTranslateStore from '@/store/translate'
 import usePronouncingStore from '@/store/pronouncing'
-// components
-import BtnSearchWord from './BtnSearchWord.vue'
 
 export default defineComponent({
     name: 'SelectLang',
-    components: { BtnSearchWord },
     data() {
         const translatelStore = useTranslateStore()
         const pronouncinglStore = usePronouncingStore()

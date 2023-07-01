@@ -1,8 +1,9 @@
 <template>
     <v-row>
-        <v-col>
+        <v-col class="ma-2">
             <v-text-field
                 clearable
+                hide-details
                 bg-color="blue-lighten-5"
                 type="text"
                 rounded="lg"
