@@ -40,8 +40,7 @@ export interface Ilanguages {
     key: number,
     name: string,
     value: string,
-    short: string,
-    helloWord: string
+    short: string
 }
 
 export interface ITranslateObject {

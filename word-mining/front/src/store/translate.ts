@@ -12,9 +12,9 @@ export default defineStore('Translate', {
         loadingAlternatives: false,
         loadingExamples: false,
         languages: [
-            { key: 0, name: "Hebrew", value: "hebrew", short:"he", helloWord: "שלום" },
-            { key: 1, name: "English",  value: "english", short:"en", helloWord: "hello" },
-            { key: 2, name: "Russian",  value: "russian", short:"ru", helloWord: "привет" },
+            { key: 0, name: "Hebrew", value: "hebrew", short:"he" },
+            { key: 1, name: "English",  value: "english", short:"en" },
+            { key: 2, name: "Russian",  value: "russian", short:"ru" },
         ],
         textInput: "",
         translateObject: { 
