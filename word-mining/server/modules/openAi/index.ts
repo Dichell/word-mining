@@ -2,9 +2,11 @@ import { Configuration, OpenAIApi } from "openai";
 import { config } from "../../config";
 
 const configuration = new Configuration({
-    organization: "org-HUn91WUxMWd2U1HhJqsMPPoK",
+    organization: config.OPEN_AI_ORGANIZATION,
     apiKey: config.OPEN_AI_KEY,
 });
+
+
 
 const openai = new OpenAIApi(configuration);
 

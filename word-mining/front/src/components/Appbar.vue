@@ -64,13 +64,19 @@
                     <v-list>
                         <v-list-item
                             >
-                                <v-list-item-title v-if="isAuth" >Sign out</v-list-item-title>
-                                <v-list-item-title v-else >Log out</v-list-item-title>
+                                <v-list-item-title v-if="generalState.getIsAuth" >Log out</v-list-item-title>
+                                <v-list-item-title v-else >Log in
+
+                                    <a :href="getGoogleUrl()" class="google-auth">
+                                        <span>Google</span>
+                                    </a>
+
+                                </v-list-item-title>
                         </v-list-item>
                         
                         <v-divider></v-divider>
                         
-                        <v-list-item
+                        <v-list-item  v-if="generalState.getIsAuth"
                             >
                                 <v-list-item-title>Settings</v-list-item-title>
                         </v-list-item>
@@ -82,23 +88,39 @@
       </v-app-bar>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+// import { defineComponent } from "vue";
 import useGeneralState from '@/store/general'
+import { computed } from 'vue';
 
-export default defineComponent({
-    name: 'Appbar',
-    data() {
-        const generalState = useGeneralState()
-        return { generalState }
-    },
-    computed: {
-        menu(){
-            return this.generalState.menu
-        },
-        isAuth(): boolean {
-            return this.generalState.getIsAuth
+const generalState = useGeneralState()
+
+const getGoogleUrl = () => {
+            const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
+        
+            const options = {
+                redirect_uri: "http://localhost:3000/api/sessions/oauth/google",
+                client_id: "764465882098-oku22kun3j75rg9irekok4l5qhkkh91e.apps.googleusercontent.com",
+                access_type: 'offline',
+                response_type: 'code',
+                prompt: 'consent',
+                scope: [
+                    'https://www.googleapis.com/auth/userinfo.profile',
+                    'https://www.googleapis.com/auth/userinfo.email',
+                ].join(' '),
+                state: '/',
+            };
+        
+            const qs = new URLSearchParams(options);
+        
+            return `${rootUrl}?${qs.toString()}`;
         }
-    }
+
+const menu = computed(()=>{
+    return generalState.menu
 })
+
+// export default {
+//     name: 'Appbar',
+// }
 </script>
