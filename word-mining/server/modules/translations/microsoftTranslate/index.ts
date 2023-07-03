@@ -1,10 +1,10 @@
 const axios = require('axios').default;
 import { v4 as uuidv4 } from 'uuid';
+import { config } from '../../../config';
 
-let key = "c44c49d497a04da0a48c8c99e5482e16";
-let location = "westeurope";
-let endpoint = "https://api.cognitive.microsofttranslator.com";
-// let endpointAlternative = "https://api.cognitive.microsofttranslator.com/dictionary/lookup";
+const key = config.MS_AZURE_KEY;
+const location = config.MS_AZURE_LOCATION;
+const endpoint = config.MS_AZURE_ENDPOINT;
 
 export async function translate({text, source, target}:{text: string, source: string, target: string}): Promise<object>{
     try{
