@@ -1,2 +1,4 @@
 word-mining/server/node_modules/
 word-mining/front/node_modules/
+word-mining/server/.env.local
+word-mining/front/.env.local
