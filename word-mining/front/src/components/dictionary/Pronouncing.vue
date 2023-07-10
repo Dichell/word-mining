@@ -16,7 +16,7 @@
                 :data-query=pronounceStore.getData.text
                 :data-lang=pronounceStore.getData.speakLanguageValue 
                 data-components="8412" 
-                :data-auto-start=pronounceStore.getAutoPlay
+                :data-auto-start="pronounceStore.getAutoPlay ? 1 : 0"
                 data-bkg-color="theme_light"  
                 rel="nofollow"></a>
             <!-- pronouncing external wiidget -->
@@ -48,17 +48,17 @@
                         </div>
 
                         <div class="d-flex flex-row align-center">
-                            <div :class="pronounceStore.getAutoPlay == 1 ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="pronounceStore.getAutoPlay ? 'font-weight-bold' : 'font-weight-regular'">
                                 autoplay
                             </div>
                             
                             <div class="px-2">
                                 <v-switch
                                     hide-details="auto"
-                                    :false-value=0
-                                    :true-value=1
+                                    :true-value=true
+                                    :false-value=false
                                     :value="pronounceStore.getAutoPlay"
-                                    @click="toggleAutoPlay"
+                                    @click="pronounceStore.toggleAutoPlay"
                                     ></v-switch>
                             </div>
                         </div>
@@ -90,9 +90,6 @@ export default defineComponent({
         },
         togglepronounceLang(){
             this.pronounceStore.togglePronounceLang()
-        },
-        toggleAutoPlay(){
-            this.pronounceStore.toggleAutoPlay()
         }
     },
     computed: {

@@ -20,7 +20,7 @@ export interface BaseStore {
 export interface IPronouncingStore extends BaseStore {
     newTranslationTrigger: number
     pronounceData: IPronounceData
-    autoPlay: number
+    autoPlay: boolean
 }
 
 export interface ITranslateStore extends BaseStore {

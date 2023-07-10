@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import { config } from "../../config";
+import { ITranslateData } from "../../types";
 
 const configuration = new Configuration({
     organization: config.OPEN_AI_ORGANIZATION,
@@ -29,11 +30,15 @@ function phraseConstructor(source: string, word: string){
     return 
 }
 
-export const gptCompletion = async (dataText:{text: string, source: string, target: keyof rqConst} ): Promise<string> => {
+export const gptCompletion = async (dataText: ITranslateData ): Promise<string> => {
 
     try{
-        const reqPhrase = requestConstructor[dataText.target] ? requestConstructor[dataText.target] : requestConstructor['english']
+        const reqPhrase = requestConstructor[dataText.target as keyof rqConst] 
+                            ? requestConstructor[dataText.target as keyof rqConst] 
+                            : requestConstructor['english']
+
         const request = reqPhrase + dataText.text
+
         console.log(`gptCompletion request; `, request)
 
         const answer = await openai.createCompletion({
@@ -48,5 +53,4 @@ export const gptCompletion = async (dataText:{text: string, source: string, targ
         console.log(e.response.data.error)
         return `ERROR`
     }
-
 }

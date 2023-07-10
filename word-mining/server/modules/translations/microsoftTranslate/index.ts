@@ -1,12 +1,13 @@
 const axios = require('axios').default;
 import { v4 as uuidv4 } from 'uuid';
 import { config } from '../../../config';
+import { ITranslateData } from '../../../types';
 
 const key = config.MS_AZURE_KEY;
 const location = config.MS_AZURE_LOCATION;
 const endpoint = config.MS_AZURE_ENDPOINT;
 
-export async function translate({text, source, target}:{text: string, source: string, target: string}): Promise<object>{
+export async function translate({text, source, target}:ITranslateData): Promise<object>{
     try{
         const response = await axios({
             baseURL: endpoint,
@@ -28,7 +29,6 @@ export async function translate({text, source, target}:{text: string, source: st
             }],
             responseType: 'json'
         })
-    
         return response.data[0].translations
     }
     catch(e){
@@ -37,7 +37,7 @@ export async function translate({text, source, target}:{text: string, source: st
     }
 }
 
-export async function translateAlternative({text, source, target}:{text: string, source: string, target: string}): Promise<object>{
+export async function translateAlternative({text, source, target}:ITranslateData): Promise<object>{
     try{
         const response = await axios({
             baseURL: endpoint,
@@ -59,7 +59,6 @@ export async function translateAlternative({text, source, target}:{text: string,
             }],
             responseType: 'json'
         })
-        
         return response
     }
     catch(e){
@@ -68,7 +67,7 @@ export async function translateAlternative({text, source, target}:{text: string,
     }
 }
 
-export async function translateExamples({text, source, target, translation}:{text: string, source: string, target: string, translation: string}): Promise<object>{
+export async function translateExamples({text, source, target, translation}:ITranslateData): Promise<object>{
     try{
         const response = await axios({
             baseURL: endpoint,
@@ -91,7 +90,6 @@ export async function translateExamples({text, source, target, translation}:{tex
             }],
             responseType: 'json'
         })
-        
         return response
     }
     catch(e){

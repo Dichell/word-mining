@@ -11,7 +11,7 @@ export default defineStore('Pronouncing', {
         loading: false,
         pronounceData: {text: "", speakLanguageValue: ""},
         newTranslationTrigger: 0,
-        autoPlay: 0   // 0 - no autoplay, 1 - yes
+        autoPlay: false
     }),
     getters: {
         getActive: (state) => state.isActive,
@@ -58,7 +58,7 @@ export default defineStore('Pronouncing', {
             this.newTranslationTrigger++
         },
         toggleAutoPlay(){
-            this.autoPlay = this.autoPlay == 1 ? 0 : 1
+            this.autoPlay = !this.autoPlay
         },
         triggerRefresh(){
             setTimeout(()=>{

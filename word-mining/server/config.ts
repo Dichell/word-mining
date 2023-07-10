@@ -4,6 +4,7 @@ dotenv.config({ path: '.env.local' });
 
 export const config = {
     DB_CONNECTION_STRING: process.env.DB_CONNECTION_STRING,
+    FRONT_URL: process.env.FRONT_URL,
     MS_AZURE_KEY: process.env.MS_AZURE_KEY,
     MS_AZURE_LOCATION: process.env.MS_AZURE_LOCATION,
     MS_AZURE_ENDPOINT: process.env.MS_AZURE_ENDPOINT,
@@ -12,4 +13,5 @@ export const config = {
     GOOGLE_OAUTH_CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID,
     GOOGLE_OAUTH_CLIENT_SECRET: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
     GOOGLE_OAUTH_REDIRECT_URL: process.env.GOOGLE_OAUTH_REDIRECT_URL,
+    SECRET: process.env.SECRET,
 }

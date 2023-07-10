@@ -7,6 +7,7 @@ import Exercices from '@/views/Exercices.vue'
 import Progress from '@/views/Progress.vue'
 import About from '@/views/About.vue'
 import Account from '@/views/Account.vue'
+import AuthError from '@/views/AuthError.vue'
 
 const routes = [
     {
@@ -44,6 +45,10 @@ const routes = [
             component: Account,
           }
         ],
+    },
+    {
+        path: '/autherror',
+        component: AuthError
     }
 ]
 
