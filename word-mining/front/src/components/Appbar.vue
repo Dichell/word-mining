@@ -99,7 +99,7 @@ const getGoogleUrl = () => {
             const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
         
             const options = {
-                redirect_uri: "http://localhost:3000/api/sessions/oauth/google",
+                redirect_uri: "http://localhost:4130/api/users/sessions/oauth/google",
                 client_id: "764465882098-oku22kun3j75rg9irekok4l5qhkkh91e.apps.googleusercontent.com",
                 access_type: 'offline',
                 response_type: 'code',

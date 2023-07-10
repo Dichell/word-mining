@@ -1,6 +1,6 @@
-import { config } from '../config';
 import axios from 'axios';
 import qs from 'qs';
+import { config } from '../config';
 
 interface GoogleOauthToken {
     access_token: string;
