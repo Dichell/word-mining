@@ -10,7 +10,7 @@ class Translations {
         this.creteRoutes();
     }
     private creteRoutes(){
-        this.router.get("/", this.translateText)
+        this.router.post("/text", this.translateText)
         this.router.post('/explanation', this.translateExplanation)
         this.router.post('/alternative', this.translateAlternative)
         this.router.post('/examples', this.translateExamples)
@@ -18,7 +18,7 @@ class Translations {
     }
     
     translateText = async(req: Request, res: Response) => {
-        if(!req.body.dataText) return res.status(400).json( {status: "error", message: "body.dataText is required"} )
+        if(!req.body.textData) return res.status(400).json( {status: "error", message: "body.textData is required"} )
         console.log(`'translateText' - starting (${req.body.textData.text}) ...`)
         try {
             const dataText: ITranslateData = {
@@ -38,7 +38,7 @@ class Translations {
     }
 
     translateExplanation = async (req: Request, res: Response) => {
-        if(!req.body.dataText) return res.status(400).json({status: "error", message: "body.dataText is required"})
+        if(!req.body.textData) return res.status(400).json({status: "error", message: "body.textData is required"})
         console.log(`'translateExplanation' - starting (${req.body.textData.text}) ...`)
         try {
             const dataText: ITranslateData = {
@@ -58,7 +58,7 @@ class Translations {
     }
     
     translateAlternative = async (req: Request, res: Response) => {
-        if(!req.body.dataText) return res.status(400).json( {status: "error", message: "body.dataText is required"} )
+        if(!req.body.textData) return res.status(400).json( {status: "error", message: "body.textData is required"} )
         console.log(`'translateAlternative' - starting (${req.body.textData.text}) ...`)
         try {
             const dataText: ITranslateData = {

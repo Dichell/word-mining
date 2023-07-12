@@ -16,8 +16,8 @@ export enum ErrorMessage {
 }
 
 export enum Endpoint {
-    Translate = 'translate',
-    TranslateExplain = 'translate-explanation',
-    TranslateAlternative = 'translate-alternative',
-    TranslateExamples = 'translate-examples'
+    Translate = 'translate/text',
+    TranslateExplain = 'translate/explanation',
+    TranslateAlternative = 'translate/alternative',
+    TranslateExamples = 'translate/examples'
 }
