@@ -4,8 +4,7 @@
         variant="flat"
         color="primary"
         :rounded=rounded
-        @click="$emit('event')"
-        v-on:keypress.ctrl.10.13.native="$emit('event')"
+        @click="$emit('click')"
         >
             <v-icon color="white" :icon="icon"></v-icon>
             <v-tooltip
@@ -28,7 +27,7 @@ export default defineComponent({
         height: number().def(50),
         rounded: oneOf([0, 'sm', 'lg', 'xl', 'pill', 'circle', 'shaped']).def('pill')
     },
-    emits: ["event"]
+    emits: ["click"]
 })
 </script>
 

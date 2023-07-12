@@ -5,10 +5,9 @@
             </template>
         </v-tooltip>
 
-        <v-sheet 
-            v-if="pronounceStore.getActive" 
-            border rounded="lg" class="pa-3">
+        <v-sheet v-if="pronounceStore.getActive"><i>Turned off. Click to turn on</i></v-sheet>
 
+        <v-sheet v-else border rounded="lg" class="pa-3">
 
             <!-- pronouncing external wiidget //TODO change to API methods -->
             <a id="yg-widget-0" 
@@ -65,7 +64,6 @@
                 </v-sheet>
             </v-row>
         </v-sheet>
-        <v-sheet v-else><i>Click to turn on this.</i></v-sheet>
 </template>
 
 <script lang="ts">

@@ -9,10 +9,11 @@
                 rounded="lg"
                 variant="outlined"
                 v-model=translateStore.textInput
+                @keydown.enter.native.stop.prevent="sendToStore"
                 >
                 <template v-slot:append>
                     <v-sheet >
-                        <BtnSearchWord />
+                        <BtnSearchWord @click="sendToStore"/>
                     </v-sheet>
                 </template>
             </v-text-field>
@@ -24,6 +25,7 @@
 import { defineComponent } from "vue";
 // store
 import useTranslateStore from '@/store/translate'
+import usePronounceStore from '@/store/pronouncing'
 // components
 import BtnSearchWord from './BtnSearchWord.vue'
 
@@ -32,7 +34,15 @@ export default defineComponent({
     components: { BtnSearchWord },
     data() {
         const translateStore = useTranslateStore()
-        return { translateStore }
+        const pronounceStore = usePronounceStore()
+        return { translateStore, pronounceStore }
+    },
+    methods: {
+        sendToStore() {
+            this.translateStore.updateTranslateObject("sourceText", this.translateStore.textInput)
+            this.translateStore.translate()
+            this.pronounceStore.updatePronounceData("text", this.translateStore.textInput)
+        }
     }
 })
 </script>

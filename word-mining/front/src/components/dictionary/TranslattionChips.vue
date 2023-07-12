@@ -34,9 +34,6 @@
                         </v-chip>
                     </div>
                 </v-row>
-<!--clouds-->   
-                    <!-- <div style="position: relative; float: right; top: -34px; right: -14px; height: 35px; width: 70px; background-image: linear-gradient(to left, white, transparent)"></div>
-                    <div style="position: relative; top: -34px; left: -14px; height: 35px; width: 70px; background-image: linear-gradient(to right, white, transparent)"></div> -->
             </v-col>
         </v-row>
     </v-container>
@@ -48,7 +45,7 @@ import useTranslateStore from '@/store/translate'
 import usePronouncingStore from '@/store/pronouncing'
 
 export default defineComponent({
-    name: 'TranslattionHistoryComp',
+    name: 'TranslattionChipsCompp',
     data() {
         const translateStore = useTranslateStore()
         const pronouncingStore = usePronouncingStore()

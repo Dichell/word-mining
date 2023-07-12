@@ -182,13 +182,13 @@ export default defineStore('Translate', {
                 this.translateExplanation = lsExplainationTranslations
             }
 
-    // history transltaions, using until db not connected
-    let lsCurrentHistory = localStorage.getItem('translationsHistory')
-    let result = []
-    if(lsCurrentHistory){
-        result = JSON.parse(lsCurrentHistory)
-    }
-    this.translateHistory = result
+            // history transltaions, using until db not connected
+            let lsCurrentHistory = localStorage.getItem('translationsHistory')
+            let result = []
+            if(lsCurrentHistory){
+                result = JSON.parse(lsCurrentHistory)
+            }
+            this.translateHistory = result
         }
     }
 })

@@ -7,7 +7,7 @@
         </v-row>
         <v-row>
             <v-col>
-                <TranslattionHistory />
+                <TranslattionChipsComp />
             </v-col>
         </v-row>
         <v-row>
@@ -32,7 +32,7 @@
 import { defineComponent } from "vue";
 // components
 import ControlPanelComp from '@/components/dictionary/ControlPanel.vue'
-import TranslattionHistory from '@/components/dictionary/TranslattionHistory.vue'
+import TranslattionChipsComp from '@/components/dictionary/TranslattionHistory.vue'
 import TranslateComp from '@/components/dictionary/Translate.vue'
 import TranslateLookupComp from '@/components/dictionary/TranslateLookup.vue'
 import TranslateExamples from '@/components/dictionary/TranslateExamples.vue'
@@ -44,7 +44,7 @@ export default defineComponent({
     name: 'Dictionary',
     components: { 
         ControlPanelComp, 
-        TranslattionHistory, 
+        TranslattionChipsComp, 
         TranslateComp, 
         TranslateLookupComp, 
         TranslateExamples, 
