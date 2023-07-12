@@ -2,11 +2,12 @@ export interface User {
     name: string
     email: string
     password: string
+    nativeLang: Languiges
     dateCreated: Date
     lastLogin: number
-    provider: string
     photo?: string
-    verified?: boolean;
+    verified?: boolean
+    provider: string
 }
 
 export interface ITranslateData {
@@ -14,4 +15,10 @@ export interface ITranslateData {
     source: string,
     target: string
     translation?: string
+}
+
+enum Languiges {
+    Russian = "russian",
+    English = "english",
+    Hebrew = "hebrew"
 }

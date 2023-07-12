@@ -2,10 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import { dbConnect } from './db';
 import api from './api'
+import { config } from './config';
 
 const app = express()
-const host = "localhost"
-const port = 4130
+const host = config.HOST
+const port = config.PORT
 
 app.use(express.json({ limit: 1024102420, type: "application/json" }))
 app.use(cors())
