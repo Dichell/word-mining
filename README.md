@@ -27,7 +27,7 @@ In another way the history is saving in localstorage.
 **EXERCISES** (in progress)
 
 User can run an exercice to remember words from his history. All words, or words by day/month.
-Suggection exercises based on wrong/right answers in previus exercices.
+Suggests exercises based on wrong/right answers in previous exercices.
 
 Some base exercises are available for all auth users. 
 Most of the exercises are available for a paid subscription.
