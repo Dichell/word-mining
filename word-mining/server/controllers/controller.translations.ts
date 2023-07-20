@@ -1,6 +1,6 @@
-import { translate, translateAlternative, translateExamples } from './microsoftTranslate';
-import { gptCompletion } from '../openAi/index'
-import { ITranslateData } from '../../types';
+import { translate, translateAlternative, translateExamples } from '../modules/translations/microsoftTranslate';
+import { gptCompletion } from '../modules/openAi/index'
+import { ITranslateData } from '../types';
 
 class TranslationsController {
 

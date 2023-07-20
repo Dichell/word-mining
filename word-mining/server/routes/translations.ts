@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { Request, Response } from 'express';
-import TranslationsController from '../modules/translations/controller.translations'
+import TranslationsController from '../controllers/controller.translations'
 import { ITranslateData } from "../types";
+import controllerDictionary from "../controllers/controller.dictionary";
+import dictionaryModel from "../models/dictionary.model";
 
 class Translations {
     router: Router;
@@ -26,13 +28,48 @@ class Translations {
                 source: req.body.textData.sourceLang,
                 target: req.body.textData.targetLang
             }
-            const response: any = await TranslationsController.translateText(dataText)
-            console.log(`'translateText' - finish (${response[0].text})`)
-            return res.status(200).json( {data: response, status: "ok", message: ""} )
+
+            let data
+
+        // check DB for translation
+            const dbTranslation: any[] = await controllerDictionary.aggregate([
+                { $match: { word: req.body.textData.text } },
+                { $lookup: {
+                    from: "dictionary",
+                    localField: `translations.${req.body.textData.targetLang}`,
+                    foreignField: "_id",
+                    as: "translationsResult"
+                }}
+              ])
+
+            if(dbTranslation.length > 0){
+                data = dbTranslation[0].translationsResult[0].word
+                console.log(`'translateText' - mongo: `, dbTranslation[0].translationsResult[0].word);
+            }
+
+            if(!dbTranslation){
+        // if no, get translation
+                const response: any = await TranslationsController.translateText(dataText)
+                console.log(`'translateText' - azure (${response[0].text})`)
+                data = response
+            }
+
+
+
+            // add new data to db
+
+
+        // add word to user-words
+
+
+        // add word to user-translations
+
+
+        // return data to client
+            return res.status(200).json( {data: data, status: "ok", message: ""} )
         }
         catch(e: any){
             console.warn("'translateText' - error")
-            console.warn(e)
             return res.status(400).json( {status: "error", message: e.message} )
         }
     }

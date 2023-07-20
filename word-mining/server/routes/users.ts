@@ -2,7 +2,7 @@ import { Response, Request, Router, NextFunction } from "express";
 import { getGoogleOauthToken, getGoogleUser } from "../services/session.service";
 import { config } from "../config";
 import jwt from 'jsonwebtoken';
-import usersContoller from "../modules/users/users.contoller";
+import usersContoller from "../controllers/users.contoller";
 
 class Users {
     router: Router

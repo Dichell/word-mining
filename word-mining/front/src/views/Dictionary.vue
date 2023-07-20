@@ -32,7 +32,7 @@
 import { defineComponent } from "vue";
 // components
 import ControlPanelComp from '@/components/dictionary/ControlPanel.vue'
-import TranslattionChipsComp from '@/components/dictionary/TranslattionHistory.vue'
+import TranslattionChipsComp from '@/components/dictionary/TranslattionChips.vue'
 import TranslateComp from '@/components/dictionary/Translate.vue'
 import TranslateLookupComp from '@/components/dictionary/TranslateLookup.vue'
 import TranslateExamples from '@/components/dictionary/TranslateExamples.vue'

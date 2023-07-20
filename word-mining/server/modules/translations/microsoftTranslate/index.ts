@@ -3,9 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { config } from '../../../config';
 import { ITranslateData } from '../../../types';
 
-const key = config.MS_AZURE_KEY;
-const location = config.MS_AZURE_LOCATION;
 const endpoint = config.MS_AZURE_ENDPOINT;
+
+const azureHeaders = {
+    'Ocp-Apim-Subscription-Key': config.MS_AZURE_KEY,
+    'Ocp-Apim-Subscription-Region': config.MS_AZURE_LOCATION,
+    'Content-type': 'application/json',
+    'X-ClientTraceId': uuidv4().toString()
+}
 
 export async function translate({text, source, target}:ITranslateData): Promise<object>{
     try{
@@ -13,12 +18,7 @@ export async function translate({text, source, target}:ITranslateData): Promise<
             baseURL: endpoint,
             url: '/translate',
             method: 'post',
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Ocp-Apim-Subscription-Region': location,
-                'Content-type': 'application/json',
-                'X-ClientTraceId': uuidv4().toString()
-            },
+            headers: azureHeaders,
             params: {
                 'api-version': '3.0',
                 'from': source,
@@ -31,9 +31,9 @@ export async function translate({text, source, target}:ITranslateData): Promise<
         })
         return response.data[0].translations
     }
-    catch(e){
+    catch(e: any){
         console.log(e)
-        return { error: 'error'}
+        return { error: e.code}
     }
 }
 
@@ -43,12 +43,7 @@ export async function translateAlternative({text, source, target}:ITranslateData
             baseURL: endpoint,
             url: '/dictionary/lookup',
             method: 'post',
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Ocp-Apim-Subscription-Region': location,
-                'Content-type': 'application/json',
-                'X-ClientTraceId': uuidv4().toString()
-            },
+            headers: azureHeaders,
             params: {
                 'api-version': '3.0',
                 'from': source,
@@ -61,9 +56,9 @@ export async function translateAlternative({text, source, target}:ITranslateData
         })
         return response
     }
-    catch(e){
+    catch(e: any){
         console.log(e)
-        return { error: 'error'}
+        return { error: e.code}
     }
 }
 
@@ -73,12 +68,7 @@ export async function translateExamples({text, source, target, translation}:ITra
             baseURL: endpoint,
             url: '/dictionary/examples',
             method: 'post',
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Ocp-Apim-Subscription-Region': location,
-                'Content-type': 'application/json',
-                'X-ClientTraceId': uuidv4().toString()
-            },
+            headers: azureHeaders,
             params: {
                 'api-version': '3.0',
                 'from': source,
@@ -92,8 +82,8 @@ export async function translateExamples({text, source, target, translation}:ITra
         })
         return response
     }
-    catch(e){
+    catch(e: any){
         console.log(e)
-        return { error: 'error'}
+        return { error: e.code}
     }
 }

@@ -1,4 +1,10 @@
-export interface User {
+import { LanguigesShort, Languiges } from '../common/types/enums'
+
+export interface Entity {
+    added: string
+}
+
+export interface User extends Entity{
     name: string
     email: string
     password: string
@@ -10,15 +16,16 @@ export interface User {
     provider: string
 }
 
+export interface Dictionary extends Entity {
+        word: string
+        freqvency: number
+        translations: any
+        source: LanguigesShort
+}
+
 export interface ITranslateData {
     text: string, 
     source: string,
     target: string
     translation?: string
-}
-
-enum Languiges {
-    Russian = "russian",
-    English = "english",
-    Hebrew = "hebrew"
 }
