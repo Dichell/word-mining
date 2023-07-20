@@ -24,10 +24,10 @@ If user logged in, translation history is saving in DB. User can see all words h
 In another way the history is saving in localstorage.
 
 
-**EXERCISES** (in progress)
+**EXERCISES**
 
 User can run an exercice to remember words from his history. All words, or words by day/month.
-Suggests exercises based on wrong/right answers in previous exercices.
+Suggests exercises based on wrong/right answers in previous exercises.
 
 Some base exercises are available for all auth users. 
 Most of the exercises are available for a paid subscription.
@@ -42,14 +42,11 @@ Most of statistics are available for a paid subscription.
 
 **Technologies:**
 
-Front: 
-- Vue 3 / Vite / Pinia / Vuetify
+Front: Vue 3 / Vite / Pinia / Vuetify
 
-Back: 
-- NodeJS / ExpressJS
+Back: NodeJS / ExpressJS
 
-DB: 
-- Mongo DB
+DB: Mongo DB
 
 Services:
 - Azure Translator (translation, alternatives, examples)
