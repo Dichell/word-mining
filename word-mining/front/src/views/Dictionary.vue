@@ -2,7 +2,11 @@
     <v-container>
         <v-row>
             <v-col>
-                <ControlPanelComp />
+                <ControlPanelComp 
+                    :input-text="inputText"
+                    @inputChanged="updateStore"
+                    @clickedTranslate="sendToStore"
+                    />
             </v-col>
         </v-row>
         <v-row>
@@ -39,6 +43,8 @@ import TranslateExamples from '@/components/dictionary/TranslateExamples.vue'
 import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 // store
 import usePronounceStore from "@/store/pronouncing";
+import useTranslateStore from '@/store/translate'
+import { UpdatableTranslateStore } from "@/types";
 
 export default defineComponent({
     name: 'Dictionary',
@@ -52,7 +58,21 @@ export default defineComponent({
     },
     data() {
         const pronounceStore = usePronounceStore() 
-        return { pronounceStore }
+        const translateStore = useTranslateStore()
+        return { pronounceStore, translateStore }
+    },
+    computed: {
+        inputText(){ return this.translateStore.getInputText }
+    },
+    methods: {
+        updateStore(key: keyof UpdatableTranslateStore, val: UpdatableTranslateStore[typeof key]) {
+            this.translateStore.updateTranslateState(key, val)
+        },
+        sendToStore() {
+            this.translateStore.updateTranslateObject("sourceText", this.translateStore.textInput)
+            this.translateStore.translate()
+            this.pronounceStore.updatePronounceData("text", this.translateStore.textInput)
+        }
     }
 })
 </script>

@@ -10,6 +10,7 @@ export const config = {
     MS_AZURE_KEY: process.env.MS_AZURE_KEY,
     MS_AZURE_LOCATION: process.env.MS_AZURE_LOCATION,
     MS_AZURE_ENDPOINT: process.env.MS_AZURE_ENDPOINT,
+    MS_BING_HOST: process.env.MS_BING_HOST,
     OPEN_AI_ORGANIZATION: process.env.OPEN_AI_ORGANIZATION,
     OPEN_AI_KEY: process.env.OPEN_AI_KEY,
     GOOGLE_OAUTH_CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID,

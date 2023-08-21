@@ -82,3 +82,5 @@ export interface IExamplesTranslations {
     targetTerm: string,
     targetSuffix: string
 }
+
+export type UpdatableTranslateStore = Pick<ITranslateStore, 'textInput' | 'translateObject'>

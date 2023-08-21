@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { Endpoint, LocalStorageKeys } from '@/enums'
 import Api from '@/api' 
 import { localStorageMethods } from '@/utils/localStorage'
-import { IAltText, IAlternativeTranslations, IExamplesTranslations, ITranslateObject, ITranslateStore, Ilanguages } from '@/types'
+import { IAltText, IAlternativeTranslations, IExamplesTranslations, ITranslateObject, ITranslateStore, Ilanguages, UpdatableTranslateStore } from '@/types'
 import { updateObject } from '@/utils/objectWorker'
 
 export default defineStore('Translate', {
@@ -30,6 +30,7 @@ export default defineStore('Translate', {
     }),
     getters: {
         getTranslateObject: (state): ITranslateObject => state.translateObject,
+        getInputText: (state): string => state.textInput,
         getSourceLang: (state): Ilanguages => state.languages[state.translateObject.fromLangKey],
         getTargetLang: (state): Ilanguages => state.languages[state.translateObject.toLangKey],
         getExplain: (state): string => state.translateExplanation,
@@ -57,6 +58,12 @@ export default defineStore('Translate', {
         updateTranslateObject(key: keyof ITranslateObject, value: string | number){
             updateObject(this.translateObject, key, value)
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+        },
+        updateTranslateState<K extends keyof UpdatableTranslateStore>(key: K, value: ITranslateStore[K]): void {
+            this.$state[key] = value
+            if( typeof this.$state[key] == JSON.stringify("ITranslateObject") ) {
+                localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+            }
         },
         reverseLangs(){
             this.loading = true
