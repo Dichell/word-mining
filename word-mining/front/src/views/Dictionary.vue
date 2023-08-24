@@ -17,7 +17,12 @@
         </v-row>
         <v-row>
             <v-col>
-                <TranslattionChipsComp />
+                <TranslattionChipsComp 
+                    :translate-history="translateHistory"
+                    @clearHistory="clearHistory"
+                    @translateThis="translateThis"
+                    @deleteChip="deleteChip"
+                    />
             </v-col>
         </v-row>
         <v-row>
@@ -72,6 +77,7 @@ export default defineComponent({
         sourceLang(): Ilanguages { return this.translateStore.getSourceLang },
         targetLang(): Ilanguages { return this.translateStore.getTargetLang },
         languages(): Ilanguages[] { return this.translateStore.languages },
+        translateHistory(): ITranslateObject[] { return this.translateStore.getHistory }
     },
     methods: {
         updateStore(key: keyof UpdatableTranslateStore, val: UpdatableTranslateStore[typeof key]) {
@@ -88,6 +94,21 @@ export default defineComponent({
         replaceLangs(): void {
             this.translateStore.reverseLangs()
             this.pronounceStore.togglePronounceLang()
+        },
+        clearHistory(){
+            this.translateStore.deleteAllHistory()
+        },
+        translateThis(translateObject: ITranslateObject){
+            this.translateStore.updateTranslateObject("sourceText", translateObject.sourceText)
+            this.translateStore.updateTranslateObject("fromLangKey", translateObject.fromLangKey)
+            this.translateStore.updateTranslateObject("toLangKey", translateObject.toLangKey)
+            this.translateStore.translate()
+            this.translateStore.textInput = translateObject.sourceText
+            this.pronounceStore.refillPronDataFromTranslateSource()
+            this.pronounceStore.triggerRefresh()
+        },
+        deleteChip(i: number){
+            this.translateStore.deleteOneFromHistory(i)
         }
     },
     mounted() {

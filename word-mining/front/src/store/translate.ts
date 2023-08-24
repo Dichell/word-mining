@@ -25,8 +25,8 @@ export default defineStore('Translate', {
         },
         alternativeTranslations: [],
         examplesTranslations: [],
+        translateExplanation: '',
         translateHistory: [],
-        translateExplanation: ''
     }),
     getters: {
         getTranslateObject: (state): ITranslateObject => state.translateObject,
@@ -34,8 +34,8 @@ export default defineStore('Translate', {
         getSourceLang: (state): Ilanguages => state.languages[state.translateObject.fromLangKey],
         getTargetLang: (state): Ilanguages => state.languages[state.translateObject.toLangKey],
         getExplain: (state): string => state.translateExplanation,
-        getExample: (state) => state.examplesTranslations,
-        getHistory: (state) => state.translateHistory,
+        getExample: (state): IExamplesTranslations[] => state.examplesTranslations,
+        getHistory: (state): ITranslateObject[] => state.translateHistory,
         getAlternativeSreings: (state) => {
             const altTexts: IAltText[] = []
             state.alternativeTranslations.forEach((a) => {
@@ -55,22 +55,22 @@ export default defineStore('Translate', {
     },
     actions: {
 // TRANSLATING
-        updateTranslateObject(key: keyof ITranslateObject, value: ITranslateObject[typeof key]){
+        updateTranslateObject(key: keyof ITranslateObject, value: ITranslateObject[typeof key]): void {
             if(key === 'fromLangKey'){
                 if(this.translateObject.toLangKey === value) this.translateObject.toLangKey = this.translateObject.fromLangKey
             } else {
                 if(this.translateObject.fromLangKey === value) this.translateObject.fromLangKey = this.translateObject.toLangKey
             }
             updateObject(this.translateObject, key, value)
-            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+            localStorageMethods.setItem(LocalStorageKeys.TranslateObject, this.translateObject)
         },
         updateTranslateState<K extends keyof UpdatableTranslateStore>(key: K, value: ITranslateStore[K]): void {
             this.$state[key] = value
             if( typeof this.$state[key] == JSON.stringify("ITranslateObject") ) {
-                localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+                localStorageMethods.setItem(LocalStorageKeys.TranslateObject, this.translateObject)
             }
         },
-        reverseLangs(){
+        reverseLangs(): void {
             this.loading = true
             let midlLang = this.translateObject
             this.translateObject = {
@@ -79,12 +79,18 @@ export default defineStore('Translate', {
                 toLangKey: midlLang.fromLangKey,
                 translatedText: midlLang.sourceText
             }
-            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+            localStorageMethods.setItem(LocalStorageKeys.TranslateObject, this.translateObject)
             this.loading = false
         },
 
-        async translate(){
+        async translate(): Promise<void> {
             this.loading = true
+            
+            this.translateObject.translatedText = ''
+            this.alternativeTranslations = []
+            this.examplesTranslations = []
+            this.translateExplanation = ''
+
             const textData = {
                 text: this.translateObject.sourceText, 
                 sourceLang: this.getSourceLang.short, 
@@ -92,33 +98,16 @@ export default defineStore('Translate', {
             }
             const response: any = await Api.get<ITranslateObject>(Endpoint.Translate, textData)
             this.translateObject.translatedText = response.data[0].text
-            localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
+            localStorageMethods.setItem(LocalStorageKeys.TranslateObject, this.translateObject)
             this.refillAlternativeTranslations()
             this.refillExamples()
             this.explain()
             this.loading = false
-
-                // history translations
-                let lsCurrentHistory = localStorage.getItem('translationsHistory')
-                let result = []
-                let count = 0
-                if(lsCurrentHistory){
-                    result = JSON.parse(lsCurrentHistory)
-                }
-                result.forEach((el:ITranslateObject)  => {
-                    if (el.sourceText == this.translateObject.sourceText){
-                        count++
-                    }
-                });
-                if(count < 1){
-                    result.unshift(this.translateObject)
-                    this.translateHistory = result
-                    localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, result)
-                }
+            this.addToTranslateHistory()
         },
 
 // EXPLANATION
-        async explain(){
+        async explain(): Promise<void> {
             this.translateExplanation = ''
             const textData = {
                 text: this.translateObject.sourceText, 
@@ -131,7 +120,7 @@ export default defineStore('Translate', {
         },
 
 // ALTERNATIVE TRANSLATIONS
-        async refillAlternativeTranslations(){
+        async refillAlternativeTranslations(): Promise<void> {
             this.alternativeTranslations = []
             const textData = {
                 text: this.translateObject.sourceText, 
@@ -150,7 +139,7 @@ export default defineStore('Translate', {
         },
 
 // EXAMPLES TRANSLATIONS
-        async refillExamples(){
+        async refillExamples(): Promise<void> {
             this.examplesTranslations = []
             const textData = {
                 text: this.translateObject.sourceText, 
@@ -169,14 +158,26 @@ export default defineStore('Translate', {
         },
 
 // HISTORY TRANSLATES
+        addToTranslateHistory(): void {
+            const isExist = this.translateHistory.find((el:ITranslateObject) => el.sourceText == this.translateObject.sourceText)
+            if(!isExist){
+                this.translateHistory.push(this.translateObject)
+                localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, this.translateHistory)
+            }
+        },
         deleteOneFromHistory(i: number) {
             this.translateHistory.splice(i, 1)
             localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, this.translateHistory)
         },
+        deleteAllHistory(): void {
+            this.translateHistory = []
+            localStorage.removeItem(LocalStorageKeys.TranslationsHistory)
+        },
+
 
 // MOUNTING
         mountBaseTranslateSettings(): void {
-            const lsTextTranslated = localStorageMethods.getAndToObject<ITranslateObject>(LocalStorageKeys.TranslateStore)
+            const lsTextTranslated = localStorageMethods.getAndToObject<ITranslateObject>(LocalStorageKeys.TranslateObject)
             if(lsTextTranslated){
                 this.translateObject = lsTextTranslated
                 this.textInput = lsTextTranslated.sourceText
@@ -193,14 +194,10 @@ export default defineStore('Translate', {
             if(lsExplainationTranslations){
                 this.translateExplanation = lsExplainationTranslations
             }
-
-            // history transltaions, using until db not connected
-            let lsCurrentHistory = localStorage.getItem('translationsHistory')
-            let result = []
+            const lsCurrentHistory = localStorageMethods.getAndToObject<ITranslateObject[]>(LocalStorageKeys.TranslationsHistory)
             if(lsCurrentHistory){
-                result = JSON.parse(lsCurrentHistory)
+                this.translateHistory = lsCurrentHistory
             }
-            this.translateHistory = result
         }
     }
 })
