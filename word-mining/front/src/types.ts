@@ -43,6 +43,11 @@ export interface Ilanguages {
     short: string
 }
 
+export interface ISelectLang {
+    sourceLang: Ilanguages,
+    targetLang: Ilanguages
+}
+
 export interface ITranslateObject {
     sourceText: string, 
     fromLangKey: number, 

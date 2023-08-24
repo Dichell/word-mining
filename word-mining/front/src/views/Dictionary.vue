@@ -6,6 +6,12 @@
                     :input-text="inputText"
                     @inputChanged="updateStore"
                     @clickedTranslate="sendToStore"
+
+                    :source-lang="sourceLang"
+                    :target-lang="targetLang"
+                    :languages="languages"
+                    @sourceTargetLangs="updateTranslateObject"
+                    @replaceLangs="replaceLangs"
                     />
             </v-col>
         </v-row>
@@ -44,7 +50,7 @@ import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 // store
 import usePronounceStore from "@/store/pronouncing";
 import useTranslateStore from '@/store/translate'
-import { UpdatableTranslateStore } from "@/types";
+import { ITranslateObject, Ilanguages, UpdatableTranslateStore } from "@/types";
 
 export default defineComponent({
     name: 'Dictionary',
@@ -62,17 +68,30 @@ export default defineComponent({
         return { pronounceStore, translateStore }
     },
     computed: {
-        inputText(){ return this.translateStore.getInputText }
+        inputText(): string { return this.translateStore.getInputText },
+        sourceLang(): Ilanguages { return this.translateStore.getSourceLang },
+        targetLang(): Ilanguages { return this.translateStore.getTargetLang },
+        languages(): Ilanguages[] { return this.translateStore.languages },
     },
     methods: {
         updateStore(key: keyof UpdatableTranslateStore, val: UpdatableTranslateStore[typeof key]) {
             this.translateStore.updateTranslateState(key, val)
         },
+        updateTranslateObject(key: keyof ITranslateObject, val: ITranslateObject[typeof key]){
+            this.translateStore.updateTranslateObject(key, val)
+        },
         sendToStore() {
             this.translateStore.updateTranslateObject("sourceText", this.translateStore.textInput)
             this.translateStore.translate()
             this.pronounceStore.updatePronounceData("text", this.translateStore.textInput)
+        },
+        replaceLangs(): void {
+            this.translateStore.reverseLangs()
+            this.pronounceStore.togglePronounceLang()
         }
-    }
+    },
+    mounted() {
+        this.translateStore.mountBaseTranslateSettings()
+    },
 })
 </script>

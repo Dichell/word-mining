@@ -55,7 +55,12 @@ export default defineStore('Translate', {
     },
     actions: {
 // TRANSLATING
-        updateTranslateObject(key: keyof ITranslateObject, value: string | number){
+        updateTranslateObject(key: keyof ITranslateObject, value: ITranslateObject[typeof key]){
+            if(key === 'fromLangKey'){
+                if(this.translateObject.toLangKey === value) this.translateObject.toLangKey = this.translateObject.fromLangKey
+            } else {
+                if(this.translateObject.fromLangKey === value) this.translateObject.fromLangKey = this.translateObject.toLangKey
+            }
             updateObject(this.translateObject, key, value)
             localStorageMethods.setItem(LocalStorageKeys.TranslateStore, this.translateObject)
         },
