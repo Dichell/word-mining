@@ -26,7 +26,10 @@
         </v-row>
         <v-row>
             <v-col cols="12" lg="7">
-                <TranslateComp />
+                <TranslateComp 
+                    :translation="translation"
+                    :explanation="translateExplanation"
+                    />
                 <TranslateLookupComp />
             </v-col>
             <v-col cols="12" lg="5">
@@ -85,6 +88,8 @@ export default defineComponent({
         targetLang(): Ilanguages { return this.translateStore.getTargetLang },
         languages(): Ilanguages[] { return this.translateStore.languages },
         translateHistory(): ITranslateHistory[] { return this.translateStore.getHistory },
+        translation(): ITranslateObject { return this.translateStore.getTranslateObject },
+        translateExplanation(): string { return this.translateStore.getExplain },
         translateExamples(): IExamplesTranslations[] { return this.translateStore.getExamples }
     },
     methods: {

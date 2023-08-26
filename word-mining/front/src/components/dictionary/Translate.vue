@@ -7,16 +7,18 @@
                     <td>
                         <v-sheet 
                             variant="text"
-                            style="text-transform:uppercase; font-weight: bold; font-size: larger;"
+                            style="text-transform:uppercase; 
+                            font-weight: bold; 
+                            font-size: larger;"
                             >
-                            {{ translateStore.getTranslateObject.translatedText }}
+                            {{ translation.translatedText }}
                         </v-sheet>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <v-card variant="text">
-                            {{ translateStore.getExplain }}
+                            {{ explanation }}
                         </v-card>
                     </td>
                 </tr>
@@ -27,16 +29,23 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useTranslateStore from '@/store/translate'
 import TitleElement from '@/components/titles/TitleElement.vue'
+import { PropType } from "vue";
+import { ITranslateObject } from "@/types";
 
 
 export default defineComponent({
     name: 'Translate',
     components: { TitleElement },
-    data() {
-        const translateStore = useTranslateStore()
-        return { translateStore }
+    props: {
+        translation: {
+            type: Object as PropType<ITranslateObject>,
+                required: true
+        },
+        explanation: {
+            type: String,
+            required: true
+        }
     }
 })
 </script>
