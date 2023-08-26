@@ -36,8 +36,8 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col>
-                <TranslateExamples cols="12" />
+            <v-col cols="12">
+                <TranslateExamples :examples="translateExamples"/>
             </v-col>
         </v-row>
         <v-row class="ma-2"></v-row>
@@ -56,7 +56,13 @@ import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 // store
 import usePronounceStore from "@/store/pronouncing";
 import useTranslateStore from '@/store/translate'
-import { ITranslateHistory, ITranslateObject, Ilanguages, UpdatableTranslateStore } from "@/types";
+import { 
+    IExamplesTranslations, 
+    ITranslateHistory, 
+    ITranslateObject, 
+    Ilanguages, 
+    UpdatableTranslateStore 
+} from "@/types";
 
 export default defineComponent({
     name: 'Dictionary',
@@ -78,7 +84,8 @@ export default defineComponent({
         sourceLang(): Ilanguages { return this.translateStore.getSourceLang },
         targetLang(): Ilanguages { return this.translateStore.getTargetLang },
         languages(): Ilanguages[] { return this.translateStore.languages },
-        translateHistory(): ITranslateHistory[] { return this.translateStore.getHistory }
+        translateHistory(): ITranslateHistory[] { return this.translateStore.getHistory },
+        translateExamples(): IExamplesTranslations[] { return this.translateStore.getExamples }
     },
     methods: {
         updateStore(key: keyof UpdatableTranslateStore, val: UpdatableTranslateStore[typeof key]) {

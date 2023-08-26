@@ -35,7 +35,7 @@ export default defineStore('Translate', {
         getSourceLang: (state): Ilanguages => state.languages[state.translateObject.fromLangKey],
         getTargetLang: (state): Ilanguages => state.languages[state.translateObject.toLangKey],
         getExplain: (state): string => state.translateExplanation,
-        getExample: (state): IExamplesTranslations[] => state.examplesTranslations,
+        getExamples: (state): IExamplesTranslations[] => state.examplesTranslations,
         getHistory: (state): ITranslateHistory[] => state.translateHistory,
         getAlternativeSreings: (state) => {
             const altTexts: IAltText[] = []
