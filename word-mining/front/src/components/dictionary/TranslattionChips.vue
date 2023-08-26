@@ -25,7 +25,7 @@
                             close-icon="mdi-close"
                             class="mx-1 mb-3"
                             :key="pair.key"
-                            @click.prevent="$emit('translateThis', {...pair})"
+                            @click.prevent="$emit('translateThis', pair.sourceText, pair.fromLangKey, pair.toLangKey)"
                             @click:close="$emit('deleteChip', {...pair})"
                             >{{ pair.sourceText }}
                                 <v-tooltip activator="parent" location="bottom">

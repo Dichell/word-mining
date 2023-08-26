@@ -37,22 +37,7 @@ export default defineStore('Translate', {
         getExplain: (state): string => state.translateExplanation,
         getExamples: (state): IExamplesTranslations[] => state.examplesTranslations,
         getHistory: (state): ITranslateHistory[] => state.translateHistory,
-        getAlternativeSreings: (state) => {
-            const altTexts: IAltText[] = []
-            state.alternativeTranslations.forEach((a) => {
-                if(a.displayTarget && a.backTranslations){
-                    let itemText: string = a.displayTarget
-                    let itemTrans: string = ""
-                    for(let j = 0; j < a.backTranslations.length; j++){
-                        a.backTranslations[j].displayText != a.backTranslations[a.backTranslations.length-1].displayText ?
-                            itemTrans += a.backTranslations[j].displayText + ", " :
-                            itemTrans += a.backTranslations[j].displayText
-                    }
-                    altTexts.push({itemText, itemTrans})
-                }
-            })
-            return altTexts
-        }
+        getAlternatives: (state): IAlternativeTranslations[] => state.alternativeTranslations,
     },
     actions: {
 // TRANSLATING
@@ -98,6 +83,7 @@ export default defineStore('Translate', {
                 targetLang: this.getTargetLang.short
             }
             const response: any = await Api.get<ITranslateObject>(Endpoint.Translate, textData)
+            this.textInput = this.translateObject.sourceText
             this.translateObject.translatedText = response.data[0].text
             localStorageMethods.setItem(LocalStorageKeys.TranslateObject, this.translateObject)
             this.refillAlternativeTranslations()

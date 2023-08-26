@@ -30,7 +30,14 @@
                     :translation="translation"
                     :explanation="translateExplanation"
                     />
-                <TranslateLookupComp />
+                <TranslateLookupComp 
+                    :translation="translation"
+                    :source-lang="sourceLang"
+                    :target-lang="targetLang"
+                    :alternative-translations="translateAlternatives"
+                    @pronounceThis="pronounceThis"
+                    @translateThis="translateThis"
+                    />
             </v-col>
             <v-col cols="12" lg="5">
                 <PronouncingComp 
@@ -60,6 +67,7 @@ import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 import usePronounceStore from "@/store/pronouncing";
 import useTranslateStore from '@/store/translate'
 import { 
+IAlternativeTranslations,
     IExamplesTranslations, 
     ITranslateHistory, 
     ITranslateObject, 
@@ -89,6 +97,8 @@ export default defineComponent({
         languages(): Ilanguages[] { return this.translateStore.languages },
         translateHistory(): ITranslateHistory[] { return this.translateStore.getHistory },
         translation(): ITranslateObject { return this.translateStore.getTranslateObject },
+        translateAlternatives(): IAlternativeTranslations[] { return this.translateStore.getAlternatives },
+
         translateExplanation(): string { return this.translateStore.getExplain },
         translateExamples(): IExamplesTranslations[] { return this.translateStore.getExamples }
     },
@@ -111,18 +121,22 @@ export default defineComponent({
         clearHistory(){
             this.translateStore.deleteAllHistory()
         },
-        translateThis(translateObject: ITranslateObject){
-            this.translateStore.updateTranslateObject("sourceText", translateObject.sourceText)
-            this.translateStore.updateTranslateObject("fromLangKey", translateObject.fromLangKey)
-            this.translateStore.updateTranslateObject("toLangKey", translateObject.toLangKey)
+        translateThis(text: string, langFrom: number, langTo: number){
+            this.translateStore.updateTranslateObject("sourceText", text)
+            this.translateStore.updateTranslateObject("fromLangKey", langFrom)
+            this.translateStore.updateTranslateObject("toLangKey", langTo)
             this.translateStore.translate()
-            this.translateStore.textInput = translateObject.sourceText
             this.pronounceStore.refillPronDataFromTranslateSource()
             this.pronounceStore.triggerRefresh()
         },
         deleteChip(val: ITranslateHistory){
             this.translateStore.deleteOneFromHistory(val.key)
-        }
+        },
+        pronounceThis(word: string, lang: string){
+            if(!this.pronounceStore.isActive){this.pronounceStore.togglePronouncing()}
+            this.pronounceStore.updatePronounceData("text", word)
+            this.pronounceStore.updatePronounceData("speakLanguageValue", lang)
+        },
     },
     mounted() {
         this.translateStore.mountBaseTranslateSettings()
