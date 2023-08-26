@@ -1,24 +1,30 @@
 <template>
         <v-tooltip text="click to on/off pronounucing" location="right">
             <template v-slot:activator="{ props }">
-                <TitleElement v-bind="props" text="Pronouncing" @event="tooglePronounceIsActive"/> 
+                <TitleElement 
+                    v-bind="props" 
+                    text="Pronouncing" 
+                    @event="$emit('tooglePronounceIsActive')"
+                    /> 
             </template>
         </v-tooltip>
 
-        <v-sheet v-if="pronounceStore.getActive"><i>Turned off. Click to turn on</i></v-sheet>
+        <v-sheet v-if="pronounceActivity"><i>Turned off. Click to turn on</i></v-sheet>
 
         <v-sheet v-else border rounded="lg" class="pa-3">
 
             <!-- pronouncing external wiidget //TODO change to API methods -->
             <a id="yg-widget-0" 
                 class="youglish-widget" 
-                :data-query=pronounceStore.getData.text
-                :data-lang=pronounceStore.getData.speakLanguageValue 
+                :data-query=pronounceData.text
+                :data-lang=pronounceData.speakLanguageValue 
                 data-components="8412" 
-                :data-auto-start="pronounceStore.getAutoPlay ? 1 : 0"
+                :data-auto-start="autoPlay ? 1 : 0"
                 data-bkg-color="theme_light"  
                 rel="nofollow"></a>
             <!-- pronouncing external wiidget -->
+
+            <div id="widget-1"></div>
 
 
             <v-row class="d-flex flex-row justify-start">
@@ -28,7 +34,7 @@
                     style="position: relative;left: 0px; bottom: 0px; width: 100%;"
                     >
                         <div class="d-flex flex-row align-center">
-                            <div :class="pronounceStore.getData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="pronounceData.speakLanguageValue == sourceLang.value ? 'font-weight-bold' : 'font-weight-regular'">
                                 {{ sourceLang.short }}
                             </div>
                             <div class="px-2">
@@ -36,18 +42,18 @@
                                     hide-details="auto"
                                     :false-value=sourceLang.value
                                     :true-value=targetLang.value
-                                    v-model="pronounceStore.getData.speakLanguageValue"
-                                    @click="togglepronounceLang"
+                                    v-model="pronounceData.speakLanguageValue"
+                                    @click="$emit('togglepronounceLang')"
                                     ></v-switch>
                             </div>
-                            <div :class="pronounceStore.getData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="pronounceData.speakLanguageValue == targetLang.value ? 'font-weight-bold' : 'font-weight-regular'">
                                 {{ targetLang.short
                                 }}
                             </div>
                         </div>
 
                         <div class="d-flex flex-row align-center">
-                            <div :class="pronounceStore.getAutoPlay ? 'font-weight-bold' : 'font-weight-regular'">
+                            <div :class="autoPlay ? 'font-weight-bold' : 'font-weight-regular'">
                                 autoplay
                             </div>
                             
@@ -56,8 +62,8 @@
                                     hide-details="auto"
                                     :true-value=true
                                     :false-value=false
-                                    :value="pronounceStore.getAutoPlay"
-                                    @click="pronounceStore.toggleAutoPlay"
+                                    :value="autoPlay"
+                                    @click="$emit('toggleAutoPlay')"
                                     ></v-switch>
                             </div>
                         </div>
@@ -67,35 +73,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-// store
-import useTranslateStore from "@/store/translate";
-import usePronounceStore from "@/store/pronouncing";
-// components
+import { PropType, defineComponent } from "vue";
 import TitleElement from '@/components/titles/TitleElement.vue'
+import { IPronounceData, Ilanguages } from "@/types";
 
 export default defineComponent({
     name: 'PronouncingComp',
-    data() {
-        const translatelStore = useTranslateStore()
-        const pronounceStore = usePronounceStore()
-        return { translatelStore, pronounceStore }
+    props: {
+        targetLang: {
+            type: Object as PropType<Ilanguages>,
+            required: true
+        },
+        sourceLang: {
+            type: Object as PropType<Ilanguages>,
+            required: true
+        },
+        pronounceActivity: {
+            type: Boolean,
+            required: true
+        },
+        pronounceData: {
+            type: Object as PropType<IPronounceData>,
+            required: true
+        },
+        autoPlay: {
+            type: Boolean,
+            required: true
+        }
     },
     components: { TitleElement },
     methods: {
-        tooglePronounceIsActive(): void {
-            this.pronounceStore.togglePronouncing()
-        },
-        togglepronounceLang(){
-            this.pronounceStore.togglePronounceLang()
-        }
-    },
-    computed: {
-        sourceLang(){ return this.translatelStore.getSourceLang },
-        targetLang(){ return this.translatelStore.getTargetLang }
+
     },
     mounted() {
-        this.pronounceStore.mountPronounceData()
         let pronounceScriipt = document.createElement('script')
         pronounceScriipt.setAttribute('src', 'https://youglish.com/public/emb/widget.js')
         pronounceScriipt.setAttribute('async', "")
