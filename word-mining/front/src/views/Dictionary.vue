@@ -6,7 +6,6 @@
                     :input-text="inputText"
                     @inputChanged="updateStore"
                     @clickedTranslate="sendToStore"
-
                     :source-lang="sourceLang"
                     :target-lang="targetLang"
                     :languages="languages"
@@ -31,7 +30,9 @@
                 <TranslateLookupComp />
             </v-col>
             <v-col cols="12" lg="5">
-                <PronouncingComp :key=pronounceStore.newTranslationTrigger /> 
+                <PronouncingComp 
+                    :key=pronounceStore.newTranslationTrigger 
+                    /> 
             </v-col>
         </v-row>
         <v-row>
@@ -55,7 +56,7 @@ import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 // store
 import usePronounceStore from "@/store/pronouncing";
 import useTranslateStore from '@/store/translate'
-import { ITranslateObject, Ilanguages, UpdatableTranslateStore } from "@/types";
+import { ITranslateHistory, ITranslateObject, Ilanguages, UpdatableTranslateStore } from "@/types";
 
 export default defineComponent({
     name: 'Dictionary',
@@ -77,7 +78,7 @@ export default defineComponent({
         sourceLang(): Ilanguages { return this.translateStore.getSourceLang },
         targetLang(): Ilanguages { return this.translateStore.getTargetLang },
         languages(): Ilanguages[] { return this.translateStore.languages },
-        translateHistory(): ITranslateObject[] { return this.translateStore.getHistory }
+        translateHistory(): ITranslateHistory[] { return this.translateStore.getHistory }
     },
     methods: {
         updateStore(key: keyof UpdatableTranslateStore, val: UpdatableTranslateStore[typeof key]) {
@@ -107,8 +108,8 @@ export default defineComponent({
             this.pronounceStore.refillPronDataFromTranslateSource()
             this.pronounceStore.triggerRefresh()
         },
-        deleteChip(i: number){
-            this.translateStore.deleteOneFromHistory(i)
+        deleteChip(val: ITranslateHistory){
+            this.translateStore.deleteOneFromHistory(val.key)
         }
     },
     mounted() {

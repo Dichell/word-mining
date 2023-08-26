@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { Endpoint, LocalStorageKeys } from '@/enums'
 import Api from '@/api' 
 import { localStorageMethods } from '@/utils/localStorage'
-import { IAltText, IAlternativeTranslations, IExamplesTranslations, ITranslateObject, ITranslateStore, Ilanguages, UpdatableTranslateStore } from '@/types'
+import { IAltText, IAlternativeTranslations, IExamplesTranslations, ITranslateHistory, ITranslateObject, ITranslateStore, Ilanguages, UpdatableTranslateStore } from '@/types'
 import { updateObject } from '@/utils/objectWorker'
+import {  v4 as uuidv4 } from 'uuid'
 
 export default defineStore('Translate', {
     state: (): ITranslateStore => ({
@@ -35,7 +36,7 @@ export default defineStore('Translate', {
         getTargetLang: (state): Ilanguages => state.languages[state.translateObject.toLangKey],
         getExplain: (state): string => state.translateExplanation,
         getExample: (state): IExamplesTranslations[] => state.examplesTranslations,
-        getHistory: (state): ITranslateObject[] => state.translateHistory,
+        getHistory: (state): ITranslateHistory[] => state.translateHistory,
         getAlternativeSreings: (state) => {
             const altTexts: IAltText[] = []
             state.alternativeTranslations.forEach((a) => {
@@ -85,7 +86,7 @@ export default defineStore('Translate', {
 
         async translate(): Promise<void> {
             this.loading = true
-            
+
             this.translateObject.translatedText = ''
             this.alternativeTranslations = []
             this.examplesTranslations = []
@@ -159,21 +160,24 @@ export default defineStore('Translate', {
 
 // HISTORY TRANSLATES
         addToTranslateHistory(): void {
-            const isExist = this.translateHistory.find((el:ITranslateObject) => el.sourceText == this.translateObject.sourceText)
+            const isExist = this.translateHistory.find((el:ITranslateHistory) => el.sourceText == this.translateObject.sourceText)
             if(!isExist){
-                this.translateHistory.push(this.translateObject)
+                this.translateHistory.push({
+                    ...this.translateObject,
+                    key: uuidv4()
+                })
                 localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, this.translateHistory)
             }
         },
-        deleteOneFromHistory(i: number) {
-            this.translateHistory.splice(i, 1)
+        deleteOneFromHistory(key: string) {
+            const filtered = this.translateHistory.filter(el => el.key !== key)
+            this.translateHistory = filtered
             localStorageMethods.setItem(LocalStorageKeys.TranslationsHistory, this.translateHistory)
         },
         deleteAllHistory(): void {
             this.translateHistory = []
             localStorage.removeItem(LocalStorageKeys.TranslationsHistory)
         },
-
 
 // MOUNTING
         mountBaseTranslateSettings(): void {
@@ -194,7 +198,7 @@ export default defineStore('Translate', {
             if(lsExplainationTranslations){
                 this.translateExplanation = lsExplainationTranslations
             }
-            const lsCurrentHistory = localStorageMethods.getAndToObject<ITranslateObject[]>(LocalStorageKeys.TranslationsHistory)
+            const lsCurrentHistory = localStorageMethods.getAndToObject<ITranslateHistory[]>(LocalStorageKeys.TranslationsHistory)
             if(lsCurrentHistory){
                 this.translateHistory = lsCurrentHistory
             }

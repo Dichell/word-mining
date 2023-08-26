@@ -20,18 +20,17 @@
                 <v-row class="d-flex flex-row justify-start align-center">
                     <div style="overflow-x:auto; white-space: nowrap;">
                         <v-chip
-                            
+                            v-for="pair in translateHistory"
+                            closable
                             close-icon="mdi-close"
                             class="mx-1 mb-3"
-                            v-for="(pair, index) in translateHistory"
-                            @click.prevent="translateIt(pair)"
+                            :key="pair.key"
+                            @click.prevent="$emit('translateThis', {...pair})"
+                            @click:close="$emit('deleteChip', {...pair})"
                             >{{ pair.sourceText }}
                                 <v-tooltip activator="parent" location="bottom">
                                     {{pair.translatedText}}
                                 </v-tooltip>
-                            <template v-slot:append>
-                                <v-btn variant="text" @click="deleteChip(index)">x</v-btn>
-                            </template>
                         </v-chip>
                     </div>
                 </v-row>
@@ -43,22 +42,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { PropType } from "vue";
-import { ITranslateObject } from "@/types";
+import { ITranslateHistory } from "@/types";
 
 export default defineComponent({
     name: 'TranslattionChipsCompp',
     props: {
         translateHistory: {
-            type: Object as PropType<ITranslateObject[]>,
+            type: Object as PropType<ITranslateHistory[]>,
             required: true
-        }
-    },
-    methods: {
-        translateIt(val: ITranslateObject){
-            this.$emit('translateThis', {...val})
-        },
-        deleteChip(i: number){
-            this.$emit('deleteChip', i)
         }
     }
 })
