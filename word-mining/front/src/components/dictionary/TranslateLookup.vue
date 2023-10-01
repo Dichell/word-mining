@@ -3,38 +3,38 @@
         <v-sheet border rounded="lg" class="pa-5">
             <v-table>
                 <tbody>
-                    <tr v-if="alternativeDataToText.length < 1">
+                    <tr v-if="alternativeTranslations.length < 1">
                         <td>
-                                <b>{{translateStore.getTranslateObject.translatedText}}</b>
+                                <b>{{translation.translatedText}}</b>
                         </td>
                     </tr>
 
-                    <tr v-for="{displayTarget, posTag, backTranslations} in alternativeDataToText">
+                    <tr v-for="alternative in alternativeTranslations">
                         <td>
                             <v-btn 
                                 density="compact" 
                                 variant="text" 
-                                @click="pronounceThis(displayTarget, translateStore.getTargetLang.value)"
-                                @dblclick="translateThis(displayTarget, translateStore.getTargetLang.key, translateStore.getSourceLang.key)"
-                                ><b>{{ displayTarget }}</b>
+                                @click="pronounceThis(alternative.displayTarget, targetLang.value)"
+                                @dblclick="translateThis(alternative.displayTarget, targetLang.key, sourceLang.key)"
+                                ><b>{{ alternative.displayTarget }}</b>
                             </v-btn>
                         </td>
                         <td>
-                            <i :style="{fontSize: 'x-small'}">{{ posTag }}</i>
+                            <i :style="{fontSize: 'x-small'}">{{ alternative.posTag }}</i>
                         </td>
-                        <td :dir="translateStore.getSourceLang.value == 'hebrew' ? 'rtl' : 'ltr'" >
+                        <td :dir="sourceLang.value == 'hebrew' ? 'rtl' : 'ltr'" >
                             <v-btn 
-                                density="compact" v-for="{normalizedText} in backTranslations"
+                                density="compact" v-for="{normalizedText} in alternative.backTranslations"
                                 variant="text"
-                                @click="pronounceThis(normalizedText, translateStore.getSourceLang.value)"
-                                @dblclick="translateThis(normalizedText, translateStore.getSourceLang.key, translateStore.getTargetLang.key)"
+                                @click="pronounceThis(normalizedText, sourceLang.value)"
+                                @dblclick="translateThis(normalizedText, sourceLang.key, targetLang.key)"
                                 >{{ normalizedText }}
                             </v-btn>
                         </td>
                     </tr>
                 </tbody>
                 <v-tooltip activator="parent" location="top" open-delay="2000"><u>Click:</u> pronounce selected. <u>Double click:</u> translate selected</v-tooltip>
-                <v-sheet v-if="alternativeDataToText.length < 1">
+                <v-sheet v-if="alternativeTranslations.length < 1">
                     <i>No variants</i>
                 </v-sheet>
             </v-table>
@@ -42,36 +42,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import useTranslateStore from '@/store/translate'
-import usePronounceStore from '@/store/pronouncing'
+import { PropType, defineComponent } from "vue";
 import TitleElement from '@/components/titles/TitleElement.vue'
+import { IAlternativeTranslations, ITranslateObject, Ilanguages } from "@/types";
 
 export default defineComponent({
     name: 'TranslateLookupComp',
-    data() {
-        const translateStore = useTranslateStore()
-        const pronounceStore = usePronounceStore()
-        return { translateStore, pronounceStore }
-    },
     components: { TitleElement },
-    methods: {
-        pronounceThis(word: string, lang: string){
-            if(!this.pronounceStore.isActive){this.pronounceStore.togglePronouncing()}
-            this.pronounceStore.updatePronounceData("text", word)
-            this.pronounceStore.updatePronounceData("speakLanguageValue", lang)
+    props: {
+        translation: {
+            type: Object as PropType<ITranslateObject>,
+                required: true
         },
-        translateThis(word: string, langFrom: number, langTo: number){
-            this.translateStore.updateTranslateObject("sourceText", word)
-            this.translateStore.updateTranslateObject("fromLangKey", langFrom)
-            this.translateStore.updateTranslateObject("toLangKey", langTo)
-            this.translateStore.translate()
-            this.translateStore.textInput = word
+        targetLang: {
+            type: Object as PropType<Ilanguages>,
+            required: true
+        },
+        sourceLang: {
+            type: Object as PropType<Ilanguages>,
+            required: true
+        },
+        alternativeTranslations: {
+            type: Object as PropType<IAlternativeTranslations[]>,
+            required: true
         }
     },
-    computed: {
-        alternativeDataToText(){
-            return this.translateStore.alternativeTranslations
+    methods: {
+        pronounceThis(word: string, lang: string){
+            this.$emit('pronounceThis', word, lang)
+        },
+        translateThis(word: string, langFrom: number, langTo: number){
+            this.$emit('translateThis', word, langFrom, langTo)
         }
     }
 })

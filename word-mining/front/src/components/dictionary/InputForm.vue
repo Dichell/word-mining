@@ -8,12 +8,12 @@
                 type="text"
                 rounded="lg"
                 variant="outlined"
-                v-model=translateStore.textInput
-                @keydown.enter.native.stop.prevent="sendToStore"
+                v-model=inputText
+                @keyup.enter="startTranslate"
                 >
                 <template v-slot:append>
                     <v-sheet >
-                        <BtnSearchWord @click="sendToStore"/>
+                        <BtnSearchWord @click="startTranslate"/>
                     </v-sheet>
                 </template>
             </v-text-field>
@@ -23,25 +23,28 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-// store
-import useTranslateStore from '@/store/translate'
-import usePronounceStore from '@/store/pronouncing'
-// components
 import BtnSearchWord from './BtnSearchWord.vue'
+import VueTypes from "vue-types";
 
 export default defineComponent({
     name: 'InputForm',
     components: { BtnSearchWord },
-    data() {
-        const translateStore = useTranslateStore()
-        const pronounceStore = usePronounceStore()
-        return { translateStore, pronounceStore }
+    props: {
+        modelValue: VueTypes.string.isRequired
+    },
+    computed: {
+        inputText:{
+            get(): string{
+                return this.modelValue
+            },
+            set(val: string){
+                this.$emit('update:modelValue', val)
+            }
+        }
     },
     methods: {
-        sendToStore() {
-            this.translateStore.updateTranslateObject("sourceText", this.translateStore.textInput)
-            this.translateStore.translate()
-            this.pronounceStore.updatePronounceData("text", this.translateStore.textInput)
+        startTranslate(){
+            this.$emit('clickedTranslate')
         }
     }
 })

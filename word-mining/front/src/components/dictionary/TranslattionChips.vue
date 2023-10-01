@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="translateStore.getHistory.length > 0" style="position: relative; top: -20px;">
+    <v-container v-if="translateHistory && translateHistory.length > 0" style="position: relative; top: -20px;">
         <v-row align="center">
             <v-col style="max-width: fit-content;">
                 <v-tooltip text="clear history" location="bottom">
@@ -11,7 +11,7 @@
                             density="compact" 
                             variant="text"
                             color="red"
-                            @click="clearHistory"></v-btn>
+                            @click="$emit('clearHistory')"></v-btn>
                     </template>
                 </v-tooltip>
                 Last words:
@@ -20,17 +20,17 @@
                 <v-row class="d-flex flex-row justify-start align-center">
                     <div style="overflow-x:auto; white-space: nowrap;">
                         <v-chip
+                            v-for="pair in translateHistory"
                             closable
                             close-icon="mdi-close"
                             class="mx-1 mb-3"
-                            v-for="({sourceText, fromLangKey, toLangKey, translatedText}, index) in translateStore.getHistory"
-                            @click="translateThis(sourceText, fromLangKey, toLangKey)"
-                            @click:close="deleteChip(index)"
-                            >{{ sourceText }}
+                            :key="pair.key"
+                            @click.prevent="$emit('translateThis', pair.sourceText, pair.fromLangKey, pair.toLangKey)"
+                            @click:close="$emit('deleteChip', {...pair})"
+                            >{{ pair.sourceText }}
                                 <v-tooltip activator="parent" location="bottom">
-                                    {{translatedText}}
+                                    {{pair.translatedText}}
                                 </v-tooltip>
-                                
                         </v-chip>
                     </div>
                 </v-row>
@@ -41,31 +41,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import useTranslateStore from '@/store/translate'
-import usePronouncingStore from '@/store/pronouncing'
+import { PropType } from "vue";
+import { ITranslateHistory } from "@/types";
 
 export default defineComponent({
     name: 'TranslattionChipsCompp',
-    data() {
-        const translateStore = useTranslateStore()
-        const pronouncingStore = usePronouncingStore()
-        return { translateStore, pronouncingStore }
-    },
-    methods: {
-        clearHistory(){
-            localStorage.setItem('translationsHistory', JSON.stringify([]))
-        },
-        translateThis(word: string, langFrom: number, langTo: number){
-            this.translateStore.updateTranslateObject("sourceText", word)
-            this.translateStore.updateTranslateObject("fromLangKey", langFrom)
-            this.translateStore.updateTranslateObject("toLangKey", langTo)
-            this.translateStore.translate()
-            this.translateStore.textInput = word
-            this.pronouncingStore.refillPronDataFromTranslateSource()
-            this.pronouncingStore.triggerRefresh()
-        },
-        deleteChip(i: number){
-            this.translateStore.deleteOneFromHistory(i)
+    props: {
+        translateHistory: {
+            type: Object as PropType<ITranslateHistory[]>,
+            required: true
         }
     }
 })

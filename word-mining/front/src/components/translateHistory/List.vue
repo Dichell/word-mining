@@ -12,11 +12,14 @@
     </thead>
     <tbody>
       <tr
-        v-for="({sourceText, translatedText}, index) in translateStore.getHistory"
+        v-for="({sourceText, translatedText, key}, index) in translateStore.getHistory"
         :key="index"
         >
         <td>{{ sourceText }}</td>
         <td>{{ translatedText }}</td>
+        <td>
+            <v-btn @click=deleteRow(key)>del</v-btn>
+        </td>
       </tr>
     </tbody>
   </v-table>
@@ -31,6 +34,11 @@ export default defineComponent({
     data() {
         const translateStore = useTranslateStore()
         return { translateStore }
+    },
+    methods:{
+        deleteRow(key: string){
+            this.translateStore.deleteOneFromHistory(key)
+        }
     }
 })
 </script>

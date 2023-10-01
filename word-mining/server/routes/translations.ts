@@ -16,6 +16,7 @@ class Translations {
         this.router.post('/explanation', this.translateExplanation)
         this.router.post('/alternative', this.translateAlternative)
         this.router.post('/examples', this.translateExamples)
+        this.router.post('/image', this.translateImage)
         this.router.post('/history', this.translateHistory)    
     }
     
@@ -47,7 +48,7 @@ class Translations {
                 console.log(`'translateText' - mongo: `, dbTranslation[0].translationsResult[0].word);
             }
 
-            if(!dbTranslation){
+            if(!dbTranslation || dbTranslation.length == 0){
         // if no, get translation
                 const response: any = await TranslationsController.translateText(dataText)
                 console.log(`'translateText' - azure (${response[0].text})`)
@@ -128,6 +129,25 @@ class Translations {
         }
         catch(e: any){
             console.warn("'translateExamples' - error")
+            return res.status(400).json( {status: "error", message: e.message} )
+        }   
+    }
+
+    translateImage = async (req: Request, res: Response) => {
+        console.log(`'translateImage' - starting (${req.body.textData.text}) ...`)
+        try {   
+            const dataText: ITranslateData = {
+                text: req.body.textData.text, 
+                source: req.body.textData.sourceLang,
+                target: req.body.textData.targetLang,
+                translation: req.body.textData.translatedText
+            }
+            const response: any = await TranslationsController.translateExamples(dataText)
+            console.log(`'translateImage' - finish (${response.data[0]})`)
+            return res.status(200).json( {data: response.data[0].examples, status: "ok", message: ""} )
+        }
+        catch(e: any){
+            console.warn("'translateImage' - error")
             return res.status(400).json( {status: "error", message: e.message} )
         }   
     }

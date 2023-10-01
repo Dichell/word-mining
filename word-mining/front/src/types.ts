@@ -32,7 +32,7 @@ export interface ITranslateStore extends BaseStore {
     translateObject: ITranslateObject,
     alternativeTranslations: IAlternativeTranslations[],
     examplesTranslations: IExamplesTranslations[],
-    translateHistory: ITranslateObject[],
+    translateHistory: ITranslateHistory[],
     translateExplanation: string
 }
 
@@ -43,11 +43,20 @@ export interface Ilanguages {
     short: string
 }
 
+export interface ISelectLang {
+    sourceLang: Ilanguages,
+    targetLang: Ilanguages
+}
+
 export interface ITranslateObject {
     sourceText: string, 
     fromLangKey: number, 
     toLangKey: number, 
     translatedText: string
+}
+
+export interface ITranslateHistory extends ITranslateObject {
+    key: string
 }
 
 export interface IPronounceData {
@@ -82,3 +91,5 @@ export interface IExamplesTranslations {
     targetTerm: string,
     targetSuffix: string
 }
+
+export type UpdatableTranslateStore = Pick<ITranslateStore, 'textInput' | 'translateObject'>

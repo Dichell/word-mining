@@ -46,6 +46,16 @@ class TranslationsController {
         }
     }
 
+    async translateImage (dataText: ITranslateData) {
+        try {
+            const data: any = await translateExamples(dataText)
+            return data
+        }
+        catch(e){
+            return new Error("translate examples are not received")
+        }
+    }
+
     async translateHistory (dataText: ITranslateData) {
         try {
             const data: any = await translateExamples(dataText)

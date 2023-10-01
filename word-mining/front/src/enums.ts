@@ -3,7 +3,7 @@ export enum LocalStorageKeys {
     ReversoIsActive = "ReversoIsActive",
     SourceText = "SourceText",
     PronounceData = "PronounceData",
-    TranslateStore = "TranslateStore",
+    TranslateObject = "TranslateObject",
     AlternativeTranslations = "AlternativeTranslations",
     ExamplesTranslations = "ExamplesTranslations",
     TranslationsHistory = "translationsHistory",
