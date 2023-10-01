@@ -148,7 +148,7 @@ export default defineStore('Translate', {
         addToTranslateHistory(): void {
             const isExist = this.translateHistory.find((el:ITranslateHistory) => el.sourceText == this.translateObject.sourceText)
             if(!isExist){
-                this.translateHistory.push({
+                this.translateHistory.unshift({
                     ...this.translateObject,
                     key: uuidv4()
                 })

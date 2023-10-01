@@ -1,15 +1,17 @@
 <template>
     <v-footer
-        style="position: absolute; bottom: -1px; width: 100vw;"
+        style="width: 100vw;"
         color="primary"
         >
             <v-row class="align-center justify-center">
-
                 <v-col class="text-btn" >
-                    WORD MINING
-                </v-col>
-                
-                <v-col cols="8" class="d-flex justify-center">
+                    <v-btn
+                        density="compact"
+                        color="primary"
+                        variant="flat"
+                        >
+                        WORDS MINING
+                    </v-btn>
                     <v-btn
                         v-for="{name, path} in menu"
                         density="compact"
@@ -19,10 +21,6 @@
                         >
                     </v-btn>
                 </v-col>
-
-                <v-col>
-                </v-col>
-
             </v-row>
     </v-footer>
 </template>
