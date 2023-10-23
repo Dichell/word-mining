@@ -2,12 +2,8 @@
     <v-table>
     <thead>
       <tr>
-        <th class="text-left">
-          from
-        </th>
-        <th class="text-left">
-          to
-        </th>
+        <th class="text-left"> from </th>
+        <th class="text-left"> to </th>
       </tr>
     </thead>
     <tbody>
@@ -15,11 +11,14 @@
         v-for="({sourceText, translatedText, key}, index) in translateStore.getHistory"
         :key="index"
         >
-        <td>{{ sourceText }}</td>
-        <td>{{ translatedText }}</td>
-        <td>
-            <v-btn @click=deleteRow(key)>del</v-btn>
-        </td>
+            <td>{{ sourceText }}</td>
+            <td>{{ translatedText }}</td>
+            <td>
+                <v-btn 
+                    icon="mdi-delete-circle" 
+                    variant="plain"
+                    @click=deleteRow(key)></v-btn>
+            </td>
       </tr>
     </tbody>
   </v-table>
