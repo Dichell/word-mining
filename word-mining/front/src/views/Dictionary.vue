@@ -35,22 +35,8 @@
                     :source-lang="sourceLang"
                     :target-lang="targetLang"
                     :alternative-translations="translateAlternatives"
-                    @pronounceThis="pronounceThis"
                     @translateThis="translateThis"
                     />
-            </v-col>
-            <v-col cols="12" lg="5">
-                <PronouncingComp 
-                    :key=pronounceStore.newTranslationTrigger 
-                    :source-lang="sourceLang"
-                    :target-lang="targetLang"
-                    :pronounce-activity="pronounceActivity"
-                    :pronounce-data="pronounceData"
-                    :auto-play="pronounceAutoPlay"
-                    @tooglePronounceIsActive="tooglePronounceIsActive"
-                    @togglePronounceLang="togglepronounceLang"
-                    @toggleAutoPlay="togglePronounceAutoPlay"
-                    /> 
             </v-col>
         </v-row>
         <v-row>
@@ -70,14 +56,12 @@ import TranslattionChipsComp from '@/components/dictionary/TranslattionChips.vue
 import TranslateComp from '@/components/dictionary/Translate.vue'
 import TranslateLookupComp from '@/components/dictionary/TranslateLookup.vue'
 import TranslateExamples from '@/components/dictionary/TranslateExamples.vue'
-import PronouncingComp from '@/components/dictionary/Pronouncing.vue'
 // store
 import usePronounceStore from "@/store/pronouncing";
 import useTranslateStore from '@/store/translate'
 import { 
-IAlternativeTranslations,
+    IAlternativeTranslations,
     IExamplesTranslations, 
-    IPronounceData, 
     ITranslateHistory, 
     ITranslateObject, 
     Ilanguages, 
@@ -92,7 +76,6 @@ export default defineComponent({
         TranslateComp, 
         TranslateLookupComp, 
         TranslateExamples, 
-        PronouncingComp 
     },
     data() {
         const pronounceStore = usePronounceStore() 
@@ -109,10 +92,6 @@ export default defineComponent({
         translateAlternatives(): IAlternativeTranslations[] { return this.translateStore.getAlternatives },
         translateExplanation(): string { return this.translateStore.getExplain },
         translateExamples(): IExamplesTranslations[] { return this.translateStore.getExamples },
-
-        pronounceActivity(): boolean { return this.pronounceStore.getActive },
-        pronounceData(): IPronounceData { return this.pronounceStore.getData },
-        pronounceAutoPlay(): boolean { return this.pronounceStore.getAutoPlay },
     },
     methods: {
         updateStore(key: keyof UpdatableTranslateStore, val: UpdatableTranslateStore[typeof key]) {
@@ -144,26 +123,9 @@ export default defineComponent({
         deleteChip(val: ITranslateHistory){
             this.translateStore.deleteOneFromHistory(val.key)
         },
-
-// PRONOUNCING
-        tooglePronounceIsActive(): void {
-            this.pronounceStore.togglePronouncing()
-        },
-        togglepronounceLang(){
-            this.pronounceStore.togglePronounceLang()
-        },
-        togglePronounceAutoPlay(){
-            this.pronounceStore.toggleAutoPlay()
-        },
-        pronounceThis(word: string, lang: string){
-            if(!this.pronounceStore.isActive){this.pronounceStore.togglePronouncing()}
-            this.pronounceStore.updatePronounceData("text", word)
-            this.pronounceStore.updatePronounceData("speakLanguageValue", lang)
-        },
     },
     mounted() {
         this.translateStore.mountBaseTranslateSettings()
-        if(this.pronounceActivity) this.pronounceStore.mountPronounceData()
     },
 })
 </script>
