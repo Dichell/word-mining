@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { dbConnect } from './db';
 import api from './api'
 import { config } from './config';
 
@@ -14,7 +13,7 @@ app.use(cors())
 app.use(api)
 
 const run = async() => {
-    await dbConnect()
+    // await dbConnect()
     app.listen(port, host, () => { console.log(`Server runs on ${host}: ${port}`) })
 }
 
