@@ -3,8 +3,8 @@ import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' });
 
 export const config = {
-    HOST: process.env.HOST || 'localhost',
-    PORT: parseInt(process.env.PORT || '3000', 10),
+    SERVER_HOST: process.env.SERVER_HOST || 'localhost',
+    SERVER_PORT: parseInt(process.env.SERVER_PORT || '3000', 10),
     DB_CONNECTION_STRING: process.env.DB_CONNECTION_STRING,
     FRONT_URL: process.env.FRONT_URL,
     MS_AZURE_KEY: process.env.MS_AZURE_KEY,

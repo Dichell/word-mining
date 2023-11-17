@@ -1,5 +1,4 @@
 import { translate, translateAlternative, translateExamples } from '../modules/translations/microsoftTranslate';
-import { gptCompletion } from '../modules/openAi/index'
 import { ITranslateData } from '../types';
 
 class TranslationsController {
@@ -13,16 +12,6 @@ class TranslationsController {
         }
         catch(e){
             return new Error("translate are not received")
-        }
-    }
-
-    async translateExplanation (dataText: ITranslateData) {
-        try {
-            const data: any = await gptCompletion(dataText)
-            return data
-        }
-        catch(e){
-            return new Error("explanation are not received")
         }
     }
 

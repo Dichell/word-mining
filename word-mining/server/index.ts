@@ -5,8 +5,8 @@ import api from './api'
 import { config } from './config';
 
 const app = express()
-const host = config.HOST
-const port = config.PORT
+const host = config.SERVER_HOST
+const port = config.SERVER_PORT
 
 app.use(express.json({ limit: 1024102420, type: "application/json" }))
 app.use(cors())
