@@ -13,7 +13,6 @@ class Translations {
         this.router.post("/text", this.translateText)
         this.router.post('/alternative', this.translateAlternative)
         this.router.post('/examples', this.translateExamples)
-        this.router.post('/history', this.translateHistory)    
     }
     
     translateText = async(req: Request, res: Response) => {
@@ -26,10 +25,14 @@ class Translations {
                 target: req.body.textData.targetLang
             }
 
-            const response: any = await TranslationsController.translateText(dataText)
-            console.log(`'translateText' - azure (${response[0].text})`)
+            const response: any = await TranslationsController.text(dataText)
 
-            return res.status(200).json( {data: response, status: "ok", message: ""} )
+            if(response.data){
+                console.log(`'translateText' - azure (${response[0].text})`)
+                return res.status(200).json( {data: response, status: "ok", message: ""} )
+            } else {
+                return res.status(204).json( {data: [], status: "empty", message: ""} )    
+            }
         }
         catch(e: any){
             console.warn("'translateText' - error")
@@ -46,9 +49,14 @@ class Translations {
                 source: req.body.textData.sourceLang,
                 target: req.body.textData.targetLang
             }
-            const response: any = await TranslationsController.translateAlternative(dataText)
-            console.log(`'translateAlternative' - finish (${response.data[0]})`)
-            return res.status(200).json( {data: response.data[0].translations, status: "ok", message: ""} )
+            const response: any = await TranslationsController.alternative(dataText)
+
+            if(response.data){
+                console.log(`'translateAlternative' - finish (${response.data[0]})`)
+                return res.status(200).json( {data: response.data[0].translations, status: "ok", message: ""} )    
+            } else {
+                return res.status(204).json( {data: [], status: "empty", message: ""} )    
+            }
         }
         catch(e: any){
             console.warn("'translateAlternative' - error")
@@ -65,33 +73,19 @@ class Translations {
                 target: req.body.textData.targetLang,
                 translation: req.body.textData.translatedText
             }
-            const response: any = await TranslationsController.translateExamples(dataText)
-            console.log(`'translateExamples' - finish (${response.data[0]})`)
-            return res.status(200).json( {data: response.data[0].examples, status: "ok", message: ""} )
+            const response: any = await TranslationsController.examples(dataText)
+            
+            if(response.data){
+                console.log(`'translateExamples' - finish (${response.data[0]})`)
+                return res.status(200).json( {data: response.data[0].examples, status: "ok", message: ""} )
+            } else {
+                return res.status(204).json( {data: [], status: "empty", message: ""} )    
+            }    
         }
         catch(e: any){
             console.warn("'translateExamples' - error")
             return res.status(400).json( {status: "error", message: e.message} )
         }   
-    }
-    
-    translateHistory = async (req: Request, res: Response) => {
-        console.log(`'translateExamples' - starting (${req.body.textData.text}) ...`)
-            try {
-                const dataText: ITranslateData = {
-                    text: req.body.textData.text, 
-                    source: req.body.textData.sourceLang,
-                    target: req.body.textData.targetLang,
-                    translation: req.body.textData.translatedText
-                }
-                const response: any = await TranslationsController.translateExamples(dataText)
-                console.log(`'translateExamples' - finish (${response.data[0]})`)
-                return res.status(200).json( {data: response.data[0].examples, status: "ok", message: ""} )
-            }
-            catch(e: any){
-                console.warn("'translateExamples' - error")
-                return res.status(400).json( {status: "error", message: e.message} )
-            }
     }
 }
 

@@ -5,7 +5,7 @@ class TranslationsController {
 
     constructor() { }
 
-    async translateText (dataText: ITranslateData) {
+    async text (dataText: ITranslateData) {
         try {
             const data: any = await translate(dataText)
             return data
@@ -15,7 +15,7 @@ class TranslationsController {
         }
     }
 
-    async translateAlternative (dataText: ITranslateData) {
+    async alternative (dataText: ITranslateData) {
         try {
             const data: any = await translateAlternative(dataText)
             return data
@@ -25,33 +25,13 @@ class TranslationsController {
         }
     }
 
-    async translateExamples (dataText: ITranslateData) {
+    async examples (dataText: ITranslateData) {
         try {
             const data: any = await translateExamples(dataText)
             return data
         }
         catch(e){
             return new Error("translate examples are not received")
-        }
-    }
-
-    async translateImage (dataText: ITranslateData) {
-        try {
-            const data: any = await translateExamples(dataText)
-            return data
-        }
-        catch(e){
-            return new Error("translate examples are not received")
-        }
-    }
-
-    async translateHistory (dataText: ITranslateData) {
-        try {
-            const data: any = await translateExamples(dataText)
-            return data
-        }
-        catch(e){
-            return new Error("translate history are not received")
         }
     }
 }
