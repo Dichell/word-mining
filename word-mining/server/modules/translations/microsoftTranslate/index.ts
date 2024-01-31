@@ -33,7 +33,7 @@ export async function translate({text, source, target}:ITranslateData): Promise<
     }
     catch(e: any){
         console.log(e)
-        return { error: e.code}
+        throw new Error(e.code)
     }
 }
 
@@ -58,7 +58,7 @@ export async function translateAlternative({text, source, target}:ITranslateData
     }
     catch(e: any){
         console.log(e)
-        return { error: e.code}
+        throw new Error(e.code)
     }
 }
 
@@ -84,6 +84,6 @@ export async function translateExamples({text, source, target, translation}:ITra
     }
     catch(e: any){
         console.log(e)
-        return { error: e.code}
+        throw new Error(e.code)
     }
 }
