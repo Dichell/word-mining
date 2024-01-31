@@ -14,7 +14,6 @@
                             <v-btn 
                                 density="compact" 
                                 variant="text" 
-                                @click="pronounceThis(alternative.displayTarget, targetLang.value)"
                                 @dblclick="translateThis(alternative.displayTarget, targetLang.key, sourceLang.key)"
                                 ><b>{{ alternative.displayTarget }}</b>
                             </v-btn>
@@ -26,7 +25,6 @@
                             <v-btn 
                                 density="compact" v-for="{normalizedText} in alternative.backTranslations"
                                 variant="text"
-                                @click="pronounceThis(normalizedText, sourceLang.value)"
                                 @dblclick="translateThis(normalizedText, sourceLang.key, targetLang.key)"
                                 >{{ normalizedText }}
                             </v-btn>
@@ -68,9 +66,6 @@ export default defineComponent({
         }
     },
     methods: {
-        pronounceThis(word: string, lang: string){
-            this.$emit('pronounceThis', word, lang)
-        },
         translateThis(word: string, langFrom: number, langTo: number){
             this.$emit('translateThis', word, langFrom, langTo)
         }

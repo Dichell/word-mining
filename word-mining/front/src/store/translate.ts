@@ -84,7 +84,7 @@ export default defineStore('Translate', {
             }
             const response: any = await Api.get<ITranslateObject>(Endpoint.Translate, textData)
             this.textInput = this.translateObject.sourceText
-            this.translateObject.translatedText = response.data[0].text
+            this.translateObject.translatedText = response ? response.data[0].text : 'no translate'
             localStorageMethods.setItem(LocalStorageKeys.TranslateObject, this.translateObject)
             this.refillAlternativeTranslations()
             this.refillExamples()
