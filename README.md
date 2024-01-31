@@ -1,5 +1,7 @@
 # words-mining
 
+![](/screen.jpg)
+
 Gives word translations, keeps & organizes history, provides exercises to remember words from the history, and offers statistics of exercise completion.
 
 **DICTIONARY** (most of functionality finished)
